@@ -30,22 +30,12 @@ const anthropicMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "The AI for Problem Solvers | Claude by Anthropic",
+  title: "Data Engineering Lifecycle — Học lý thuyết DE",
   description:
-    "Claude is Anthropic's AI, built for problem solvers. Tackle complex challenges, analyze data, write code, and think through your hardest work.",
+    "Khóa học lý thuyết Data Engineering: lifecycle, ingestion, modeling, orchestration, streaming, enterprise.",
   icons: {
     icon: "/seo/favicon.png",
     apple: "/seo/apple-touch-icon.png",
-  },
-  openGraph: {
-    title: "The AI for Problem Solvers | Claude by Anthropic",
-    description:
-      "Claude is Anthropic's AI, built for problem solvers. Tackle complex challenges, analyze data, write code, and think through your hardest work.",
-    images: ["/seo/og-image.jpg"],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
   },
 };
 
@@ -56,7 +46,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="vi"
       className={`${anthropicSans.variable} ${anthropicSerif.variable} ${anthropicMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
