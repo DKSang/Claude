@@ -1,15 +1,42 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import Link from "next/link";
+import { X } from "lucide-react";
 import { EASE_OUT_QUART, EASE_EXPO_OUT } from "@/lib/motion";
 
 const LIFECYCLE_STAGES = [
-  { vi: "Sinh dữ liệu", en: "Generation", moduleId: "module-1-source-systems" },
-  { vi: "Lưu trữ", en: "Storage", moduleId: "module-2-storage-systems" },
-  { vi: "Nạp dữ liệu", en: "Ingestion", moduleId: "module-3-ingestion" },
-  { vi: "Biến đổi", en: "Transformation", moduleId: "module-4-modeling" },
-  { vi: "Phục vụ", en: "Serving", moduleId: "module-7-enterprise" },
+  {
+    vi: "Sinh du lieu",
+    en: "Generation",
+    moduleId: "module-1-source-systems",
+    description: "Du lieu sinh ra tu source systems — API, database, sensor, file. Giai doan nay tra loi: du lieu den tu dau, kieu gi, tan suat cap nhat ra sao.",
+  },
+  {
+    vi: "Luu tru",
+    en: "Storage",
+    moduleId: "module-2-storage-systems",
+    description: "Du lieu ha canh va nam lai o storage layer — data lake, lakehouse, warehouse. Bronze/Silver/Gold medallion architecture.",
+  },
+  {
+    vi: "Nap du lieu",
+    en: "Ingestion",
+    moduleId: "module-3-ingestion",
+    description: "Dua du lieu tu nguon ve luu tru dau tien (Bronze). Batch, micro-batch, hoac streaming. Dam bao trung thuc, co the truy vet.",
+  },
+  {
+    vi: "Bien doi",
+    en: "Transformation",
+    moduleId: "module-4-modeling",
+    description: "Bien doi du lieu tho thanh mo hinh phan tich — Silver/Gold layers. dbt, Trino, SQL transformations, data modeling.",
+  },
+  {
+    vi: "Phuc vu",
+    en: "Serving",
+    moduleId: "module-7-enterprise",
+    description: "Phuc vu du lieu cho downstream — dashboard, API, ML pipeline, ung dung. Security, governance, access patterns.",
+  },
 ] as const;
 
 const ARROW_H = "M4 12 L20 12";
@@ -21,9 +48,72 @@ interface LifecycleDiagramProps {
   activeModuleId?: string;
 }
 
+function StagePopover({
+  stage,
+  onClose,
+}: {
+  stage: (typeof LIFECYCLE_STAGES)[number];
+  onClose: () => void;
+}) {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        top: "100%",
+        left: "50%",
+        transform: "translateX(-50%)",
+        marginTop: 8,
+        width: 260,
+        background: "var(--card)",
+        border: "1px solid var(--border-secondary)",
+        borderRadius: "var(--radius-small)",
+        padding: "var(--space-1)",
+        boxShadow: "0 8px 24px rgba(20,20,19,0.08)",
+        zIndex: 10,
+      }}
+    >
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "var(--space-0-5)" }}>
+        <div>
+          <div style={{ fontFamily: "var(--font-serif)", fontSize: "17px", fontWeight: 500, color: "var(--fg-primary)" }}>
+            {stage.vi}
+          </div>
+          <div style={{ fontSize: "13px", fontFamily: "var(--font-sans)", color: "var(--fg-tertiary)" }}>
+            {stage.en}
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Dong"
+          style={{ background: "none", border: "none", cursor: "pointer", color: "var(--fg-tertiary)", padding: 0 }}
+        >
+          <X size={16} />
+        </button>
+      </div>
+      <p style={{ fontSize: "14px", lineHeight: "22px", fontFamily: "var(--font-sans)", color: "var(--fg-secondary)", margin: "0 0 var(--space-0-75) 0" }}>
+        {stage.description}
+      </p>
+      <Link
+        href={`/learn/${stage.moduleId}`}
+        style={{
+          fontSize: "14px",
+          fontFamily: "var(--font-sans)",
+          color: "var(--text-accent)",
+          textDecoration: "none",
+          fontWeight: 500,
+        }}
+        className="hover-underline"
+      >
+        {"Hoc module nay ->"}
+      </Link>
+    </div>
+  );
+}
+
 export function LifecycleDiagram({ activeModuleId }: LifecycleDiagramProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const [openPopover, setOpenPopover] = useState<number | null>(null);
 
   return (
     <div ref={ref} className="flex flex-col md:flex-row items-center gap-2 md:gap-1">
@@ -35,6 +125,7 @@ export function LifecycleDiagram({ activeModuleId }: LifecycleDiagramProps) {
               initial={{ opacity: 0, y: 12, scale: 0.96 }}
               animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
               transition={{ duration: 0.45, delay: i * 0.1, ease: EASE_OUT_QUART }}
+              onClick={() => setOpenPopover(openPopover === i ? null : i)}
               style={{
                 background: isActive ? "rgba(217,119,87,0.08)" : "var(--card)",
                 border: `1px solid ${isActive ? "var(--text-accent)" : "var(--border-tertiary)"}`,
@@ -43,9 +134,13 @@ export function LifecycleDiagram({ activeModuleId }: LifecycleDiagramProps) {
                 textAlign: "center",
                 minWidth: 120,
                 position: "relative",
+                cursor: "pointer",
                 transition: "border-color 0.3s var(--ease-expo-out), background 0.3s var(--ease-expo-out)",
               }}
             >
+              {openPopover === i && (
+                <StagePopover stage={stage} onClose={() => setOpenPopover(null)} />
+              )}
               {isActive && (
                 <motion.span
                   layoutId="lifecycle-active-glow"
