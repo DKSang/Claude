@@ -50,7 +50,7 @@ function parseInlineSpans(text) {
 }
 
 function parseModuleMeta(content) {
-  const lines = content.split("\n");
+  const lines = content.split(/\r?\n/);
   const h1Line = lines.find((l) => l.startsWith("# "));
   if (!h1Line) return null;
 
@@ -216,6 +216,81 @@ function parseBlocks(lines, startIndex) {
       continue;
     }
 
+    if (line.startsWith(":::quiz{")) {
+      const idMatch = line.match(/id="([^"]*)"/);
+      const qMatch = line.match(/question="([^"]*)"/);
+      const quizId = idMatch ? idMatch[1] : "";
+      const question = qMatch ? qMatch[1] : "";
+      i++;
+
+      const options = [];
+      while (
+        i < lines.length &&
+        !lines[i].startsWith(":::tabs{") &&
+        !lines[i].startsWith(":::quiz{") &&
+        !lines[i].startsWith(":::checkpoint{") &&
+        !lines[i].startsWith("## ") &&
+        !lines[i].startsWith("# ")
+      ) {
+        const optLine = lines[i];
+        if (optLine.match(/^\s*-\s*\[[ xX]\]/)) {
+          const correct = /^\s*-\s*\[[xX]\]/.test(optLine);
+          const rest = optLine.replace(/^\s*-\s*\[[ xX]\]\s*/, "").trim();
+          const parts = rest.split(/\s+[\u2014\u2013-]\s+/);
+          const text = parts[0] || rest;
+          const explanation = parts.length > 1 ? parts.slice(1).join(" - ") : "";
+          options.push({ text, correct, explanation });
+          i++;
+        } else if (optLine.trim() === ":::") {
+          i++;
+          break;
+        } else if (optLine.trim() === "") {
+          i++;
+        } else {
+          break;
+        }
+      }
+
+      if (options.length > 0) {
+        blocks.push({ type: "quiz", id: quizId, question, options });
+      }
+      continue;
+    }
+
+    if (line.startsWith(":::checkpoint{")) {
+      const cpMatch = line.match(/id="([^"]*)"/);
+      const cpId = cpMatch ? cpMatch[1] : "";
+      i++;
+
+      const goals = [];
+      while (
+        i < lines.length &&
+        !lines[i].startsWith(":::tabs{") &&
+        !lines[i].startsWith(":::quiz{") &&
+        !lines[i].startsWith(":::checkpoint{") &&
+        !lines[i].startsWith("## ") &&
+        !lines[i].startsWith("# ")
+      ) {
+        const goalLine = lines[i];
+        if (goalLine.trim() === ":::") {
+          i++;
+          break;
+        }
+        const goalMatch = goalLine.match(
+          /^\s*-\s*goal:\s*"([^"]*)"\s*\|\s*section:\s*(.+)$/
+        );
+        if (goalMatch) {
+          goals.push({ label: goalMatch[1], sectionId: goalMatch[2].trim() });
+        }
+        i++;
+      }
+
+      if (goals.length > 0) {
+        blocks.push({ type: "checkpoint", id: cpId, goals });
+      }
+      continue;
+    }
+
     if (line.trim() === "") {
       i++;
       continue;
@@ -241,7 +316,7 @@ function parseModuleFile(filename, content) {
   const meta = parseModuleMeta(content);
   if (!meta) return null;
 
-  const lines = content.split("\n");
+  const lines = content.split(/\r?\n/);
   const sections = [];
   const moduleId = filename.replace(/\.md$/, "");
 
