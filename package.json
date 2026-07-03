@@ -1,27 +1,18 @@
 {
-  "name": "ai-website-clone-template",
-  "version": "0.3.1",
+  "name": "data-engineer-course",
+  "version": "1.0.0",
   "private": true,
-  "description": "Clone any website into a clean, modern Next.js codebase using AI coding agents",
-  "author": "JCodesMore",
+  "description": "Khóa học Kỹ thuật Dữ liệu (Data Engineering) - Từ căn bản đến chuyên sâu",
+  "author": "",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/JCodesMore/ai-website-cloner-template.git"
-  },
-  "homepage": "https://github.com/JCodesMore/ai-website-cloner-template",
-  "bugs": {
-    "url": "https://github.com/JCodesMore/ai-website-cloner-template/issues"
-  },
   "keywords": [
-    "claude-code",
-    "website-clone",
-    "reverse-engineering",
+    "data-engineering",
+    "data-engineer",
+    "course",
     "nextjs",
-    "ai",
-    "template",
     "tailwindcss",
-    "shadcn-ui"
+    "shadcn-ui",
+    "vietnamese"
   ],
   "engines": {
     "node": ">=24"
@@ -29,7 +20,7 @@
   "scripts": {
     "dev": "next dev",
     "prebuild": "node scripts/convert-docs.mjs",
-    "convert-docs": "node scripts/convert-docs.mjs",
+    "seed": "node scripts/convert-docs.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
