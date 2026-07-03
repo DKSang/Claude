@@ -8,14 +8,14 @@ export function LearnHeader() {
     <header
       className="fixed top-0 left-0 right-0 z-20"
       style={{
-        height: 56,
+        height: 84,
         background: "var(--bg-primary)",
         borderBottom: "0.8px solid var(--border-tertiary)",
       }}
     >
       <div
         className="flex items-center justify-between mx-auto"
-        style={{ maxWidth: "90rem", height: "100%", padding: "0 32px" }}
+        style={{ maxWidth: "90rem", height: "100%", padding: "24px 32px" }}
       >
         <div className="flex items-center gap-3">
           <button
@@ -32,21 +32,22 @@ export function LearnHeader() {
           <Link
             href="/"
             style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: "var(--text-body-1)",
+              fontFamily: "var(--font-sans)",
+              fontSize: "20px",
               color: "var(--fg-primary)",
-              fontWeight: 500,
+              fontWeight: 400,
             }}
           >
             Data Engineering
           </Link>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-6">
           <Link
             href="/"
             style={{
-              fontSize: "var(--text-body-3)",
+              fontSize: "17px",
               color: "var(--fg-secondary)",
+              fontFamily: "var(--font-sans)",
             }}
           >
             Trang chủ
@@ -56,8 +57,9 @@ export function LearnHeader() {
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              fontSize: "var(--text-body-3)",
+              fontSize: "17px",
               color: "var(--fg-secondary)",
+              fontFamily: "var(--font-sans)",
             }}
           >
             GitHub

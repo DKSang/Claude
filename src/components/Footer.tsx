@@ -13,7 +13,8 @@ export function Footer() {
       >
         <span
           style={{
-            fontSize: "var(--text-caption)",
+            fontSize: "15px",
+            fontFamily: "var(--font-sans)",
             color: "var(--fg-tertiary)",
           }}
         >
@@ -21,7 +22,8 @@ export function Footer() {
         </span>
         <span
           style={{
-            fontSize: "var(--text-caption)",
+            fontSize: "15px",
+            fontFamily: "var(--font-sans)",
             color: "var(--fg-tertiary)",
           }}
         >

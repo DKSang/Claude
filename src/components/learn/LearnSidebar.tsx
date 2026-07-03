@@ -47,7 +47,7 @@ export function LearnSidebar({ curriculum, currentModuleId }: LearnSidebarProps)
           }
         }
       },
-      { rootMargin: "-80px 0px -70% 0px" }
+      { rootMargin: "-100px 0px -70% 0px" }
     );
 
     headings.forEach((h) => observer.observe(h));
@@ -79,8 +79,8 @@ export function LearnSidebar({ curriculum, currentModuleId }: LearnSidebarProps)
         width: 280,
         flexShrink: 0,
         position: "sticky",
-        top: 56,
-        height: "calc(100vh - 56px)",
+        top: 84,
+        height: "calc(100vh - 84px)",
         overflowY: "auto",
         background: "var(--bg-secondary)",
         borderRight: "1px solid var(--border-tertiary)",
@@ -98,7 +98,8 @@ export function LearnSidebar({ curriculum, currentModuleId }: LearnSidebarProps)
                 className="flex items-center gap-1 w-full"
                 style={{
                   padding: "8px 16px",
-                  fontSize: "var(--text-caption)",
+                  fontSize: "15px",
+                  fontFamily: "var(--font-sans)",
                   textTransform: "uppercase",
                   letterSpacing: "0.5px",
                   color: "var(--fg-tertiary)",
@@ -129,7 +130,8 @@ export function LearnSidebar({ curriculum, currentModuleId }: LearnSidebarProps)
                         className={cn("block")}
                         style={{
                           padding: "8px 16px 8px 24px",
-                          fontSize: "var(--text-body-3)",
+                          fontSize: "17px",
+                          fontFamily: "var(--font-sans)",
                           color: isActive ? "var(--fg-primary)" : "var(--fg-secondary)",
                           fontWeight: isActive ? 500 : 400,
                           background: isActive ? "var(--bg-tertiary)" : "transparent",
@@ -148,7 +150,8 @@ export function LearnSidebar({ curriculum, currentModuleId }: LearnSidebarProps)
                             style={{
                               display: "block",
                               padding: "6px 16px 6px 36px",
-                              fontSize: "var(--text-body-3)",
+                              fontSize: "15px",
+                              fontFamily: "var(--font-sans)",
                               color:
                                 activeSection === section.id
                                   ? "var(--text-accent)"

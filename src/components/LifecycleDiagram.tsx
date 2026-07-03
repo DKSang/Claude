@@ -30,7 +30,7 @@ export function LifecycleDiagram({ activeModuleId }: LifecycleDiagramProps) {
               <div
                 style={{
                   fontFamily: "var(--font-serif)",
-                  fontSize: "var(--text-body-3)",
+                  fontSize: "17px",
                   color: "var(--fg-primary)",
                   fontWeight: 500,
                 }}
@@ -39,7 +39,8 @@ export function LifecycleDiagram({ activeModuleId }: LifecycleDiagramProps) {
               </div>
               <div
                 style={{
-                  fontSize: "var(--text-caption)",
+                  fontSize: "13px",
+                  fontFamily: "var(--font-sans)",
                   color: "var(--fg-tertiary)",
                   marginTop: 2,
                 }}

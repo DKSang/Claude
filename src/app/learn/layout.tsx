@@ -9,7 +9,7 @@ export default function LearnLayout({
   return (
     <>
       <LearnHeader />
-      <div className="flex" style={{ paddingTop: 56, minHeight: "calc(100vh - 56px)" }}>
+      <div className="flex" style={{ paddingTop: 84, minHeight: "calc(100vh - 84px)" }}>
         {children}
       </div>
       <Footer />

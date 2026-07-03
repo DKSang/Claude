@@ -9,42 +9,44 @@ export function ModuleCard({ module }: ModuleCardProps) {
   return (
     <Link
       href={`/learn/${module.id}`}
-      className="block transition-all duration-200"
+      className="block"
       style={{
         background: "var(--card)",
         border: "1px solid var(--border-tertiary)",
         borderRadius: "var(--radius-large)",
         padding: "var(--space-1-5)",
-        transitionTimingFunction: "var(--ease-expo-out)",
+        transition: "border-color 0.2s var(--ease-expo-out), box-shadow 0.2s var(--ease-expo-out)",
       }}
     >
       <div
         style={{
-          fontSize: "var(--text-caption)",
-          textTransform: "uppercase",
-          letterSpacing: "1px",
+          fontSize: "15px",
+          fontFamily: "var(--font-sans)",
           color: "var(--text-accent)",
-          fontWeight: 500,
+          fontWeight: 400,
+          marginBottom: "var(--space-0-5)",
         }}
       >
         Module {module.number}
       </div>
       <h3
-        className="text-h5"
         style={{
+          fontSize: "19px",
+          lineHeight: 1.2,
+          fontFamily: "var(--font-serif)",
+          fontWeight: 500,
           color: "var(--fg-primary)",
-          marginTop: "var(--space-0-5)",
-          marginBottom: "var(--space-0-75)",
-          lineHeight: 1.3,
+          margin: "0 0 var(--space-0-75) 0",
         }}
       >
         {module.title}
       </h3>
       <p
         style={{
-          fontSize: "var(--text-body-3)",
-          color: "var(--fg-tertiary)",
+          fontSize: "17px",
           lineHeight: 1.6,
+          fontFamily: "var(--font-sans)",
+          color: "var(--fg-tertiary)",
           display: "-webkit-box",
           WebkitLineClamp: 3,
           WebkitBoxOrient: "vertical",
@@ -52,7 +54,7 @@ export function ModuleCard({ module }: ModuleCardProps) {
           margin: 0,
         }}
       >
-        {module.summary}
+        {module.summary || "Nội dung đang được cập nhật."}
       </p>
     </Link>
   );

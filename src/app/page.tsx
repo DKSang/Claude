@@ -11,35 +11,39 @@ export default function Home() {
   return (
     <>
       <LearnHeader />
-      <main className="flex flex-col" style={{ paddingTop: 56 }}>
+      <main className="flex flex-col" style={{ paddingTop: 84 }}>
         <section
-          className="mx-auto w-full flex flex-col items-center text-center"
+          className="mx-auto w-full"
           style={{
-            maxWidth: "48rem",
-            padding: "var(--space-6) var(--container-margin) var(--space-4)",
+            maxWidth: "90rem",
+            padding: "12.5rem var(--container-margin) 6rem",
           }}
         >
-          <h1
-            className="text-display-2"
-            style={{
-              color: "var(--fg-primary)",
-              lineHeight: 1.1,
-              maxWidth: "36rem",
-            }}
-          >
-            Data Engineering Lifecycle
-          </h1>
-          <p
-            style={{
-              fontSize: "var(--text-body-large-1)",
-              color: "var(--fg-tertiary)",
-              maxWidth: "32rem",
-              marginTop: "var(--space-1-5)",
-              lineHeight: 1.5,
-            }}
-          >
-            Học lý thuyết Data Engineering qua 5 giai đoạn vòng đời — từ nguồn dữ liệu đến phục vụ phân tích.
-          </p>
+          <div style={{ maxWidth: "42rem" }}>
+            <h1
+              className="text-display-2"
+              style={{
+                color: "var(--fg-primary)",
+                lineHeight: 1.1,
+                fontWeight: 500,
+                marginBottom: "2.5rem",
+              }}
+            >
+              Data Engineering Lifecycle
+            </h1>
+            <p
+              style={{
+                fontSize: "20px",
+                lineHeight: "32px",
+                color: "var(--fg-tertiary)",
+                maxWidth: "34rem",
+                fontFamily: "var(--font-sans)",
+                margin: 0,
+              }}
+            >
+              Học lý thuyết Data Engineering qua 5 giai đoạn vòng đời — từ nguồn dữ liệu đến phục vụ phân tích.
+            </p>
+          </div>
           <div style={{ marginTop: "var(--space-4)" }}>
             <LifecycleDiagram />
           </div>
@@ -48,16 +52,17 @@ export default function Home() {
         <section
           className="mx-auto w-full"
           style={{
-            maxWidth: "64rem",
+            maxWidth: "90rem",
             padding: "0 var(--container-margin) var(--section-space-main)",
           }}
         >
           <h2
-            className="text-h4"
+            className="text-h1"
             style={{
               color: "var(--fg-primary)",
-              marginBottom: "var(--space-2-5)",
-              textAlign: "center",
+              fontWeight: 500,
+              lineHeight: 1.2,
+              marginBottom: "var(--space-3)",
             }}
           >
             Khóa học

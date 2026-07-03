@@ -17,18 +17,18 @@ export function HeadingBlock({ level, text, id }: HeadingBlockProps) {
     return (
       <Tag
         className={cn(sizeClass, bottomBorder, marginTop, marginBottom)}
-        style={{ scrollMarginTop: "80px", color: "var(--fg-primary)" }}
-      >
-        {text}
-      </Tag>
-    );
-  }
+      style={{ scrollMarginTop: "100px", color: "var(--fg-primary)" }}
+    >
+      {text}
+    </Tag>
+  );
+}
 
   return (
     <Tag
       id={id}
       className={cn(sizeClass, bottomBorder, marginTop, marginBottom)}
-      style={{ scrollMarginTop: "80px", color: "var(--fg-primary)" }}
+      style={{ scrollMarginTop: "100px", color: "var(--fg-primary)" }}
     >
       {text}
     </Tag>

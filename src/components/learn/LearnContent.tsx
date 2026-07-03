@@ -18,22 +18,25 @@ export function LearnContent({ module, curriculum }: LearnContentProps) {
   return (
     <div className="mx-auto" style={{ maxWidth: 720, width: "100%" }}>
       <div style={{ paddingTop: "var(--space-2-5)", paddingBottom: "var(--space-5)" }}>
-        <div style={{ fontSize: "var(--text-caption)", color: "var(--fg-tertiary)", marginBottom: "var(--space-1)" }}>
+        <div style={{ fontSize: "15px", fontFamily: "var(--font-sans)", color: "var(--fg-tertiary)", marginBottom: "var(--space-1)" }}>
           Module {module.number} · {module.title}
         </div>
 
         <h1
           className="text-h1"
-          style={{ color: "var(--fg-primary)", marginBottom: "var(--space-0-5)" }}
+          style={{ color: "var(--fg-primary)", fontWeight: 500, lineHeight: 1.2, marginBottom: "var(--space-0-5)" }}
         >
           {module.title}
         </h1>
         {module.subtitle && (
           <p
             style={{
-              fontSize: "var(--text-body-large-2)",
+              fontSize: "20px",
+              lineHeight: "32px",
+              fontFamily: "var(--font-sans)",
               color: "var(--fg-tertiary)",
               marginBottom: "var(--space-3)",
+              margin: "0 0 var(--space-3) 0",
             }}
           >
             {module.subtitle}
@@ -51,7 +54,7 @@ export function LearnContent({ module, curriculum }: LearnContentProps) {
         )}
 
         {module.sections.map((section) => (
-          <section key={section.id} id={section.id} style={{ scrollMarginTop: "80px" }}>
+          <section key={section.id} id={section.id} style={{ scrollMarginTop: "100px" }}>
             {section.blocks.map((block, i) => (
               <BlockRenderer key={i} block={block} />
             ))}
@@ -71,9 +74,10 @@ export function LearnContent({ module, curriculum }: LearnContentProps) {
               href={`/learn/${prevModule.id}`}
               className="flex items-center gap-2"
               style={{
-                fontSize: "var(--text-body-3)",
+                fontSize: "17px",
+                fontFamily: "var(--font-sans)",
                 color: "var(--fg-secondary)",
-                fontWeight: 500,
+                fontWeight: 400,
               }}
             >
               <ArrowLeft size={16} />
@@ -87,9 +91,10 @@ export function LearnContent({ module, curriculum }: LearnContentProps) {
               href={`/learn/${nextModule.id}`}
               className="flex items-center gap-2"
               style={{
-                fontSize: "var(--text-body-3)",
+                fontSize: "17px",
+                fontFamily: "var(--font-sans)",
                 color: "var(--fg-secondary)",
-                fontWeight: 500,
+                fontWeight: 400,
               }}
             >
               Module {nextModule.number}: {nextModule.title}
