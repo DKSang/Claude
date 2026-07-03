@@ -11,6 +11,7 @@ interface LearnContentProps {
 
 export function LearnContent({ module, curriculum }: LearnContentProps) {
   const moduleIndex = curriculum.modules.findIndex((m) => m.id === module.id);
+  if (moduleIndex === -1) return null;
   const prevModule = moduleIndex > 0 ? curriculum.modules[moduleIndex - 1] : null;
   const nextModule = moduleIndex < curriculum.modules.length - 1 ? curriculum.modules[moduleIndex + 1] : null;
 
@@ -42,6 +43,12 @@ export function LearnContent({ module, curriculum }: LearnContentProps) {
         <div style={{ marginBottom: "var(--space-4)" }}>
           <LifecycleDiagram activeModuleId={module.id} />
         </div>
+
+        {module.sections.length === 0 && (
+          <p style={{ color: "var(--fg-tertiary)", fontSize: "var(--text-body-2)" }}>
+            Nội dung đang được cập nhật.
+          </p>
+        )}
 
         {module.sections.map((section) => (
           <section key={section.id} id={section.id} style={{ scrollMarginTop: "80px" }}>

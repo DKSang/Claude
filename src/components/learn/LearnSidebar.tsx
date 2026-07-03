@@ -27,6 +27,13 @@ export function LearnSidebar({ curriculum, currentModuleId }: LearnSidebarProps)
 
   const [expandedGroups, setExpandedGroups] = useState<Set<number>>(new Set([currentGroup]));
   const [activeSection, setActiveSection] = useState<string>("");
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [prevGroup, setPrevGroup] = useState(currentGroup);
+
+  if (currentGroup !== prevGroup) {
+    setPrevGroup(currentGroup);
+    setExpandedGroups((prev) => new Set(prev).add(currentGroup));
+  }
 
   useEffect(() => {
     const headings = document.querySelectorAll("section[id]");
@@ -47,6 +54,12 @@ export function LearnSidebar({ curriculum, currentModuleId }: LearnSidebarProps)
     return () => observer.disconnect();
   }, [currentModuleId]);
 
+  useEffect(() => {
+    const handler = () => setMobileOpen((prev) => !prev);
+    window.addEventListener("toggle-sidebar", handler);
+    return () => window.removeEventListener("toggle-sidebar", handler);
+  }, []);
+
   const groups = groupModules(curriculum);
 
   function toggleGroup(num: number) {
@@ -60,7 +73,8 @@ export function LearnSidebar({ curriculum, currentModuleId }: LearnSidebarProps)
 
   return (
     <nav
-      className="hidden md:block"
+      className={cn(mobileOpen ? "block" : "hidden", "md:block")}
+      id="learn-sidebar-nav"
       style={{
         width: 280,
         flexShrink: 0,
@@ -80,6 +94,7 @@ export function LearnSidebar({ curriculum, currentModuleId }: LearnSidebarProps)
               <button
                 type="button"
                 onClick={() => toggleGroup(groupNum)}
+                aria-expanded={isExpanded}
                 className="flex items-center gap-1 w-full"
                 style={{
                   padding: "8px 16px",
@@ -110,6 +125,7 @@ export function LearnSidebar({ curriculum, currentModuleId }: LearnSidebarProps)
                     <div key={mod.id}>
                       <Link
                         href={`/learn/${mod.id}`}
+                        aria-current={isActive ? "page" : undefined}
                         className={cn("block")}
                         style={{
                           padding: "8px 16px 8px 24px",

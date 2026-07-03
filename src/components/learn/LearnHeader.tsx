@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { Menu } from "lucide-react";
 
 export function LearnHeader() {
   return (
@@ -14,17 +17,30 @@ export function LearnHeader() {
         className="flex items-center justify-between mx-auto"
         style={{ maxWidth: "90rem", height: "100%", padding: "0 32px" }}
       >
-        <Link
-          href="/"
-          style={{
-            fontFamily: "var(--font-serif)",
-            fontSize: "var(--text-body-1)",
-            color: "var(--fg-primary)",
-            fontWeight: 500,
-          }}
-        >
-          Data Engineering
-        </Link>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            className="md:hidden"
+            onClick={() => {
+              window.dispatchEvent(new CustomEvent("toggle-sidebar"));
+            }}
+            style={{ background: "none", border: "none", cursor: "pointer", padding: 4, color: "var(--fg-primary)" }}
+            aria-label="Toggle navigation"
+          >
+            <Menu size={22} />
+          </button>
+          <Link
+            href="/"
+            style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: "var(--text-body-1)",
+              color: "var(--fg-primary)",
+              fontWeight: 500,
+            }}
+          >
+            Data Engineering
+          </Link>
+        </div>
         <div className="flex items-center gap-4">
           <Link
             href="/"

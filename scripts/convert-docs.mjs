@@ -225,9 +225,6 @@ function parseModuleFile(filename, content) {
     }
     i++;
   }
-  if (!summaryText && sections.length === 0) {
-    // Will be filled after sections are parsed
-  }
   summaryText = summaryText.replace(/\*\*(.+?)\*\*/g, "$1").replace(/\*(.+?)\*/g, "$1").replace(/`(.+?)`/g, "$1");
   const summary = summaryText.length > 150
     ? summaryText.slice(0, 147) + "..."
@@ -259,6 +256,7 @@ function parseModuleFile(filename, content) {
       }
     }
   }
+  if (!finalSummary) finalSummary = meta.title;
 
   return {
     id: moduleId,
@@ -283,11 +281,21 @@ function main() {
 
   console.log(`Found ${files.length} module files`);
 
+  if (!files.length) {
+    console.error("No module files found in docs directory");
+    process.exit(1);
+  }
+
   const modules = [];
   for (const file of files) {
     const content = fs.readFileSync(path.join(DOCS_DIR, file), "utf-8");
     const mod = parseModuleFile(file, content);
     if (mod) {
+      const moduleId = mod.id;
+      if (modules.some(m => m.id === moduleId)) {
+        console.warn(`Duplicate module ID: ${moduleId} — skipping`);
+        continue;
+      }
       modules.push(mod);
       console.log(`  Parsed: ${file} -> ${mod.sections.length} sections`);
     } else {
