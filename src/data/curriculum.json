@@ -9900,6 +9900,26 @@
               ]
             }
           ]
+        },
+        {
+          "id": "kiem-tra-hieu-biet-phuong-phap-feynman",
+          "number": 14,
+          "title": "Kiem tra hieu biet — Phuong phap Feynman",
+          "blocks": [
+            {
+              "type": "feynman",
+              "id": "fey-watermark",
+              "topic": "Watermark Pattern trong Incremental Loading",
+              "keyPoints": [
+                "Luu start time cua lan chay truoc do, khong phai end time",
+                "Pha 1: filter du lieu moi bang watermark (WHERE observed_at > last_watermark)",
+                "Pha 2: merge vao bang dich bang upsert de dam bao idempotency",
+                "Backfill bang cach lui watermark ve truoc do va chay lai",
+                "Watermark phai duoc cap nhat SAU khi merge thanh cong, khong phai truoc"
+              ],
+              "sectionContext": "Mo hinh incremental processing pho quat dung watermark table de theo doi lan nap thanh cong cuoi cung. Thay vi nap toan bo du lieu moi lan, chi lay phan moi bang cach filter theo watermark. Dam bao trung thuc va co the replay."
+            }
+          ]
         }
       ]
     },
