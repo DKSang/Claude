@@ -47,6 +47,9 @@ next-env.d.ts
 
 # Local temp files
 temp/
+
+# SQLite data
+data/
 .agents/
 _bmad/
 .opencode/
