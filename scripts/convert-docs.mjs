@@ -182,6 +182,40 @@ function parseBlocks(lines, startIndex) {
       continue;
     }
 
+    if (line.startsWith(":::tabs{")) {
+      const propsMatch = line.match(/id="([^"]*)"/);
+      const tabsId = propsMatch ? propsMatch[1] : "";
+      i++;
+
+      const panels = [];
+      while (i < lines.length && !lines[i].startsWith(":::tabs{") && !lines[i].startsWith("## ") && !lines[i].startsWith("# ")) {
+        if (lines[i].startsWith(":::tab{")) {
+          const labelMatch = lines[i].match(/label="([^"]*)"/);
+          const label = labelMatch ? labelMatch[1] : "";
+          i++;
+
+          const contentLines = [];
+          while (i < lines.length && !lines[i].startsWith(":::")) {
+            contentLines.push(lines[i]);
+            i++;
+          }
+          i++;
+
+          const contentText = contentLines.join(" ").trim();
+          panels.push({ label, spans: parseInlineSpans(contentText) });
+        } else if (lines[i].trim() === "") {
+          i++;
+        } else {
+          break;
+        }
+      }
+
+      if (panels.length > 0) {
+        blocks.push({ type: "tabs", id: tabsId, panels });
+      }
+      continue;
+    }
+
     if (line.trim() === "") {
       i++;
       continue;
