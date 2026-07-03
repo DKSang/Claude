@@ -1,0 +1,160 @@
+import Database from "better-sqlite3";
+import path from "path";
+import fs from "fs";
+
+const DB_PATH = path.join(process.cwd(), "data", "learning.db");
+
+let db: Database.Database | null = null;
+
+export function getDb(): Database.Database {
+  if (!db) {
+    fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
+    db = new Database(DB_PATH);
+    db.pragma("journal_mode = WAL");
+    db.exec(`
+      CREATE TABLE IF NOT EXISTS module_progress (
+        module_id TEXT PRIMARY KEY,
+        sections_read TEXT DEFAULT '[]',
+        checkpoint_goals TEXT DEFAULT '[]',
+        quiz_score INTEGER DEFAULT 0,
+        quiz_attempts TEXT DEFAULT '[]',
+        feynman_best_score INTEGER DEFAULT 0,
+        feynman_attempts TEXT DEFAULT '[]',
+        updated_at TEXT DEFAULT (datetime('now'))
+      );
+    `);
+    try {
+      db.exec("ALTER TABLE module_progress ADD COLUMN feynman_best_score INTEGER DEFAULT 0");
+    } catch {
+    }
+    try {
+      db.exec("ALTER TABLE module_progress ADD COLUMN feynman_attempts TEXT DEFAULT '[]'");
+    } catch {
+    }
+  }
+  return db;
+}
+
+export interface ModuleProgress {
+  moduleId: string;
+  sectionsRead: string[];
+  checkpointGoals: string[];
+  quizScore: number;
+  quizAttempts: { score: number; date: string }[];
+  feynmanBestScore: number;
+  feynmanAttempts: { score: number; date: string; feedback: string }[];
+}
+
+export function getProgress(moduleId: string): ModuleProgress | null {
+  const db = getDb();
+  const row = db.prepare("SELECT * FROM module_progress WHERE module_id = ?").get(moduleId) as Record<string, unknown> | undefined;
+  if (!row) return null;
+  return {
+    moduleId: row.module_id as string,
+    sectionsRead: JSON.parse(row.sections_read as string),
+    checkpointGoals: JSON.parse(row.checkpoint_goals as string),
+    quizScore: row.quiz_score as number,
+    quizAttempts: JSON.parse(row.quiz_attempts as string),
+    feynmanBestScore: row.feynman_best_score as number,
+    feynmanAttempts: JSON.parse(row.feynman_attempts as string),
+  };
+}
+
+export function getAllProgress(): ModuleProgress[] {
+  const db = getDb();
+  const rows = db.prepare("SELECT * FROM module_progress").all() as Record<string, unknown>[];
+  return rows.map((row) => ({
+    moduleId: row.module_id as string,
+    sectionsRead: JSON.parse(row.sections_read as string),
+    checkpointGoals: JSON.parse(row.checkpoint_goals as string),
+    quizScore: row.quiz_score as number,
+    quizAttempts: JSON.parse(row.quiz_attempts as string),
+    feynmanBestScore: row.feynman_best_score as number,
+    feynmanAttempts: JSON.parse(row.feynman_attempts as string),
+  }));
+}
+
+export function upsertProgress(
+  moduleId: string,
+  updates: Partial<Pick<ModuleProgress, "sectionsRead" | "checkpointGoals" | "quizScore">>
+): ModuleProgress {
+  const db = getDb();
+  const existing = getProgress(moduleId);
+  const merged: ModuleProgress = {
+    moduleId,
+    sectionsRead: updates.sectionsRead ?? existing?.sectionsRead ?? [],
+    checkpointGoals: updates.checkpointGoals ?? existing?.checkpointGoals ?? [],
+    quizScore: updates.quizScore ?? existing?.quizScore ?? 0,
+    quizAttempts: existing?.quizAttempts ?? [],
+    feynmanBestScore: existing?.feynmanBestScore ?? 0,
+    feynmanAttempts: existing?.feynmanAttempts ?? [],
+  };
+  db.prepare(`
+    INSERT INTO module_progress (module_id, sections_read, checkpoint_goals, quiz_score, quiz_attempts, feynman_best_score, feynman_attempts, updated_at)
+    VALUES (@moduleId, @sectionsRead, @checkpointGoals, @quizScore, @quizAttempts, @feynmanBestScore, @feynmanAttempts, datetime('now'))
+    ON CONFLICT(module_id) DO UPDATE SET
+      sections_read = @sectionsRead,
+      checkpoint_goals = @checkpointGoals,
+      quiz_score = @quizScore,
+      feynman_best_score = @feynmanBestScore,
+      feynman_attempts = @feynmanAttempts,
+      updated_at = datetime('now')
+  `).run({
+    moduleId,
+    sectionsRead: JSON.stringify(merged.sectionsRead),
+    checkpointGoals: JSON.stringify(merged.checkpointGoals),
+    quizScore: merged.quizScore,
+    quizAttempts: JSON.stringify(merged.quizAttempts),
+    feynmanBestScore: merged.feynmanBestScore,
+    feynmanAttempts: JSON.stringify(merged.feynmanAttempts),
+  });
+  return merged;
+}
+
+export function addQuizAttempt(moduleId: string, score: number): ModuleProgress {
+  const db = getDb();
+  const existing = getProgress(moduleId);
+  const attempts = existing?.quizAttempts ?? [];
+  attempts.push({ score, date: new Date().toISOString() });
+  const bestScore = Math.max(existing?.quizScore ?? 0, score);
+  db.prepare(`
+    INSERT INTO module_progress (module_id, sections_read, checkpoint_goals, quiz_score, quiz_attempts, updated_at)
+    VALUES (@moduleId, @sectionsRead, @checkpointGoals, @quizScore, @quizAttempts, datetime('now'))
+    ON CONFLICT(module_id) DO UPDATE SET
+      quiz_score = @quizScore,
+      quiz_attempts = @quizAttempts,
+      updated_at = datetime('now')
+  `).run({
+    moduleId,
+    sectionsRead: JSON.stringify(existing?.sectionsRead ?? []),
+    checkpointGoals: JSON.stringify(existing?.checkpointGoals ?? []),
+    quizScore: bestScore,
+    quizAttempts: JSON.stringify(attempts),
+  });
+  return getProgress(moduleId)!;
+}
+
+export function addFeynmanAttempt(moduleId: string, score: number, feedback: string): ModuleProgress {
+  const db = getDb();
+  const existing = getProgress(moduleId);
+  const attempts = existing?.feynmanAttempts ?? [];
+  attempts.push({ score, date: new Date().toISOString(), feedback });
+  const bestScore = Math.max(existing?.feynmanBestScore ?? 0, score);
+  db.prepare(`
+    INSERT INTO module_progress (module_id, sections_read, checkpoint_goals, quiz_score, quiz_attempts, feynman_best_score, feynman_attempts, updated_at)
+    VALUES (@moduleId, @sectionsRead, @checkpointGoals, @quizScore, @quizAttempts, @feynmanBestScore, @feynmanAttempts, datetime('now'))
+    ON CONFLICT(module_id) DO UPDATE SET
+      feynman_best_score = @feynmanBestScore,
+      feynman_attempts = @feynmanAttempts,
+      updated_at = datetime('now')
+  `).run({
+    moduleId,
+    sectionsRead: JSON.stringify(existing?.sectionsRead ?? []),
+    checkpointGoals: JSON.stringify(existing?.checkpointGoals ?? []),
+    quizScore: existing?.quizScore ?? 0,
+    quizAttempts: JSON.stringify(existing?.quizAttempts ?? []),
+    feynmanBestScore: bestScore,
+    feynmanAttempts: JSON.stringify(attempts),
+  });
+  return getProgress(moduleId)!;
+}

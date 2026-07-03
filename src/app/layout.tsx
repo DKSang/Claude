@@ -1,20 +1,42 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const anthropicSans = localFont({
+  src: [
+    { path: "../../public/fonts/AnthropicSans-Roman-Web.woff2", weight: "300 800", style: "normal" },
+    { path: "../../public/fonts/AnthropicSans-Italic-Web.woff2", weight: "300 800", style: "italic" },
+  ],
+  variable: "--font-anthropic-sans",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const anthropicSerif = localFont({
+  src: [
+    { path: "../../public/fonts/AnthropicSerif-Roman-Web.woff2", weight: "300 800", style: "normal" },
+    { path: "../../public/fonts/AnthropicSerif-Italic-Web.woff2", weight: "300 800", style: "italic" },
+  ],
+  variable: "--font-anthropic-serif",
+  display: "swap",
+});
+
+const anthropicMono = localFont({
+  src: [
+    { path: "../../public/fonts/AnthropicMono-Roman-Web.woff2", weight: "300 800", style: "normal" },
+    { path: "../../public/fonts/AnthropicMono-Italic-Web.woff2", weight: "300 800", style: "italic" },
+  ],
+  variable: "--font-anthropic-mono",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Website Clone",
-  description: "Pixel-perfect website clone",
+  title: "Data Engineering Lifecycle — Học lý thuyết DE",
+  description:
+    "Khóa học lý thuyết Data Engineering: lifecycle, ingestion, modeling, orchestration, streaming, enterprise.",
+  icons: {
+    icon: "/seo/favicon.png",
+    apple: "/seo/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({
@@ -24,8 +46,8 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      lang="vi"
+      className={`${anthropicSans.variable} ${anthropicSerif.variable} ${anthropicMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
