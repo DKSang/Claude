@@ -1,0 +1,268 @@
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const DOCS_DIR = path.resolve(__dirname, "..", "..", "Fundemental-Data-Eng", "docs");
+const OUTPUT_PATH = path.resolve(__dirname, "..", "src", "data", "curriculum.json");
+
+function slugify(text) {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}
+
+function parseInlineSpans(text) {
+  const spans = [];
+  const regex = /(\*\*(.+?)\*\*)|(\*(.+?)\*)|(`(.+?)`)|(\[(.+?)\]\((.+?)\))/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      spans.push({ type: "text", text: text.slice(lastIndex, match.index) });
+    }
+    if (match[2]) {
+      spans.push({ type: "bold", text: match[2] });
+    } else if (match[4]) {
+      spans.push({ type: "italic", text: match[4] });
+    } else if (match[6]) {
+      spans.push({ type: "code", text: match[6] });
+    } else if (match[8]) {
+      spans.push({ type: "link", text: match[8], href: match[9] });
+    }
+    lastIndex = regex.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    spans.push({ type: "text", text: text.slice(lastIndex) });
+  }
+
+  return spans.length > 0 ? spans : [{ type: "text", text }];
+}
+
+function parseModuleMeta(content) {
+  const lines = content.split("\n");
+  const h1Line = lines.find((l) => l.startsWith("# "));
+  if (!h1Line) return null;
+
+  const fullTitle = h1Line.slice(2).trim();
+  const numberMatch = fullTitle.match(/B\u00e0i\s*(\d+)/i);
+  const number = numberMatch ? parseInt(numberMatch[1], 10) : 0;
+
+  let title = fullTitle.replace(/^B\u00e0i\s*\d+:\s*/i, "").trim();
+  let subtitle = "";
+
+  const subtitleMatch = title.match(/^(.+?)\s*[-\u2013\u2014]\s*(.+)$/);
+  if (subtitleMatch) {
+    title = subtitleMatch[1].trim();
+    subtitle = subtitleMatch[2].trim();
+  }
+
+  return { number, title, subtitle, fullTitle };
+}
+
+function parseBlocks(lines, startIndex) {
+  const blocks = [];
+  let i = startIndex;
+
+  while (i < lines.length) {
+    const line = lines[i];
+
+    if (line.startsWith("## ")) {
+      break;
+    }
+
+    if (line.startsWith("# ")) {
+      break;
+    }
+
+    if (line.startsWith("### ")) {
+      const text = line.slice(4).trim();
+      blocks.push({ type: "heading", level: 3, text, id: slugify(text) });
+      i++;
+      continue;
+    }
+
+    if (line.startsWith("#### ")) {
+      const text = line.slice(5).trim();
+      blocks.push({ type: "heading", level: 4, text, id: slugify(text) });
+      i++;
+      continue;
+    }
+
+    if (line.startsWith("```")) {
+      const langMatch = line.slice(3).trim();
+      const language = langMatch || "text";
+      const codeLines = [];
+      i++;
+      while (i < lines.length && !lines[i].startsWith("```")) {
+        codeLines.push(lines[i]);
+        i++;
+      }
+      i++;
+      blocks.push({ type: "code", language, code: codeLines.join("\n") });
+      continue;
+    }
+
+    if (line.startsWith("> ")) {
+      const quoteLines = [];
+      while (i < lines.length && lines[i].startsWith("> ")) {
+        quoteLines.push(lines[i].slice(2));
+        i++;
+      }
+      const quoteText = quoteLines.join(" ");
+      const normalized = quoteText
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/đ/g, "d");
+      const variant = normalized.startsWith("luu y") ? "note" : "tip";
+      blocks.push({ type: "blockquote", variant, spans: parseInlineSpans(quoteText) });
+      continue;
+    }
+
+    if (line.startsWith("|") && line.trim().endsWith("|")) {
+      const tableLines = [];
+      while (i < lines.length && lines[i].startsWith("|") && lines[i].trim().endsWith("|")) {
+        tableLines.push(lines[i]);
+        i++;
+      }
+      if (tableLines.length >= 2) {
+        const parseRow = (row) =>
+          row.split("|").slice(1, -1).map((cell) => cell.trim());
+        const headers = parseRow(tableLines[0]);
+        const rows = tableLines.slice(2).map(parseRow);
+        blocks.push({ type: "table", headers, rows });
+      }
+      continue;
+    }
+
+    if (line.match(/^\s*[-*]\s/)) {
+      const items = [];
+      while (i < lines.length && lines[i].match(/^\s*[-*]\s/)) {
+        const itemText = lines[i].replace(/^\s*[-*]\s/, "").trim();
+        items.push(parseInlineSpans(itemText));
+        i++;
+      }
+      blocks.push({ type: "list", ordered: false, items });
+      continue;
+    }
+
+    if (line.match(/^\s*\d+\.\s/)) {
+      const items = [];
+      while (i < lines.length && lines[i].match(/^\s*\d+\.\s/)) {
+        const itemText = lines[i].replace(/^\s*\d+\.\s/, "").trim();
+        items.push(parseInlineSpans(itemText));
+        i++;
+      }
+      blocks.push({ type: "list", ordered: true, items });
+      continue;
+    }
+
+    if (line.trim() === "") {
+      i++;
+      continue;
+    }
+
+    const paraLines = [];
+    while (i < lines.length && lines[i].trim() !== "" &&
+           !lines[i].startsWith("#") && !lines[i].startsWith("```") &&
+           !lines[i].startsWith("> ") && !lines[i].startsWith("|") &&
+           !lines[i].match(/^\s*[-*]\s/) && !lines[i].match(/^\s*\d+\.\s/)) {
+      paraLines.push(lines[i]);
+      i++;
+    }
+    if (paraLines.length > 0) {
+      blocks.push({ type: "paragraph", spans: parseInlineSpans(paraLines.join(" ")) });
+    }
+  }
+
+  return { blocks, nextIndex: i };
+}
+
+function parseModuleFile(filename, content) {
+  const meta = parseModuleMeta(content);
+  if (!meta) return null;
+
+  const lines = content.split("\n");
+  const sections = [];
+  const moduleId = filename.replace(/\.md$/, "");
+
+  let summaryText = "";
+  let i = 0;
+  while (i < lines.length && !lines[i].startsWith("## ")) {
+    if (lines[i].trim() !== "" && !lines[i].startsWith("#") && !lines[i].startsWith("---")) {
+      summaryText = lines[i].trim();
+    }
+    i++;
+  }
+  const summary = summaryText.length > 150
+    ? summaryText.slice(0, 147) + "..."
+    : summaryText;
+
+  let sectionNumber = 0;
+  while (i < lines.length) {
+    if (lines[i].startsWith("## ")) {
+      const title = lines[i].slice(3).trim();
+      const sectionId = slugify(title);
+      sectionNumber++;
+      i++;
+      const { blocks, nextIndex } = parseBlocks(lines, i);
+      sections.push({ id: sectionId, number: sectionNumber, title, blocks });
+      i = nextIndex;
+    } else {
+      i++;
+    }
+  }
+
+  return {
+    id: moduleId,
+    number: meta.number,
+    title: meta.title,
+    subtitle: meta.subtitle,
+    summary,
+    sourceFile: filename,
+    sections,
+  };
+}
+
+function main() {
+  if (!fs.existsSync(DOCS_DIR)) {
+    console.error(`Docs directory not found: ${DOCS_DIR}`);
+    process.exit(1);
+  }
+
+  const files = fs.readdirSync(DOCS_DIR)
+    .filter((f) => f.startsWith("module-") && f.endsWith(".md"))
+    .sort();
+
+  console.log(`Found ${files.length} module files`);
+
+  const modules = [];
+  for (const file of files) {
+    const content = fs.readFileSync(path.join(DOCS_DIR, file), "utf-8");
+    const mod = parseModuleFile(file, content);
+    if (mod) {
+      modules.push(mod);
+      console.log(`  Parsed: ${file} -> ${mod.sections.length} sections`);
+    } else {
+      console.warn(`  Skipped: ${file} (no H1 found)`);
+    }
+  }
+
+  const output = { modules };
+  fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });
+  fs.writeFileSync(OUTPUT_PATH, JSON.stringify(output, null, 2), "utf-8");
+  console.log(`Written: ${OUTPUT_PATH} (${modules.length} modules)`);
+}
+
+main();
