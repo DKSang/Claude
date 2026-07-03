@@ -6,6 +6,8 @@ import { CodeBlock } from "./CodeBlock";
 import { BlockquoteBlock } from "./BlockquoteBlock";
 import { ListBlock } from "./ListBlock";
 import { ComparisonTabs } from "./ComparisonTabs";
+import { QuizBlock } from "./QuizBlock";
+import { CheckpointBlock } from "./CheckpointBlock";
 
 interface BlockRendererProps {
   block: Block;
@@ -27,6 +29,10 @@ export async function BlockRenderer({ block }: BlockRendererProps) {
       return <ListBlock ordered={block.ordered} items={block.items} />;
     case "tabs":
       return <ComparisonTabs id={block.id} panels={block.panels} />;
+    case "quiz":
+      return <QuizBlock id={block.id} question={block.question} options={block.options} moduleId="" onSaveScore={() => {}} />;
+    case "checkpoint":
+      return <CheckpointBlock id={block.id} goals={block.goals} completedGoals={[]} onToggleGoal={() => {}} />;
     default:
       return null;
   }
