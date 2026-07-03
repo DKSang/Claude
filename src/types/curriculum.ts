@@ -12,7 +12,18 @@ export type Block =
   | { type: "code"; language: string; code: string }
   | { type: "blockquote"; variant: "tip" | "note"; spans: InlineSpan[] }
   | { type: "list"; ordered: boolean; items: InlineSpan[][] }
-  | { type: "tabs"; id: string; panels: { label: string; spans: InlineSpan[] }[] };
+  | { type: "tabs"; id: string; panels: { label: string; spans: InlineSpan[] }[] }
+  | {
+      type: "quiz";
+      id: string;
+      question: string;
+      options: { text: string; correct: boolean; explanation: string }[];
+    }
+  | {
+      type: "checkpoint";
+      id: string;
+      goals: { label: string; sectionId: string }[];
+    };
 
 export interface Section {
   id: string;
