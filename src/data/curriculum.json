@@ -5,7 +5,7 @@
       "number": 0,
       "title": "Nhập môn Kỹ thuật Dữ liệu",
       "subtitle": "Vòng đời, Kiến trúc & Tư duy Lựa chọn Công nghệ",
-      "summary": "> Tip: Học Data Engineering tốt không phải là học thật nhiều tool. Trọng tâm là hiểu dòng chảy dữ liệu, điểm hỏng thường gặp, và lý do chọn tool ph...",
+      "summary": "Bài mở đầu này đặt nền cho toàn bộ khóa học Kỹ thuật Dữ liệu. Thay vì bắt đầu bằng danh sách công nghệ, ta bắt đầu bằng ba câu hỏi căn bản hơn: kỹ ...",
       "sourceFile": "module-00-introduction.md",
       "sections": [
         {
@@ -1398,7 +1398,7 @@
       "number": 0,
       "title": "Source Systems",
       "subtitle": "Dữ liệu sinh ra từ đâu?",
-      "summary": "",
+      "summary": "Sau bài này, bạn cần trả lời được bốn câu hỏi trước khi viết bất kỳ pipeline nào:\r",
       "sourceFile": "module-00-source-systems.md",
       "sections": [
         {
@@ -2871,7 +2871,7 @@
       "number": 0,
       "title": "Storage Systems",
       "subtitle": "Dữ liệu được lưu ở đâu?",
-      "summary": "*(Bản bổ sung — các phần lý thuyết còn thiếu được đánh dấu 🆕)*",
+      "summary": "Sau bài Source Systems, ta đã biết dữ liệu sinh ra ở đâu. Bài này trả lời câu hỏi tiếp theo: dữ liệu hạ cánh, nằm lại, và được tổ chức ở đâu trước ...",
       "sourceFile": "module-00-storage-systems.md",
       "sections": [
         {
@@ -6828,7 +6828,7 @@
       "number": 1,
       "title": "Ingestion",
       "subtitle": "Nạp dữ liệu từ nguồn công khai vào Bronze Lakehouse",
-      "summary": "Mục tiêu của bài không phải học thuộc từng công cụ. Mục tiêu là hiểu những quyết định kỹ thuật nằm bên dưới công cụ, để khi dùng `dlt`, Airbyte hay...",
+      "summary": "Module 1 đi vào giai đoạn Nạp dữ liệu (Ingestion) trong vòng đời kỹ thuật dữ liệu: đưa dữ liệu từ hệ thống nguồn về lớp lưu trữ đầu tiên để có thể ...",
       "sourceFile": "module-01-ingestion.md",
       "sections": [
         {
@@ -9821,7 +9821,7 @@
       "number": 2,
       "title": "Queries, Modeling & Transformation",
       "subtitle": "Từ câu hỏi đến mô hình dữ liệu",
-      "summary": "> Tip: dbt giúp tổ chức SQL, dependency, tests, docs và lineage. dbt không phải execution engine. DuckDB mới là engine thực thi truy vấn trong stac...",
+      "summary": "Module 1 đã đưa dữ liệu thô từ các nguồn công khai như Open-Meteo, NASA POWER, OpenAQ và Vietnam Provinces vào vùng Bronze của lakehouse. Nhưng dữ ...",
       "sourceFile": "module-02-modeling.md",
       "sections": [
         {
@@ -13705,7 +13705,7 @@
       "number": 3,
       "title": "Điều phối Luồng Dữ liệu",
       "subtitle": "Orchestration & DataOps với Airflow",
-      "summary": "| PRD/Architecture của khóa học | Luồng `dlt/Airbyte -> DuckDB/dbt -> Soda Core -> DuckLake maintenance -> Streamlit`, retries, Slack/terminal aler...",
+      "summary": "Sau Module 1 và Module 2, bạn đã có các mảnh quan trọng của pipeline dữ liệu: dlt hoặc Airbyte để nạp dữ liệu khí hậu/nông nghiệp công khai vào lak...",
       "sourceFile": "module-03-orchestration.md",
       "sections": [
         {
@@ -16331,7 +16331,7 @@
       "number": 4,
       "title": "Xử lý Dữ liệu Thời gian Thực",
       "subtitle": "Streaming với Redpanda & Flink",
-      "summary": "Trong bài toán Climate Change & Smart Agriculture Việt Nam, một trạm đo có thể gửi quan sát nhiệt độ, mưa, độ ẩm hoặc bức xạ mặt trời liên tục. Nếu...",
+      "summary": "Sau Module 1, bạn đã học cách nạp dữ liệu public API theo lô bằng dlt. Sau Module 2, bạn đã thấy dbt và Trino/DuckDB biến dữ liệu thô thành mô hình...",
       "sourceFile": "module-04-streaming.md",
       "sections": [
         {
@@ -18286,7 +18286,7 @@
       "number": 5,
       "title": "Enterprise Platform",
       "subtitle": "Serving, Security & Lakehouse Governance",
-      "summary": "> Tip: Một pipeline chạy thành công chưa đủ. Dữ liệu chỉ có giá trị khi người dùng downstream hiểu được, truy vấn được, tin được và không bị lộ ngo...",
+      "summary": "Sau các module trước, bạn đã đi qua gần trọn Vòng đời Kỹ thuật Dữ liệu (Data Engineering Lifecycle): hiểu nguồn dữ liệu, nạp dữ liệu, lưu trữ, mô h...",
       "sourceFile": "module-05-enterprise.md",
       "sections": [
         {

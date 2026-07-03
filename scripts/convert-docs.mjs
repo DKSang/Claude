@@ -214,11 +214,21 @@ function parseModuleFile(filename, content) {
   let summaryText = "";
   let i = 0;
   while (i < lines.length && !lines[i].startsWith("## ")) {
-    if (lines[i].trim() !== "" && !lines[i].startsWith("#") && !lines[i].startsWith("---")) {
-      summaryText = lines[i].trim();
+    const line = lines[i].trim();
+    if (line !== "" && !line.startsWith("#") && !line.startsWith("---") &&
+        !line.startsWith("> ") && !line.startsWith("|") &&
+        !line.startsWith("```") && !line.match(/^\s*[-*]\s/) &&
+        !line.match(/^\s*\d+\.\s/) && !line.match(/^\*\(.*\)\*$/)) {
+      if (!summaryText) {
+        summaryText = line;
+      }
     }
     i++;
   }
+  if (!summaryText && sections.length === 0) {
+    // Will be filled after sections are parsed
+  }
+  summaryText = summaryText.replace(/\*\*(.+?)\*\*/g, "$1").replace(/\*(.+?)\*/g, "$1").replace(/`(.+?)`/g, "$1");
   const summary = summaryText.length > 150
     ? summaryText.slice(0, 147) + "..."
     : summaryText;
@@ -238,12 +248,24 @@ function parseModuleFile(filename, content) {
     }
   }
 
+  let finalSummary = summary;
+  if (!finalSummary && sections.length > 0) {
+    for (const section of sections) {
+      const paraBlock = section.blocks.find((b) => b.type === "paragraph");
+      if (paraBlock && paraBlock.type === "paragraph") {
+        const paraText = paraBlock.spans.map((s) => s.text).join("");
+        finalSummary = paraText.length > 150 ? paraText.slice(0, 147) + "..." : paraText;
+        break;
+      }
+    }
+  }
+
   return {
     id: moduleId,
     number: meta.number,
     title: meta.title,
     subtitle: meta.subtitle,
-    summary,
+    summary: finalSummary,
     sourceFile: filename,
     sections,
   };
