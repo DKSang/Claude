@@ -9785,6 +9785,121 @@
               ]
             }
           ]
+        },
+        {
+          "id": "so-do-kien-thuc-ingestion",
+          "number": 13,
+          "title": "Sơ đồ kiến thức Ingestion",
+          "blocks": [
+            {
+              "type": "mindmap",
+              "id": "mm-ingestion-overview",
+              "nodes": [
+                {
+                  "id": "ingestion",
+                  "label": "Nap du lieu",
+                  "nodeType": "stage"
+                },
+                {
+                  "id": "source",
+                  "label": "Source Systems",
+                  "nodeType": "concept"
+                },
+                {
+                  "id": "bronze",
+                  "label": "Bronze Layer",
+                  "nodeType": "concept"
+                },
+                {
+                  "id": "batch",
+                  "label": "Batch",
+                  "nodeType": "concept"
+                },
+                {
+                  "id": "stream",
+                  "label": "Stream",
+                  "nodeType": "concept"
+                },
+                {
+                  "id": "watermark",
+                  "label": "Watermark Pattern",
+                  "nodeType": "tool"
+                },
+                {
+                  "id": "merge",
+                  "label": "MERGE / Idempotency",
+                  "nodeType": "tool"
+                },
+                {
+                  "id": "dlt",
+                  "label": "dlt",
+                  "nodeType": "tool"
+                },
+                {
+                  "id": "airbyte",
+                  "label": "Airbyte",
+                  "nodeType": "tool"
+                },
+                {
+                  "id": "soda",
+                  "label": "Soda Core",
+                  "nodeType": "tool"
+                }
+              ],
+              "edges": [
+                {
+                  "from": "source",
+                  "to": "ingestion",
+                  "label": "nap tu nguon"
+                },
+                {
+                  "from": "ingestion",
+                  "to": "bronze",
+                  "label": "land tai"
+                },
+                {
+                  "from": "ingestion",
+                  "to": "batch",
+                  "label": "che do 1"
+                },
+                {
+                  "from": "ingestion",
+                  "to": "stream",
+                  "label": "che do 2"
+                },
+                {
+                  "from": "batch",
+                  "to": "watermark",
+                  "label": "incremental"
+                },
+                {
+                  "from": "watermark",
+                  "to": "merge",
+                  "label": "idempotency"
+                },
+                {
+                  "from": "stream",
+                  "to": "merge",
+                  "label": "at-least-once"
+                },
+                {
+                  "from": "dlt",
+                  "to": "ingestion",
+                  "label": "tool nap"
+                },
+                {
+                  "from": "airbyte",
+                  "to": "ingestion",
+                  "label": "tool nap"
+                },
+                {
+                  "from": "soda",
+                  "to": "bronze",
+                  "label": "quality gate"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
