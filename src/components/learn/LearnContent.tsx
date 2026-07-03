@@ -5,6 +5,7 @@ import { BlockRenderer } from "./blocks/BlockRenderer";
 import { LifecycleDiagram } from "@/components/LifecycleDiagram";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { AccordionSection } from "./AccordionSection";
+import { InteractiveContent, InteractiveBlock } from "./InteractiveBlocks";
 
 interface LearnContentProps {
   module: Module;
@@ -57,6 +58,8 @@ export async function LearnContent({ module, curriculum }: LearnContentProps) {
           </p>
         )}
 
+        <InteractiveContent moduleId={module.id} sections={module.sections} />
+
         {(await Promise.all(
           module.sections.map(async (section) => {
             const firstHeadingIdx = section.blocks.findIndex(
@@ -66,7 +69,12 @@ export async function LearnContent({ module, curriculum }: LearnContentProps) {
               ? section.blocks.slice(1)
               : section.blocks;
             const renderedBlocks = await Promise.all(
-              renderBlocks.map((block, i) => <BlockRenderer key={i} block={block} />)
+              renderBlocks.map((block, i) => {
+                if (block.type === "quiz" || block.type === "checkpoint") {
+                  return <InteractiveBlock key={i} block={block} moduleId={module.id} />;
+                }
+                return <BlockRenderer key={i} block={block} />;
+              })
             );
             return (
               <AccordionSection

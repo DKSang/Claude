@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Module } from "@/types/curriculum";
 import { ModuleIllustration } from "@/components/ModuleIllustration";
+import { ModuleProgressBadge } from "@/components/ModuleProgressBadge";
 
 interface ModuleCardProps {
   module: Module;
@@ -20,16 +21,11 @@ export function ModuleCard({ module }: ModuleCardProps) {
       }}
     >
       <ModuleIllustration moduleId={module.id} />
-      <div
-        style={{
-          fontSize: "15px",
-          fontFamily: "var(--font-sans)",
-          color: "var(--text-accent)",
-          fontWeight: 400,
-          marginBottom: "var(--space-0-5)",
-        }}
-      >
-        Module {module.number}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "var(--space-0-5)" }}>
+        <div style={{ fontSize: "15px", fontFamily: "var(--font-sans)", color: "var(--text-accent)", fontWeight: 400 }}>
+          Module {module.number}
+        </div>
+        <ModuleProgressBadge moduleId={module.id} totalSections={module.sections.length} />
       </div>
       <h3
         style={{

@@ -7,6 +7,7 @@ import { VideoSection } from "@/components/VideoSection";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { WordsPullUp } from "@/components/animations/WordsPullUp";
 import { CardEntrance } from "@/components/animations/CardEntrance";
+import { ProgressBar } from "@/components/ProgressBar";
 import curriculumData from "@/data/curriculum.json";
 import type { Curriculum } from "@/types/curriculum";
 
@@ -68,6 +69,7 @@ export default function Home() {
             padding: "0 var(--container-margin) var(--section-space-main)",
           }}
         >
+          <ProgressBar totalModules={curriculum.modules.length} />
           <FadeIn>
             <h2
               className="text-h1"
