@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Module } from "@/types/curriculum";
+import { ModuleIllustration } from "@/components/ModuleIllustration";
 
 interface ModuleCardProps {
   module: Module;
@@ -9,15 +10,16 @@ export function ModuleCard({ module }: ModuleCardProps) {
   return (
     <Link
       href={`/learn/${module.id}`}
-      className="block"
+      className="block hover-lift"
       style={{
         background: "var(--card)",
         border: "1px solid var(--border-tertiary)",
         borderRadius: "var(--radius-large)",
         padding: "var(--space-1-5)",
-        transition: "border-color 0.2s var(--ease-expo-out), box-shadow 0.2s var(--ease-expo-out)",
+        overflow: "hidden",
       }}
     >
+      <ModuleIllustration moduleId={module.id} />
       <div
         style={{
           fontSize: "15px",

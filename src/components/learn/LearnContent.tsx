@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { Module, Curriculum } from "@/types/curriculum";
 import { BlockRenderer } from "./blocks/BlockRenderer";
 import { LifecycleDiagram } from "@/components/LifecycleDiagram";
+import { FadeIn } from "@/components/animations/FadeIn";
 
 interface LearnContentProps {
   module: Module;
@@ -43,9 +44,11 @@ export function LearnContent({ module, curriculum }: LearnContentProps) {
           </p>
         )}
 
-        <div style={{ marginBottom: "var(--space-4)" }}>
-          <LifecycleDiagram activeModuleId={module.id} />
-        </div>
+        <FadeIn>
+          <div style={{ marginBottom: "var(--space-4)" }}>
+            <LifecycleDiagram activeModuleId={module.id} />
+          </div>
+        </FadeIn>
 
         {module.sections.length === 0 && (
           <p style={{ color: "var(--fg-tertiary)", fontSize: "var(--text-body-2)" }}>
@@ -55,9 +58,11 @@ export function LearnContent({ module, curriculum }: LearnContentProps) {
 
         {module.sections.map((section) => (
           <section key={section.id} id={section.id} style={{ scrollMarginTop: "100px" }}>
-            {section.blocks.map((block, i) => (
-              <BlockRenderer key={i} block={block} />
-            ))}
+            <FadeIn y={16}>
+              {section.blocks.map((block, i) => (
+                <BlockRenderer key={i} block={block} />
+              ))}
+            </FadeIn>
           </section>
         ))}
 
@@ -72,12 +77,13 @@ export function LearnContent({ module, curriculum }: LearnContentProps) {
           {prevModule ? (
             <Link
               href={`/learn/${prevModule.id}`}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 hover-underline"
               style={{
                 fontSize: "17px",
                 fontFamily: "var(--font-sans)",
                 color: "var(--fg-secondary)",
                 fontWeight: 400,
+                transition: "color 0.2s var(--ease-expo-out)",
               }}
             >
               <ArrowLeft size={16} />
@@ -89,12 +95,13 @@ export function LearnContent({ module, curriculum }: LearnContentProps) {
           {nextModule ? (
             <Link
               href={`/learn/${nextModule.id}`}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 hover-underline"
               style={{
                 fontSize: "17px",
                 fontFamily: "var(--font-sans)",
                 color: "var(--fg-secondary)",
                 fontWeight: 400,
+                transition: "color 0.2s var(--ease-expo-out)",
               }}
             >
               Module {nextModule.number}: {nextModule.title}

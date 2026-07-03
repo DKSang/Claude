@@ -44,6 +44,7 @@ export function LearnHeader() {
         <div className="flex items-center gap-6">
           <Link
             href="/"
+            className="hover-underline"
             style={{
               fontSize: "17px",
               color: "var(--fg-secondary)",
@@ -56,6 +57,7 @@ export function LearnHeader() {
             href="https://github.com/DKSang/Fundemental-Data-Eng"
             target="_blank"
             rel="noopener noreferrer"
+            className="hover-underline"
             style={{
               fontSize: "17px",
               color: "var(--fg-secondary)",

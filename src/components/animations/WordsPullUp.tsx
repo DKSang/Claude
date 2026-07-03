@@ -1,22 +1,29 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
+import { EASE_EXPO_OUT } from "@/lib/motion";
 
 interface WordsPullUpProps {
   text: string;
   className?: string;
+  style?: React.CSSProperties;
   delay?: number;
   stagger?: number;
 }
 
-export function WordsPullUp({ text, className, delay = 0, stagger = 0.08 }: WordsPullUpProps) {
+export function WordsPullUp({ text, className, style, delay = 0, stagger = 0.08 }: WordsPullUpProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const prefersReducedMotion = useReducedMotion();
   const words = text.split(" ");
 
+  if (prefersReducedMotion) {
+    return <div ref={ref} className={className} style={style}>{text}</div>;
+  }
+
   return (
-    <div ref={ref} className={className} style={{ display: "inline-flex", flexWrap: "wrap" }}>
+    <div ref={ref} className={className} style={{ display: "inline-flex", flexWrap: "wrap", ...style }}>
       {words.map((word, i) => (
         <motion.span
           key={i}
@@ -26,7 +33,7 @@ export function WordsPullUp({ text, className, delay = 0, stagger = 0.08 }: Word
           transition={{
             duration: 0.5,
             delay: delay + i * stagger,
-            ease: [0.16, 1, 0.3, 1],
+            ease: EASE_EXPO_OUT,
           }}
         >
           {word}

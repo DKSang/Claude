@@ -136,6 +136,7 @@ export function LearnSidebar({ curriculum, currentModuleId }: LearnSidebarProps)
                           fontWeight: isActive ? 500 : 400,
                           background: isActive ? "var(--bg-tertiary)" : "transparent",
                           borderLeft: isActive ? "3px solid var(--text-accent)" : "3px solid transparent",
+                          transition: "background 0.2s var(--ease-expo-out), color 0.2s var(--ease-expo-out)",
                         }}
                       >
                         {mod.title}
