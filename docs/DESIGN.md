@@ -1,524 +1,211 @@
-# DESIGN.md — Data Engineering Learning App
+Create a Next.js 16 (App Router, React 19, TypeScript strict) + Tailwind CSS v4 + shadcn/ui learning platform called "Data Engineering Lifecycle". The page has 3 route types: Landing page (/), Learn index (/learn redirect), and Module reader (/learn/[moduleId]). Use lucide-react for icons. The design is warm, editorial, and clean — modeled pixel-for-pixel on claude.com's computed styles. Light theme only, warm cream background, Anthropic Serif for headings, Anthropic Sans for body.
 
-> Tài liệu thiết kế cho web app học lý thuyết Data Engineering, xây trên codebase Next.js 16 + shadcn/ui + Tailwind v4 hiện có (Anthropic design system).
+FONTS
 
----
+Load three local fonts via next/font/local in layout.tsx (weights: 300 800, normal + italic):
 
-## 1. Tổng quan
+Anthropic Sans (src: public/fonts/AnthropicSans-Roman-Web.woff2 + Italic) -- global default body font, UI labels, nav links
+Anthropic Serif (src: public/fonts/AnthropicSerif-Roman-Web.woff2 + Italic) -- all headings (h1–h6), lifecycle diagram labels
+Anthropic Mono (src: public/fonts/AnthropicMono-Roman-Web.woff2 + Italic) -- code blocks, inline code
 
-### 1.1 Mục tiêu
-
-Biến 8 file markdown lý thuyết Data Engineering (tiếng Việt, ~2.640 dòng) từ repo `Fundemental-Data-Eng/docs` thành web app học trực quan, sinh động, dễ hiểu và nhớ lâu hơn. Nội dung xoay quanh **Data Engineering Lifecycle**: Generation → Storage → Ingestion → Transformation → Serving, với ví dụ xuyên suốt "Climate & Smart Agriculture Việt Nam".
-
-### 1.2 Phạm vi (Phase A — Content + Reading UI)
-
-Phase này chỉ làm:
-- Convert markdown → JSON structured
-- Render bài học với UI đẹp, bám sát design system hiện tại
-- Layout sidebar + content (option A)
-- Navigation theo module/section
-- Lifecycle diagram tĩnh (SVG, không tương tác)
-
-**Không bao gồm trong phase này:** AI features (Socratic checkpoint, Feynman grading, reverse mode), interactive diagrams (click node → panel), DuckDB WASM playground, knowledge graph tracking. Các tính năng đó thuộc các phase sau, mỗi phase có spec riêng.
-
-### 1.3 Đối tượng người dùng
-
-Một người (chính là tác giả) tự học Data Engineering. Giao diện tiếng Việt. Sử dụng trên desktop chủ yếu, nhưng cần responsive cho mobile.
-
----
-
-## 2. Design System hiện có (bám sát 100%)
-
-Codebase đã có sẵn một design system hoàn chỉnh lấy từ Anthropic. Toàn bộ app mới **phải dùng đúng các token này**, không thêm màu/font/spacing mới.
-
-### 2.1 Fonts
-
-| Font | Biến CSS | Vai trò | File |
-|---|---|---|---|
-| Anthropic Sans | `--font-sans` / `--font-anthropic-sans` | Body text, UI labels, buttons | `public/fonts/AnthropicSans-Roman-Web.woff2` + Italic |
-| Anthropic Serif | `--font-serif` / `--font-anthropic-serif` | Headings (h1–h6) | `public/fonts/AnthropicSerif-Roman-Web.woff2` + Italic |
-| Anthropic Mono | `--font-mono` / `--font-anthropic-mono` | Code blocks, inline code | `public/fonts/AnthropicMono-Roman-Web.woff2` + Italic |
-
-Fonts load qua `next/font/local` trong `layout.tsx`. **Không thay đổi cách load.** Headings mặc định dùng serif (đã set trong `@layer base`: `h1–h6 { font-family: var(--font-serif) }`).
-
-### 2.2 Color Palette (Light theme — `:root`)
-
-| Token | Giá trị | Vai trò |
-|---|---|---|
-| `--background` / `--bg-primary` | `#faf9f5` | Nền chính (warm cream) |
-| `--foreground` / `--fg-primary` | `#141413` | Text chính (near-black) |
-| `--bg-secondary` | `#f5f4ed` | Nền sidebar, card nhẹ |
-| `--bg-tertiary` | `#f0eee6` | Nền hover, muted |
-| `--fg-secondary` | `#30302e` | Text phụ |
-| `--fg-tertiary` | `#5e5d59` | Text tertiary (tips, captions) |
-| `--border-tertiary` | `#e8e6dc` | Border nhẹ (header, divider) |
-| `--border-secondary` | `#d1cfc5` | Border vừa |
-| `--border-primary` | `#b0aea5` | Border đậm |
-| `--text-accent` / `--ring` | `#d97757` | Accent clay (link hover, focus ring) |
-| `--selection-bg` | `rgba(217,119,87,0.5)` | Text selection |
-
-**Brand colors (extension tokens):**
-
-| Token | Giá trị | Dùng cho |
-|---|---|---|
-| `--color-clay` | `#d97757` | Accent chính |
-| `--color-clay-interactive` | `#c96442` | Hover/active accent |
-| `--color-cactus` | `#bcd1ca` | Success / "hoàn thành" |
-| `--color-mineral` | `#629987` | Success text |
-| `--color-peach` | `#ebc9b7` | Highlight nhẹ |
-| `--color-sky` | `#6a9bcc` | Info / "đang học" |
-| `--color-fig` | `#c46686` | Warning / "cần ôn" |
-| `--color-error` | `#b53333` | Error |
-
-> **Quy tắc:** Không thêm màu hex mới. Nếu cần trạng thái mới (ví dụ "đã hoàn thành"), dùng brand colors có sẵn: `--color-cactus`/`--color-mineral` cho success, `--color-sky` cho in-progress, `--color-fig` cho warning.
-
-### 2.3 Typography Scale (fluid clamp)
-
-Tất cả kích thước text dùng CSS variable có sẵn, không hardcode `font-size`:
-
-| Token | Min → Max | Dùng cho |
-|---|---|---|
-| `--text-display-1` | 42px → 72px | Hero title (trang chủ) |
-| `--text-display-2` | 36px → 64px | — |
-| `--text-h1` | 34px → 52px | Module title |
-| `--text-h2` | 30px → 44px | Section heading (## trong markdown) |
-| `--text-h3` | 28px → 36px | Subsection heading (###) |
-| `--text-h4` | 23px → 32px | Sub-subsection (####) |
-| `--text-h5` | 20px → 25px | — |
-| `--text-h6` | 16px → 19px | — |
-| `--text-body-large-1` | 22px → 24px | Lead paragraph |
-| `--text-body-1` | 19px → 20px | Body text (mặc định, 20px/32px line-height) |
-| `--text-body-2` | 17px | Compact body |
-| `--text-body-3` | 15px | UI labels, nav items |
-| `--text-caption` | 12px | Caption, metadata |
-| `--text-micro` | 10px | — |
-
-Body mặc định: `font-size: 20px; line-height: 32px` (set trong `@layer base`).
-
-### 2.4 Spacing Scale (fluid clamp)
-
-| Token | Min → Max |
-|---|---|
-| `--space-0-25` | 4px (cố định) |
-| `--space-0-5` | 8px |
-| `--space-0-75` | 12px |
-| `--space-1` | 16px |
-| `--space-1-5` | 24px |
-| `--space-2` | 28px → 32px |
-| `--space-2-5` | 32px → 40px |
-| `--space-3` | 40px → 48px |
-| `--space-4` | 52px → 64px |
-| `--space-5` | 64px → 80px |
-| `--space-6` | 72px → 96px |
-| `--section-space-small` | 64px → 96px |
-| `--section-space-main` | 96px → 128px |
-
-### 2.5 Radius Scale
-
-| Token | Giá trị |
-|---|---|
-| `--radius-x-small` | 4px |
-| `--radius-small` | 8px |
-| `--radius-main` | 12px (mặc định `--radius`) |
-| `--radius-large` | 16px |
-| `--radius-x-large` | 16px → 24px (fluid) |
-| `--radius-xx-large` | 16px → 32px (fluid) |
-
-### 2.6 Container & Layout
-
-| Token | Giá trị |
-|---|---|
-| `--container-max` | 90rem (1440px) |
-| `--container-margin` | 32px → 64px (fluid) |
-
-### 2.7 Easing
-
-| Token | Giá trị |
-|---|---|
-| `--ease-expo-out` | `cubic-bezier(0.16, 1, 0.3, 1)` |
-
-### 2.8 Component Patterns (từ code hiện có)
-
-- **"use client"** ở đầu file cho component có state/interaction
-- **`cn()`** từ `@/lib/utils` để merge Tailwind classes
-- **Inline styles** với CSS variables cho giá trị từ design tokens (pattern: `style={{ color: "var(--fg-primary)" }}`)
-- **Tailwind utilities** cho layout (flex, grid, gap, responsive)
-- **Icons** từ `@/components/icons` (SVG components) hoặc `lucide-react`
-- **`Link`** từ `next/link` cho navigation
-
----
-
-## 3. Kiến trúc ứng dụng
-
-### 3.1 Route Structure (Next.js App Router)
-
-```
-src/app/
-  layout.tsx          # Root layout (giữ nguyên fonts + globals.css)
-  page.tsx            # Trang chủ: grid module cards + lifecycle overview
-  learn/
-    layout.tsx        # Layout cho trang học: sidebar + content area
-    page.tsx          # Redirect → module đầu tiên (module-00-introduction)
-    [moduleId]/
-      page.tsx        # Trang đọc module: sidebar sections + content
-```
-
-### 3.2 Data Flow
-
-```
-Fundemental-Data-Eng/docs/*.md
-  ↓ (build-time script: scripts/convert-docs.ts)
-src/data/curriculum.json    # Structured JSON: modules → sections → blocks
-  ↓ (import trong server components)
-[moduleId]/page.tsx         # Render sidebar + content từ JSON
-```
-
-**Convert script** chạy tại build time (`prebuild` npm script). Đọc markdown từ `../Fundemental-Data-Eng/docs/`, parse, ghi ra `src/data/curriculum.json`. Markdown gốc vẫn là single source of truth — chạy lại script để cập nhật.
-
-### 3.3 Component Structure
-
-```
-src/components/
-  learn/
-    LearnSidebar.tsx        # Sidebar điều hướng module/section
-    LearnContent.tsx        # Render nội dung bài học từ JSON blocks
-    LearnHeader.tsx         # Top bar khi trong module (compact)
-    blocks/                 # Render cho từng loại content block
-      HeadingBlock.tsx      # h2, h3, h4
-      ParagraphBlock.tsx    # Text thường, có bold/italic/inline-code
-      TableBlock.tsx        # Markdown table
-      CodeBlock.tsx         # Code block (```text, ```sql)
-      ListBlock.tsx         # ul/ol
-      BlockquoteBlock.tsx   # Tip/note (blockquote)
-  LifecycleDiagram.tsx     # SVG tĩnh: 5 giai đoạn lifecycle
-  ModuleCard.tsx           # Thẻ module cho trang chủ
-  Header.tsx               # (thay thế) Header mới cho learning app
-  Footer.tsx               # (thay thế) Footer đơn giản
-  ui/                      # shadcn/ui primitives (giữ nguyên)
-  icons.tsx                # SVG icons (giữ nguyên + thêm mới khi cần)
-```
-
----
-
-## 4. Layout chi tiết
-
-### 4.1 Trang chủ (`/`)
-
-Thay thế hoàn toàn nội dung clone claude.com. Cấu trúc:
-
-```
-┌─────────────────────────────────────────────┐
-│ Header (fixed, compact)                      │
-├─────────────────────────────────────────────┤
-│                                               │
-│  HERO: "Data Engineering Lifecycle"           │
-│  Tiêu đề serif lớn + mô tả ngắn               │
-│  LifecycleDiagram (SVG 5 giai đoạn)           │
-│                                               │
-├─────────────────────────────────────────────┤
-│  MODULE GRID (3 cột desktop, 1 cột mobile)    │
-│  ┌────────┐ ┌────────┐ ┌────────┐            │
-│  │ Mod 0  │ │ Mod 1  │ │ Mod 2  │            │
-│  │ Nhập   │ │ Inges  │ │ Model  │            │
-│  │ môn    │ │ tion   │ │ ing    │            │
-│  └────────┘ └────────┘ └────────┘            │
-│  ┌────────┐ ┌────────┐ ┌────────┐            │
-│  │ Mod 3  │ │ Mod 4  │ │ Mod 5  │            │
-│  │ Orches │ │ Stream │ │ Enter  │            │
-│  └────────┘ └────────┘ └────────┘            │
-├─────────────────────────────────────────────┤
-│ Footer (đơn giản)                             │
-└─────────────────────────────────────────────┘
-```
-
-**ModuleCard:**
-- Background: `var(--card)` (#ffffff) với border `var(--border-tertiary)`
-- Border-radius: `var(--radius-large)` (16px)
-- Padding: `var(--space-1-5)` (24px)
-- Module number label: `--text-caption`, color `var(--text-accent)`
-- Module title: `--text-h4`, font-serif, color `var(--fg-primary)`
-- Module description: `--text-body-3`, color `var(--fg-tertiary)`, 2 dòng max
-- Hover: border → `var(--border-secondary)`, subtle shadow
-- Click → `/learn/[moduleId]`
-
-### 4.2 Trang học (`/learn/[moduleId]`)
-
-Layout sidebar + content (option A):
-
-```
-┌──────────────────────────────────────────────────┐
-│ LearnHeader (fixed top, compact)                   │
-├──────────┬───────────────────────────────────────┤
-│          │  Breadcrumb: Module 1 › Ingestion       │
-│ SIDEBAR  │                                          │
-│ (sticky) │  ╔═══════════════════════════════════╗  │
-│          │  ║  H1: Bài 1: Ingestion              ║  │
-│ Module 0 │  ║  (serif, --text-h1)                ║  │
-│  § Nhập  │  ╚═══════════════════════════════════╝  │
-│  § Source│                                          │
-│  § Storage│  ## 1. Ingestion là gì?                 │
-│          │  (serif, --text-h2, border-bottom)       │
-│ Module 1 │                                          │
-│ ▸§ Ing...│  Body text (--text-body-1, 20px/32px)   │
-│  § Batch │                                          │
-│  § Schema│  > 💡 Tip: Hãy xem ingestion như...     │
-│          │    (blockquote, bg --bg-tertiary)        │
-│ Module 2 │                                          │
-│  § ...   │  ┌─────────────────────────────────┐    │
-│          │  │ Generation → Storage → Ingest.. │    │
-│          │  └─────────────────────────────────┘    │
-│          │    (code block, font-mono, --bg-tertiary)│
-│          │                                          │
-│          │  | Nguồn | Kiểu | Chú ý |               │
-│          │  |--------|------|-------|               │
-│          │  | Open-M | ...  | ...   |               │
-│          │    (table, border --border-tertiary)     │
-│          │                                          │
-│          │  ← Module trước    Module sau →          │
-├──────────┴───────────────────────────────────────┤
-│ Footer                                              │
-└──────────────────────────────────────────────────┘
-```
-
-**Sidebar:**
-- Width: 280px (fixed), sticky full-height
-- Background: `var(--bg-secondary)` (#f5f4ed)
-- Border-right: `1px solid var(--border-tertiary)`
-- Scrollable nội bộ (overflow-y: auto, height: calc(100vh - header-height))
-- Module group header: `--text-caption`, uppercase, color `var(--fg-tertiary)`, margin-top `var(--space-1-5)`
-- Section item: `--text-body-3` (15px), padding `8px 16px`, color `var(--fg-secondary)`
-- Active section: background `var(--bg-tertiary)`, border-left `3px solid var(--text-accent)`, color `var(--fg-primary)`, font-weight 500
-- Hover (non-active): background `rgba(0,0,0,0.03)`, color `var(--fg-primary)`
-- Module hiện tại: expanded (section items visible). Module khác: collapsed (chỉ header, click để expand)
-
-**Content area:**
-- Max-width: `720px` (optimal reading width, centered)
-- Padding: `var(--space-2-5)` top, `var(--space-2)` sides
-- Background: `var(--bg-primary)`
-
-**Mobile (≤768px):**
-- Sidebar ẩn mặc định, hamburger menu mở drawer overlay
-- Content full-width, padding giảm xuống `var(--space-1)`
-
-### 4.3 LearnHeader (compact)
-
-Thay thế Header hiện tại. Đơn giản hơn:
-- Fixed top, height ~56px
-- Background: `var(--bg-primary)` với border-bottom `var(--border-tertiary)`
-- Left: Logo/title "Data Engineering" (serif, --text-body-1)
-- Center/Right: Link "Trang chủ" + link GitHub repo
-- Mobile: thêm hamburger button bên trái để toggle sidebar
-
----
-
-## 5. Content Block Rendering
-
-Markdown convert ra JSON với block types. Mỗi block type có component render riêng.
-
-### 5.1 JSON Schema (curriculum.json)
-
-```jsonc
-{
-  "modules": [
-    {
-      "id": "module-00-introduction",
-      "number": 0,
-      "title": "Nhập môn Kỹ thuật Dữ liệu",
-      "subtitle": "Vòng đời, Kiến trúc & Tư duy Lựa chọn Công nghệ",
-      "summary": "Đặt nền cho toàn bộ khóa học...",
-      "sourceFile": "module-00-introduction.md",
-      "sections": [
-        {
-          "id": "ky-su-du-lieu-la-ai",
-          "number": 1,
-          "title": "Kỹ sư Dữ liệu là ai?",
-          "blocks": [
-            { "type": "heading", "level": 3, "text": "Định nghĩa và vai trò" },
-            { "type": "paragraph", "spans": [ { "text": "Kỹ thuật dữ liệu..." } ] },
-            { "type": "table", "headers": ["Vai trò", "Trọng tâm"], "rows": [["...", "..."]] },
-            { "type": "code", "language": "text", "code": "Generation -> Storage -> ..." },
-            { "type": "blockquote", "variant": "tip", "spans": [ { "text": "Tip: ..." } ] },
-            { "type": "list", "ordered": false, "items": [ [ { "text": "..." } ] ] }
-          ]
-        }
-      ]
-    }
-  ]
-}
-```
-
-### 5.2 Block Rendering Specs
-
-#### HeadingBlock
-
-| Markdown | Level | CSS | Style |
-|---|---|---|---|
-| `##` | 2 | `--text-h2`, font-serif | border-bottom `1px solid var(--border-tertiary)`, padding-bottom `var(--space-0-5)`, margin-top `var(--space-4)`, margin-bottom `var(--space-1-5)` |
-| `###` | 3 | `--text-h3`, font-serif | margin-top `var(--space-3)`, margin-bottom `var(--space-1)` |
-| `####` | 4 | `--text-h4`, font-serif | margin-top `var(--space-2-5)`, margin-bottom `var(--space-0-75)` |
-
-H1 (module title) chỉ xuất hiện một lần đầu bài, render ở `--text-h1`, font-serif, color `var(--fg-primary)`, margin-bottom `var(--space-2)`.
-
-#### ParagraphBlock
-
-- Font: `var(--font-sans)`, size `var(--text-body-1)` (20px), line-height 32px
-- Color: `var(--fg-secondary)` (#30302e) — hơi tối hơn fg-primary để dịu mắt khi đọc dài
-- Margin-bottom: `var(--space-1)` (16px)
-- **Spans** (inline formatting):
-  - **Bold**: font-weight 600, color `var(--fg-primary)`
-  - *Italic*: font-style italic
-  - `inline code`: font `var(--font-mono)`, size 0.875em, background `var(--bg-tertiary)`, padding `2px 6px`, border-radius `var(--radius-x-small)`, color `var(--text-accent)`
-
-#### TableBlock
-
-- Width: 100%, border-collapse
-- Header row: background `var(--bg-tertiary)`, font-weight 600, color `var(--fg-primary)`, text-align left, padding `10px 14px`, font-size `var(--text-body-3)`
-- Body rows: border-top `1px solid var(--border-tertiary)`, padding `10px 14px`, font-size `var(--text-body-3)`, color `var(--fg-secondary)`
-- Border-radius: `var(--radius-small)` cho outer table (overflow hidden)
-- Responsive: trên mobile <640px, table scroll ngang (overflow-x: auto, wrapper)
-
-#### CodeBlock
-
-- Background: `var(--bg-tertiary)` (#f0eee6) — warm tone, không phải dark theme
-- Font: `var(--font-mono)`, size `var(--text-body-3)` (15px), line-height 24px
-- Color: `var(--fg-secondary)`
-- Padding: `var(--space-1)` (16px)
-- Border-radius: `var(--radius-small)` (8px)
-- Border: `1px solid var(--border-tertiary)`
-- Overflow-x: auto cho code dài
-- **Không syntax highlighting** trong phase A (chỉ mono font, uniform color). Syntax highlighting có thể thêm sau nếu cần.
-- Language label (tùy chọn): góc trên phải, `--text-micro`, color `var(--fg-tertiary)`, uppercase
-
-#### BlockquoteBlock
-
-Markdown blockquote (`>`) trong docs luôn là tip/note. Render thành callout:
-
-- Background: `var(--bg-tertiary)` với opacity nhẹ (hoặc dùng `--color-peach` với opacity 0.15)
-- Border-left: `3px solid var(--text-accent)` (clay)
-- Border-radius: `var(--radius-small)`, trừ border-left (sharp)
-- Padding: `var(--space-1)` (16px) all sides
-- Font: `var(--font-sans)`, size `var(--text-body-2)` (17px), color `var(--fg-secondary)`
-- Icon/prefix: Nếu bắt đầu bằng "Tip:", hiển thị icon nhỏ (Lucide `Lightbulb`) color `var(--text-accent)` ở đầu
-
-#### ListBlock
-
-- Unordered: `list-style: disc`, marker color `var(--text-accent)`
-- Ordered: `list-style: decimal`, marker color `var(--text-accent)`, font-weight 500
-- Padding-left: `var(--space-1-5)` (24px)
-- Item spacing: `var(--space-0-25)` (4px) giữa items
-- Font: `var(--font-sans)`, size `var(--text-body-1)`, color `var(--fg-secondary)`
-- Nested list: padding-left thêm `var(--space-1)`, marker style đổi (circle cho ul level 2)
-
----
-
-## 6. LifecycleDiagram (SVG tĩnh)
-
-Sơ đồ 5 giai đoạn Data Engineering Lifecycle, hiển thị trên trang chủ và đầu mỗi module.
-
-### 6.1 Cấu trúc
-
-```
-[Generation] → [Storage] → [Ingestion] → [Transformation] → [Serving]
-```
-
-5 node dạng pill/rounded-rect, nối bằng arrow, nằm ngang (desktop) hoặc wrap (mobile).
-
-### 6.2 Style
-
-- Mỗi node: background `var(--card)`, border `1px solid var(--border-tertiary)`, border-radius `var(--radius-large)`, padding `12px 20px`
-- Node label: font-serif, `--text-body-3`, color `var(--fg-primary)`
-- Node sublabel (English term): `--text-caption`, color `var(--fg-tertiary)`
-- Arrow: stroke `var(--border-secondary)`, strokeWidth 1.5, arrowhead marker
-- Active node (module hiện tại): border `var(--text-accent)`, background `rgba(217,119,87,0.08)`
-- Responsive: mobile chuyển sang layout dọc, arrow xoay xuống
-
-### 6.3 Reuse
-
-Dùng lại pattern từ `MindMapGraph.tsx` hiện có (SVG + CSS variables). Tuy nhiên diagram này đơn giản hơn nhiều — chỉ 5 node tuyến tính, không cần hover logic phức tạp trong phase A.
-
----
-
-## 7. Navigation
-
-### 7.1 Sidebar → Content
-
-- Click section trong sidebar → scroll đến section tương ứng trong content (anchor link, `scroll-margin-top` để tránh bị header che)
-- Active section highlight theo scroll position (IntersectionObserver — "use client")
-- Click module header → expand/collapse section list
-
-### 7.2 Prev/Next
-
-Cuối mỗi module:
-- "← Module trước" (left align) — link về module trước đó
-- "Module sau →" (right align) — link tới module tiếp theo
-- Style: `--text-body-3`, color `var(--fg-secondary)`, hover `var(--text-accent)`
-- Module đầu tiên: chỉ có "Module sau →"
-- Module cuối: chỉ có "← Module trước"
-
-### 7.3 Breadcrumb
-
-Đầu content area:
-- Format: "Module 1 › Ingestion"
-- Style: `--text-caption`, color `var(--fg-tertiary)`, separator `›` color `var(--border-primary)`
-- Click "Module 1" → scroll lên đầu bài
-
----
-
-## 8. Responsive Breakpoints
-
-Tailwind v4 default breakpoints (mobile-first):
-
-| Breakpoint | Width | Layout |
-|---|---|---|
-| <768px | Mobile | Sidebar drawer, content full-width, module grid 1 cột, diagram dọc |
-| ≥768px (md) | Tablet | Sidebar visible, content 720px, module grid 2 cột |
-| ≥1024px (lg) | Desktop | Full layout, module grid 3 cột |
-| ≥1440px | Wide | Container max 90rem centered |
-
----
-
-## 9. Thay thế nội dung clone claude.com
-
-### 9.1 Xóa
-
-- `src/components/Header.tsx` → thay bằng `LearnHeader.tsx`
-- `src/components/Footer.tsx` → thay bằng footer đơn giản
-- `src/components/HeroSection.tsx` → xóa
-- `src/components/ProblemSolversSection.tsx` → xóa
-- `src/components/HowToUseSection.tsx` → xóa
-- `src/components/KeepThinkingSection.tsx` → xóa
-- `src/components/ModelsSection.tsx` → xóa
-- `src/app/page.tsx` → viết lại (trang chủ module grid)
-
-### 9.2 Giữ
-
-- `src/components/MindMapGraph.tsx` — giữ để tham khảo pattern SVG (có thể reuse cho knowledge map phase sau)
-- `src/components/icons.tsx` — giữ (SVG icons có thể dùng lại)
-- `src/components/ui/` — giữ (shadcn primitives)
-- `src/lib/utils.ts` — giữ (cn utility)
-- `src/app/globals.css` — giữ nguyên (design tokens)
-- `src/app/layout.tsx` — giữ nguyên fonts, chỉ đổi metadata (title/description)
-- `public/fonts/` — giữ nguyên
-
-### 9.3 Metadata mới
-
-```typescript
-export const metadata: Metadata = {
-  title: "Data Engineering Lifecycle — Học lý thuyết DE",
-  description: "Khóa học lý thuyết Data Engineering: lifecycle, ingestion, modeling, orchestration, streaming, enterprise.",
-  // icons giữ nguyên
-};
-```
-
----
-
-## 10. Roadmap các phase sau
-
-| Phase | Tính năng | Spec riêng |
-|---|---|---|
-| B | Interactive diagrams: click node → panel giải thích, so sánh AI-generated | Sau phase A |
-| C | AI features: Socratic checkpoint, Feynman grading, reverse mode (qua FreeLLMAPI) | Sau phase B |
-| D | DuckDB WASM playground: SQL chạy thật trên browser | Sau phase C |
-| E | Knowledge graph + progress tracking: bản đồ tri thức liên module, gợi ý ôn | Sau phase D |
-
-Mỗi phase là 1 spec → plan → implementation cycle độc lập. Phase A phải hoàn thành và ổn định trước khi bắt đầu phase B.
+Each font gets a CSS variable via next/font: --font-anthropic-sans, --font-anthropic-serif, --font-anthropic-mono. In globals.css @theme inline, link them:
+
+--font-sans: var(--font-anthropic-sans), "Anthropic Sans", Arial, sans-serif;
+--font-serif: var(--font-anthropic-serif), "Anthropic Serif", Georgia, serif;
+--font-mono: var(--font-anthropic-mono), "Anthropic Mono", ui-monospace, monospace;
+
+In @layer base, set body to font-family: var(--font-sans), font-size: 20px, line-height: 32px. Set h1–h6 to font-family: var(--font-serif), font-weight: 500.
+
+COLOR SYSTEM
+
+Background: #faf9f5 (var(--bg-primary)) globally, warm cream
+Card background: #ffffff (var(--card))
+Sidebar background: #f5f4ed (var(--bg-secondary))
+Tertiary background: #f0eee6 (var(--bg-tertiary)) — code blocks, table headers, hover states
+Primary text: #141413 (var(--fg-primary)) — headings, bold text
+Secondary text: #30302e (var(--fg-secondary)) — body paragraphs, table cells
+Tertiary text: #5e5d59 (var(--fg-tertiary)) — subtitles, captions, breadcrumbs, footer
+Accent (clay): #d97757 (var(--text-accent)) — links, focus ring, blockquote border, module number labels, inline code
+Accent interactive: #c96442 (var(--color-clay-interactive)) — hover states
+Border tertiary: #e8e6dc (var(--border-tertiary)) — card borders, table borders, dividers
+Border secondary: #d1cfc5 (var(--border-secondary)) — lifecycle diagram arrows, hover borders
+Blockquote background: rgba(235, 201, 183, 0.12) — peach tint at 12% opacity
+Active lifecycle node: background rgba(217,119,87,0.08), border var(--text-accent)
+Selection: background rgba(217,119,87,0.5), color var(--fg-primary)
+
+Brand status colors (for future phases): cactus #bcd1ca, mineral #629987, sky #6a9bcc, fig #c46686, error #b53333
+
+CUSTOM CSS UTILITIES (globals.css)
+
+Typography scale classes — plain CSS classes (NOT @layer utilities, which doesn't work in Tailwind v4). Each sets font-size to a CSS variable:
+
+.text-display-1 { font-size: var(--text-display-1); }  — 42px→72px fluid
+.text-display-2 { font-size: var(--text-display-2); }  — 36px→64px fluid (landing H1)
+.text-h1 { font-size: var(--text-h1); }  — 34px→52px fluid (module H1, section H2 on landing)
+.text-h2 { font-size: var(--text-h2); }  — 30px→44px fluid (content H2 from markdown ##)
+.text-h3 { font-size: var(--text-h3); }  — 28px→36px fluid (content H3 from markdown ###)
+.text-h4 { font-size: var(--text-h4); }  — 23px→32px fluid (content H4 from markdown ####)
+.text-body-1 { font-size: var(--text-body-1); }  — 19px→20px fluid (body text)
+.text-body-2 { font-size: var(--text-body-2); }  — 17px (blockquote text)
+.text-body-3 { font-size: var(--text-body-3); }  — 15px (table cells, sidebar section links, footer, breadcrumb)
+.text-caption { font-size: var(--text-caption); }  — 12px
+.text-micro { font-size: var(--text-micro); }  — 10px (code language label)
+
+All fluid clamp values use valid CSS: clamp(min, calc(base + Nvw), max). Invalid patterns like calc(rem + (number * length) / length) silently break — always use the base+Nvw form.
+
+Card hover: a.block:hover { border-color: var(--border-secondary) !important; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+
+Container: .container-anthropic { max-width: var(--container-max); margin-inline: auto; padding-inline: var(--container-margin); }
+
+FLUID CSS VARIABLES (all in :root, all use valid clamp(base+Nvw) syntax)
+
+Typography: --text-display-1: clamp(2.625rem, calc(2.0893rem + 2.6786vw), 4.5rem); --text-display-2: clamp(2.25rem, calc(1.75rem + 2.5vw), 4rem); --text-h1: clamp(2.125rem, calc(1.8036rem + 1.6071vw), 3.25rem); --text-h2: clamp(1.875rem, calc(1.625rem + 1.25vw), 2.75rem); --text-h3: clamp(1.75rem, calc(1.6071rem + 0.7143vw), 2.25rem); --text-h4: clamp(1.4375rem, calc(1.2768rem + 0.8036vw), 2rem); --text-h5: clamp(1.25rem, calc(1.1607rem + 0.4464vw), 1.5625rem); --text-body-1: clamp(1.1875rem, calc(1.1696rem + 0.0893vw), 1.25rem); --text-body-large-1: clamp(1.375rem, calc(1.3393rem + 0.1786vw), 1.5rem)
+
+Spacing: --space-1: 1rem; --space-1-5: 1.5rem; --space-2: clamp(1.75rem, calc(1.6786rem + 0.3571vw), 2rem); --space-3: clamp(2.5rem, calc(2.3571rem + 0.7143vw), 3rem); --space-4: clamp(3.25rem, calc(3.0357rem + 1.0714vw), 4rem); --space-5: clamp(4rem, calc(3.7143rem + 1.4286vw), 5rem); --section-space-main: clamp(6rem, calc(5.4286rem + 2.8571vw), 8rem)
+
+Radius: --radius-large: 1rem; --radius-small: 0.5rem; --radius-x-small: 0.25rem
+
+Container: --container-max: 90rem (1440px); --container-margin: clamp(2rem, calc(1.4286rem + 2.8571vw), 4rem)
+
+Easing: --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1)
+
+SECTION 1: LANDING PAGE (/)
+
+Fixed header at top (LearnHeader component), height 84px, background var(--bg-primary), border-bottom 0.8px solid var(--border-tertiary). Padding 24px 32px. Left: "Data Engineering" link — font-family var(--font-sans), 20px, weight 400, color var(--fg-primary). Right: "Trang chủ" and "GitHub" links — 17px, var(--font-sans), color var(--fg-secondary). Mobile: hamburger button (lucide Menu, 22px, md:hidden) dispatches CustomEvent "toggle-sidebar".
+
+Hero section: max-width 90rem, padding 12.5rem (200px) top, container-margin sides, 6rem bottom. Left-aligned content in a div max-width 42rem (672px).
+
+H1 "Data Engineering Lifecycle": class text-display-2 (64px at desktop), font-family var(--font-serif), font-weight 500, line-height 1.1, color var(--fg-primary), margin-bottom 2.5rem (40px).
+
+Subtitle paragraph: 20px, line-height 32px, font-family var(--font-sans), color var(--fg-tertiary) (#5e5d59), max-width 34rem (544px), margin 0. Text: "Học lý thuyết Data Engineering qua 5 giai đoạn vòng đời — từ nguồn dữ liệu đến phục vụ phân tích."
+
+LifecycleDiagram below hero, margin-top var(--space-4).
+
+Module grid section: max-width 90rem, padding 0 sides, var(--section-space-main) bottom. H2 "Khóa học": class text-h1 (52px), weight 500, line-height 1.2, color var(--fg-primary), margin-bottom var(--space-3). Grid: grid-cols-1 md:grid-cols-2 lg:grid-cols-3, gap var(--space-1) (16px).
+
+ModuleCard (8 cards): Link, background var(--card), border 1px solid var(--border-tertiary), border-radius var(--radius-large) (16px), padding var(--space-1-5) (24px). Module number label: 15px, var(--font-sans), color var(--text-accent), weight 400, margin-bottom var(--space-0-5). H3 title: 19px, line-height 1.2, var(--font-serif), weight 500, color var(--fg-primary), margin 0 0 var(--space-0-75) 0. Summary: 17px, line-height 1.6, var(--font-sans), color var(--fg-tertiary), -webkit-line-clamp 3. Hover: border-color → var(--border-secondary), box-shadow 0 2px 12px rgba(0,0,0,0.04).
+
+Footer: background var(--bg-primary), border-top 1px solid var(--border-tertiary), padding var(--space-2) sides. Two spans: 15px, var(--font-sans), color var(--fg-tertiary). Left: "Data Engineering Lifecycle — Học lý thuyết DE". Right: "Built with Next.js 16 + Anthropic Design System".
+
+SECTION 2: MODULE READER (/learn/[moduleId])
+
+Layout: LearnHeader (84px fixed) + flex row (padding-top 84px) with LearnSidebar (left) + main content (right) + Footer.
+
+LearnSidebar ("use client"): width 280px, sticky top 84px, height calc(100vh - 84px), overflow-y auto, background var(--bg-secondary), border-right 1px solid var(--border-tertiary). Hidden on mobile (hidden md:block), toggled via CustomEvent listener.
+
+Two-level structure:
+- Module group headers (0–5): button, 15px, var(--font-sans), uppercase, letter-spacing 0.5px, color var(--fg-tertiary), padding 8px 16px. ChevronDown icon rotates -90deg when collapsed. aria-expanded set.
+- Module entries: Link, 17px, var(--font-sans), padding 8px 16px 8px 24px. Active: color var(--fg-primary), weight 500, background var(--bg-tertiary), border-left 3px solid var(--text-accent). Inactive: color var(--fg-secondary), weight 400, border-left 3px solid transparent. aria-current="page" on active.
+- Section links (under active module only): <a>, 15px, var(--font-sans), padding 6px 16px 6px 36px, color var(--fg-tertiary). Active section (IntersectionObserver scroll-spy, rootMargin -100px): color var(--text-accent), weight 500.
+
+Main content (LearnContent, server component): max-width 720px, centered mx-auto. Padding-top var(--space-2-5), padding-bottom var(--space-5).
+
+Breadcrumb: "Module N · Title", 15px, var(--font-sans), color var(--fg-tertiary), margin-bottom var(--space-1).
+
+H1 (module title): class text-h1 (52px), var(--font-serif), weight 500, line-height 1.2, color var(--fg-primary), margin-bottom var(--space-0-5).
+
+Subtitle: 20px, line-height 32px, var(--font-sans), color var(--fg-tertiary), margin 0 0 var(--space-3) 0.
+
+LifecycleDiagram with activeModuleId prop, margin-bottom var(--space-4).
+
+CONTENT BLOCK COMPONENTS (rendered from curriculum.json)
+
+Each section renders blocks via BlockRenderer (switch on block.type). All blocks use var(--font-sans) for body and var(--font-serif) for headings.
+
+HeadingBlock (## → h2, ### → h3, #### → h4):
+- H2: class text-h2 (44px), border-bottom 1px solid var(--border-tertiary), padding-bottom 0.5rem, margin-top var(--space-4), margin-bottom var(--space-1-5), scroll-margin-top 100px, color var(--fg-primary), weight 500 (from base layer)
+- H3: class text-h3 (36px), margin-top var(--space-3), margin-bottom var(--space-1), scroll-margin-top 100px
+- H4: class text-h4 (32px), margin-top var(--space-2-5), margin-bottom var(--space-0-75), scroll-margin-top 100px
+- Empty id: omit id attribute entirely
+
+ParagraphBlock:
+- <p>, var(--font-sans), font-size var(--text-body-1) (20px), line-height 32px, color var(--fg-secondary), margin-bottom var(--space-1)
+- Empty spans array: return null
+- Inline spans: bold (weight 600, color var(--fg-primary)), italic (<em>), inline code (var(--font-mono), 0.875em, background var(--bg-tertiary), padding 2px 6px, border-radius var(--radius-x-small), color var(--text-accent)), link (color var(--text-accent), underline; URL sanitized via /^(https?:|\/|#|mailto:)/ regex; external links get target="_blank" rel="noopener noreferrer")
+
+TableBlock:
+- Wrapper: overflow-x-auto, border-radius var(--radius-small), border 1px solid var(--border-tertiary)
+- Empty headers: return null
+- Header row: background var(--bg-tertiary), padding 10px 14px, font-size var(--text-body-3) (15px), weight 600, color var(--fg-primary), white-space nowrap, border-bottom 1px solid var(--border-tertiary)
+- Body cells: padding 10px 14px, font-size var(--text-body-3) (15px), color var(--fg-secondary), border-top 1px solid var(--border-tertiary) (except first row)
+- Jagged rows: map over headers, use row[j] ?? "" to pad missing cells
+
+CodeBlock:
+- Empty/whitespace code: return null
+- Background var(--bg-tertiary), border 1px solid var(--border-tertiary), border-radius var(--radius-small), padding var(--space-1) (16px), overflow-x-auto
+- <pre> white-space pre, <code> var(--font-mono), font-size var(--text-body-3) (15px), line-height 24px, color var(--fg-secondary)
+- Language label (if not "text"): position absolute, top 8px right 12px, font-size var(--text-micro) (10px), color var(--fg-tertiary), uppercase, letter-spacing 0.5px
+- No syntax highlighting (Phase A)
+
+BlockquoteBlock:
+- Empty spans: return null
+- Background rgba(235,201,183,0.12), border-left 3px solid var(--text-accent), border-top-right-radius var(--radius-small), border-bottom-right-radius var(--radius-small), padding var(--space-1) var(--space-1) var(--space-1) var(--space-1-5), margin var(--space-1-5) 0
+- Icon: lucide Lightbulb (variant "tip") or Info (variant "note"), 16px, color var(--text-accent), flex-shrink 0, margin-top 4px
+- Text: var(--font-sans), font-size var(--text-body-2) (17px), line-height 28px, color var(--fg-secondary)
+
+ListBlock:
+- Empty items: return null
+- <ul> or <ol>, var(--font-sans), font-size var(--text-body-1) (20px), line-height 32px, color var(--fg-secondary), padding-left var(--space-1-5) (24px)
+- list-style: disc (ul) or decimal (ol)
+- Item spacing: marginTop 4px for i > 0
+- Inline spans: same as ParagraphBlock
+
+Prev/Next navigation (bottom of content): flex justify-between, margin-top var(--space-5), padding-top var(--space-3), border-top 1px solid var(--border-tertiary). Links: 17px, var(--font-sans), color var(--fg-secondary), weight 400. ArrowLeft/ArrowRight icons 16px. First module: only "next". Last module: only "prev".
+
+LIFECYCLE DIAGRAM (shared component)
+
+5 stages in a linear flow: Sinh dữ liệu (Generation) → Lưu trữ (Storage) → Nạp dữ liệu (Ingestion) → Biến đổi (Transformation) → Phục vụ (Serving).
+
+Each node: pill shape, background var(--card) (or rgba(217,119,87,0.08) if active), border 1px solid var(--border-tertiary) (or var(--text-accent) if active), border-radius var(--radius-large), padding 12px 20px, text-align center, min-width 120px.
+
+Node label (Vietnamese): var(--font-serif), 17px, weight 500, color var(--fg-primary).
+Node sublabel (English): 13px, var(--font-sans), color var(--fg-tertiary), margin-top 2px.
+
+Arrows: SVG, stroke var(--border-secondary), strokeWidth 1.5. Horizontal on desktop (md:flex-row), vertical on mobile (flex-col). Arrowhead via SVG path.
+
+DATA FLOW
+
+Markdown files in ../Fundemental-Data-Eng/docs/module-XX-*.md → scripts/convert-docs.mjs (build-time, runs via prebuild npm script) → src/data/curriculum.json (Curriculum type: modules[] → sections[] → blocks[]). Server components import JSON directly. No runtime markdown parsing. Re-run `node scripts/convert-docs.mjs` or `npm run convert-docs` to update content.
+
+JSON structure: { modules: [{ id, number, title, subtitle, summary, sourceFile, sections: [{ id, number, title, blocks: [Block] }] }] }
+Block types: heading (level 2|3|4, text, id), paragraph (spans: InlineSpan[]), table (headers, rows), code (language, code), blockquote (variant tip|note, spans), list (ordered, items: InlineSpan[][])
+InlineSpan types: text, bold, italic, code, link (text + href)
+
+RESPONSIVE BREAKPOINTS
+
+Tailwind v4 defaults (mobile-first):
+- <768px (mobile): sidebar hidden (drawer toggle via hamburger), content full-width, module grid 1 col, lifecycle diagram vertical
+- ≥768px (md): sidebar visible, module grid 2 cols, lifecycle diagram horizontal
+- ≥1024px (lg): module grid 3 cols
+- ≥1440px: container max 90rem centered
+
+All fluid typography/spacing uses clamp(base+Nvw) — scales smoothly between 320px and 1440px viewport. No media-query font-size jumps.
+
+ACCESSIBILITY
+
+- Headings: weight 500 globally (base layer), serif font family
+- Sidebar: aria-expanded on group toggle buttons, aria-current="page" on active module link
+- Header: hamburger has aria-label="Toggle navigation"
+- Links: external links get rel="noopener noreferrer", target="_blank"
+- URL sanitization: link hrefs filtered via /^(https?:|\/|#|mailto:)/ — javascript: and data: URIs blocked
+- Scroll offset: scroll-margin-top 100px on all headings/sections (accounts for 84px fixed header)
+- Tables: no caption (Phase A limitation)
+
+TECH STACK
+
+Next.js 16 (App Router, React 19, TypeScript strict) — params is Promise, must await in dynamic pages. generateStaticParams pre-renders all module routes.
+Tailwind CSS v4.2 — @theme inline for font/color tokens, plain CSS classes for typography utilities (NOT @layer utilities or @utility — both broken in v4 for this use case)
+shadcn/ui (Radix primitives, cn() utility from @/lib/utils)
+lucide-react (icons: ArrowLeft, ArrowRight, ChevronDown, Lightbulb, Info, Menu)
+next/font/local (Anthropic Sans, Serif, Mono — woff2, weights 300-800, normal+italic)
+Node.js ESM script for markdown→JSON conversion (no external deps, built-in fs/path)
+
+CRITICAL GOTCHAS
+
+1. Tailwind v4 @layer utilities does NOT generate CSS. Use plain .class {} declarations instead.
+2. CSS clamp() with calc(rem + (number * length) / length) is INVALID — length/length produces unitless, + rem is type-mismatched. Always use calc(baseRem + Nvw) form.
+3. next/font generates CSS variables like --font-anthropic-sans: "anthropicSans", NOT "Anthropic Sans". The @theme inline must reference var(--font-anthropic-sans) first, then fallback to the named font.
+4. Next.js 16 params prop is a Promise — must `const { moduleId } = await params` in page components.
+5. No hardcoded colors/fonts/spacing — always use var(--xxx) tokens.
+6. No comments in code unless explicitly requested.
+7. Vietnamese UI text — all labels, navigation, breadcrumbs in Vietnamese.
