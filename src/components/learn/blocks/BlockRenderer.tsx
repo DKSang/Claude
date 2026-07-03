@@ -5,6 +5,7 @@ import { TableBlock } from "./TableBlock";
 import { CodeBlock } from "./CodeBlock";
 import { BlockquoteBlock } from "./BlockquoteBlock";
 import { ListBlock } from "./ListBlock";
+import { ComparisonTabs } from "./ComparisonTabs";
 
 interface BlockRendererProps {
   block: Block;
@@ -24,6 +25,8 @@ export function BlockRenderer({ block }: BlockRendererProps) {
       return <BlockquoteBlock variant={block.variant} spans={block.spans} />;
     case "list":
       return <ListBlock ordered={block.ordered} items={block.items} />;
+    case "tabs":
+      return <ComparisonTabs id={block.id} panels={block.panels} />;
     default:
       return null;
   }
