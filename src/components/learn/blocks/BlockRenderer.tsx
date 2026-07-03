@@ -11,7 +11,7 @@ interface BlockRendererProps {
   block: Block;
 }
 
-export function BlockRenderer({ block }: BlockRendererProps) {
+export async function BlockRenderer({ block }: BlockRendererProps) {
   switch (block.type) {
     case "heading":
       return <HeadingBlock level={block.level} text={block.text} id={block.id} />;

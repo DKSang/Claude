@@ -291,3 +291,14 @@ a.block:hover {
     animation: none !important;
   }
 }
+
+.shiki {
+  background: transparent !important;
+  margin: 0;
+  padding: 0;
+}
+.shiki code {
+  font-family: var(--font-mono);
+  font-size: var(--text-body-3);
+  line-height: 24px;
+}

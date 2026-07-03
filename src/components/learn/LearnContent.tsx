@@ -11,7 +11,7 @@ interface LearnContentProps {
   curriculum: Curriculum;
 }
 
-export function LearnContent({ module, curriculum }: LearnContentProps) {
+export async function LearnContent({ module, curriculum }: LearnContentProps) {
   const moduleIndex = curriculum.modules.findIndex((m) => m.id === module.id);
   if (moduleIndex === -1) return null;
   const prevModule = moduleIndex > 0 ? curriculum.modules[moduleIndex - 1] : null;
@@ -57,28 +57,29 @@ export function LearnContent({ module, curriculum }: LearnContentProps) {
           </p>
         )}
 
-        {module.sections.map((section) => {
-          const firstHeadingIdx = section.blocks.findIndex(
-            (b) => b.type === "heading" && b.level === 2 && b.text === section.title
-          );
-          const renderBlocks = firstHeadingIdx === 0
-            ? section.blocks.slice(1)
-            : section.blocks;
-          return (
-            <AccordionSection
-              key={section.id}
-              id={section.id}
-              title={section.title}
-              blockCount={section.blocks.length}
-            >
-              <FadeIn y={16}>
-                {renderBlocks.map((block, i) => (
-                  <BlockRenderer key={i} block={block} />
-                ))}
-              </FadeIn>
-            </AccordionSection>
-          );
-        })}
+        {(await Promise.all(
+          module.sections.map(async (section) => {
+            const firstHeadingIdx = section.blocks.findIndex(
+              (b) => b.type === "heading" && b.level === 2 && b.text === section.title
+            );
+            const renderBlocks = firstHeadingIdx === 0
+              ? section.blocks.slice(1)
+              : section.blocks;
+            const renderedBlocks = await Promise.all(
+              renderBlocks.map((block, i) => <BlockRenderer key={i} block={block} />)
+            );
+            return (
+              <AccordionSection
+                key={section.id}
+                id={section.id}
+                title={section.title}
+                blockCount={section.blocks.length}
+              >
+                <FadeIn y={16}>{renderedBlocks}</FadeIn>
+              </AccordionSection>
+            );
+          })
+        ))}
 
         <div
           className="flex justify-between"
