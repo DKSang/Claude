@@ -4,6 +4,7 @@ import type { Module, Curriculum } from "@/types/curriculum";
 import { BlockRenderer } from "./blocks/BlockRenderer";
 import { LifecycleDiagram } from "@/components/LifecycleDiagram";
 import { FadeIn } from "@/components/animations/FadeIn";
+import { AccordionSection } from "./AccordionSection";
 
 interface LearnContentProps {
   module: Module;
@@ -56,15 +57,28 @@ export function LearnContent({ module, curriculum }: LearnContentProps) {
           </p>
         )}
 
-        {module.sections.map((section) => (
-          <section key={section.id} id={section.id} style={{ scrollMarginTop: "100px" }}>
-            <FadeIn y={16}>
-              {section.blocks.map((block, i) => (
-                <BlockRenderer key={i} block={block} />
-              ))}
-            </FadeIn>
-          </section>
-        ))}
+        {module.sections.map((section) => {
+          const firstHeadingIdx = section.blocks.findIndex(
+            (b) => b.type === "heading" && b.level === 2 && b.text === section.title
+          );
+          const renderBlocks = firstHeadingIdx === 0
+            ? section.blocks.slice(1)
+            : section.blocks;
+          return (
+            <AccordionSection
+              key={section.id}
+              id={section.id}
+              title={section.title}
+              blockCount={section.blocks.length}
+            >
+              <FadeIn y={16}>
+                {renderBlocks.map((block, i) => (
+                  <BlockRenderer key={i} block={block} />
+                ))}
+              </FadeIn>
+            </AccordionSection>
+          );
+        })}
 
         <div
           className="flex justify-between"
