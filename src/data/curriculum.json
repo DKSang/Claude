@@ -1,12 +1,12 @@
 {
   "modules": [
     {
-      "id": "module-00-introduction",
+      "id": "module-0-introduction",
       "number": 0,
       "title": "Nhập môn Kỹ thuật Dữ liệu",
       "subtitle": "Vòng đời, Kiến trúc & Tư duy Lựa chọn Công nghệ",
       "summary": "Bài mở đầu này đặt nền cho toàn bộ khóa học Kỹ thuật Dữ liệu. Thay vì bắt đầu bằng danh sách công nghệ, ta bắt đầu bằng ba câu hỏi căn bản hơn: kỹ ...",
-      "sourceFile": "module-00-introduction.md",
+      "sourceFile": "module-0-introduction.md",
       "sections": [
         {
           "id": "nguon-tham-khao-duoc-dung-trong-bai-nay",
@@ -1394,12 +1394,12 @@
       ]
     },
     {
-      "id": "module-00-source-systems",
-      "number": 0,
+      "id": "module-1-source-systems",
+      "number": 1,
       "title": "Source Systems",
       "subtitle": "Dữ liệu sinh ra từ đâu?",
       "summary": "Sau bài này, bạn cần trả lời được bốn câu hỏi trước khi viết bất kỳ pipeline nào:\r",
-      "sourceFile": "module-00-source-systems.md",
+      "sourceFile": "module-1-source-systems.md",
       "sections": [
         {
           "id": "muc-tieu-hoc-tap",
@@ -2867,12 +2867,12 @@
       ]
     },
     {
-      "id": "module-00-storage-systems",
-      "number": 0,
+      "id": "module-2-storage-systems",
+      "number": 2,
       "title": "Storage Systems",
       "subtitle": "Dữ liệu được lưu ở đâu?",
       "summary": "Sau bài Source Systems, ta đã biết dữ liệu sinh ra ở đâu. Bài này trả lời câu hỏi tiếp theo: dữ liệu hạ cánh, nằm lại, và được tổ chức ở đâu trước ...",
-      "sourceFile": "module-00-storage-systems.md",
+      "sourceFile": "module-2-storage-systems.md",
       "sections": [
         {
           "id": "muc-tieu-hoc-tap",
@@ -6824,12 +6824,12 @@
       ]
     },
     {
-      "id": "module-01-ingestion",
-      "number": 1,
+      "id": "module-3-ingestion",
+      "number": 3,
       "title": "Ingestion",
       "subtitle": "Nạp dữ liệu từ nguồn công khai vào Bronze Lakehouse",
       "summary": "Module 1 đi vào giai đoạn Nạp dữ liệu (Ingestion) trong vòng đời kỹ thuật dữ liệu: đưa dữ liệu từ hệ thống nguồn về lớp lưu trữ đầu tiên để có thể ...",
-      "sourceFile": "module-01-ingestion.md",
+      "sourceFile": "module-3-ingestion.md",
       "sections": [
         {
           "id": "1-ingestion-la-gi-trong-data-engineering-lifecycle",
@@ -9817,12 +9817,12 @@
       ]
     },
     {
-      "id": "module-02-modeling",
-      "number": 2,
+      "id": "module-4-modeling",
+      "number": 4,
       "title": "Queries, Modeling & Transformation",
       "subtitle": "Từ câu hỏi đến mô hình dữ liệu",
       "summary": "Module 1 đã đưa dữ liệu thô từ các nguồn công khai như Open-Meteo, NASA POWER, OpenAQ và Vietnam Provinces vào vùng Bronze của lakehouse. Nhưng dữ ...",
-      "sourceFile": "module-02-modeling.md",
+      "sourceFile": "module-4-modeling.md",
       "sections": [
         {
           "id": "nguon-sach-duoc-dung-trong-bai-nay",
@@ -13701,12 +13701,12 @@
       ]
     },
     {
-      "id": "module-03-orchestration",
-      "number": 3,
+      "id": "module-5-orchestration",
+      "number": 5,
       "title": "Điều phối Luồng Dữ liệu",
       "subtitle": "Orchestration & DataOps với Airflow",
       "summary": "Sau Module 1 và Module 2, bạn đã có các mảnh quan trọng của pipeline dữ liệu: dlt hoặc Airbyte để nạp dữ liệu khí hậu/nông nghiệp công khai vào lak...",
-      "sourceFile": "module-03-orchestration.md",
+      "sourceFile": "module-5-orchestration.md",
       "sections": [
         {
           "id": "1-vi-sao-pipeline-can-nhac-truong",
@@ -16327,12 +16327,12 @@
       ]
     },
     {
-      "id": "module-04-streaming",
-      "number": 4,
+      "id": "module-6-streaming",
+      "number": 6,
       "title": "Xử lý Dữ liệu Thời gian Thực",
       "subtitle": "Streaming với Redpanda & Flink",
       "summary": "Sau Module 1, bạn đã học cách nạp dữ liệu public API theo lô bằng dlt. Sau Module 2, bạn đã thấy dbt và Trino/DuckDB biến dữ liệu thô thành mô hình...",
-      "sourceFile": "module-04-streaming.md",
+      "sourceFile": "module-6-streaming.md",
       "sections": [
         {
           "id": "nguon-kien-thuc-duoc-dung-trong-bai-nay",
@@ -18282,12 +18282,12 @@
       ]
     },
     {
-      "id": "module-05-enterprise",
-      "number": 5,
+      "id": "module-7-enterprise",
+      "number": 7,
       "title": "Enterprise Platform",
       "subtitle": "Serving, Security & Lakehouse Governance",
       "summary": "Sau các module trước, bạn đã đi qua gần trọn Vòng đời Kỹ thuật Dữ liệu (Data Engineering Lifecycle): hiểu nguồn dữ liệu, nạp dữ liệu, lưu trữ, mô h...",
-      "sourceFile": "module-05-enterprise.md",
+      "sourceFile": "module-7-enterprise.md",
       "sections": [
         {
           "id": "1-vi-sao-du-lieu-gold-chua-phai-diem-ket-thuc",
