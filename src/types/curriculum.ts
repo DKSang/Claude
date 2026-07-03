@@ -23,6 +23,12 @@ export type Block =
       type: "checkpoint";
       id: string;
       goals: { label: string; sectionId: string }[];
+    }
+  | {
+      type: "mindmap";
+      id: string;
+      nodes: { id: string; label: string; nodeType: "concept" | "tool" | "stage" }[];
+      edges: { from: string; to: string; label: string }[];
     };
 
 export interface Section {

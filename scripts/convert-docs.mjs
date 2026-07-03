@@ -291,6 +291,40 @@ function parseBlocks(lines, startIndex) {
       continue;
     }
 
+    if (line.startsWith(":::mindmap{")) {
+      const mmMatch = line.match(/id="([^"]*)"/);
+      const mmId = mmMatch ? mmMatch[1] : "";
+      i++;
+
+      const nodes = [];
+      const edges = [];
+      while (i < lines.length && !lines[i].startsWith(":::tabs{") && !lines[i].startsWith(":::quiz{") && !lines[i].startsWith(":::checkpoint{") && !lines[i].startsWith(":::mindmap{") && !lines[i].startsWith("## ") && !lines[i].startsWith("# ")) {
+        const directiveLine = lines[i];
+        if (directiveLine.trim() === ":::") {
+          i++;
+          break;
+        }
+        const nodeMatch = directiveLine.match(/^\s*-\s*node:\s*(\S+)\s*\|\s*"([^"]*)"\s*\|\s*(concept|tool|stage)\s*$/);
+        if (nodeMatch) {
+          nodes.push({ id: nodeMatch[1], label: nodeMatch[2], nodeType: nodeMatch[3] });
+          i++;
+          continue;
+        }
+        const edgeMatch = directiveLine.match(/^\s*-\s*edge:\s*(\S+)\s*->\s*(\S+)\s*\|\s*"([^"]*)"\s*$/);
+        if (edgeMatch) {
+          edges.push({ from: edgeMatch[1], to: edgeMatch[2], label: edgeMatch[3] });
+          i++;
+          continue;
+        }
+        i++;
+      }
+
+      if (nodes.length > 0) {
+        blocks.push({ type: "mindmap", id: mmId, nodes, edges });
+      }
+      continue;
+    }
+
     if (line.trim() === "") {
       i++;
       continue;
