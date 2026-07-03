@@ -325,6 +325,60 @@ function parseBlocks(lines, startIndex) {
       continue;
     }
 
+    if (line.startsWith(":::feynman{")) {
+      const feyIdMatch = line.match(/id="([^"]*)"/);
+      const feyTopicMatch = line.match(/topic="([^"]*)"/);
+      const feyId = feyIdMatch ? feyIdMatch[1] : "";
+      const feyTopic = feyTopicMatch ? feyTopicMatch[1] : "";
+      i++;
+
+      const keyPoints = [];
+      let sectionContext = "";
+
+      while (i < lines.length && !lines[i].startsWith(":::feynman{") && !lines[i].startsWith(":::tabs{") && !lines[i].startsWith(":::quiz{") && !lines[i].startsWith(":::checkpoint{") && !lines[i].startsWith(":::mindmap{") && !lines[i].startsWith("## ") && !lines[i].startsWith("# ")) {
+        const subLine = lines[i];
+
+        if (subLine.trim() === "::: keypoints" || subLine.trim() === ":::keypoints") {
+          i++;
+          while (i < lines.length && lines[i].trim() !== ":::") {
+            const kpLine = lines[i].trim();
+            if (kpLine.startsWith("- ")) {
+              keyPoints.push(kpLine.slice(2));
+            } else if (kpLine) {
+              keyPoints.push(kpLine);
+            }
+            i++;
+          }
+          i++;
+          continue;
+        }
+
+        if (subLine.trim() === "::: context" || subLine.trim() === ":::context") {
+          i++;
+          const ctxLines = [];
+          while (i < lines.length && lines[i].trim() !== ":::") {
+            ctxLines.push(lines[i]);
+            i++;
+          }
+          i++;
+          sectionContext = ctxLines.join(" ").trim();
+          continue;
+        }
+
+        if (subLine.trim() === ":::") {
+          i++;
+          break;
+        }
+
+        i++;
+      }
+
+      if (keyPoints.length > 0 || sectionContext) {
+        blocks.push({ type: "feynman", id: feyId, topic: feyTopic, keyPoints, sectionContext });
+      }
+      continue;
+    }
+
     if (line.trim() === "") {
       i++;
       continue;

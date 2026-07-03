@@ -29,6 +29,13 @@ export type Block =
       id: string;
       nodes: { id: string; label: string; nodeType: "concept" | "tool" | "stage" }[];
       edges: { from: string; to: string; label: string }[];
+    }
+  | {
+      type: "feynman";
+      id: string;
+      topic: string;
+      keyPoints: string[];
+      sectionContext: string;
     };
 
 export interface Section {
