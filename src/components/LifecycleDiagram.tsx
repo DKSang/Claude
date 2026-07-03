@@ -5,11 +5,11 @@ import { useRef } from "react";
 import { EASE_OUT_QUART, EASE_EXPO_OUT } from "@/lib/motion";
 
 const LIFECYCLE_STAGES = [
-  { vi: "Sinh dữ liệu", en: "Generation", moduleId: "module-00-source-systems" },
-  { vi: "Lưu trữ", en: "Storage", moduleId: "module-00-storage-systems" },
-  { vi: "Nạp dữ liệu", en: "Ingestion", moduleId: "module-01-ingestion" },
-  { vi: "Biến đổi", en: "Transformation", moduleId: "module-02-modeling" },
-  { vi: "Phục vụ", en: "Serving", moduleId: "module-05-enterprise" },
+  { vi: "Sinh dữ liệu", en: "Generation", moduleId: "module-1-source-systems" },
+  { vi: "Lưu trữ", en: "Storage", moduleId: "module-2-storage-systems" },
+  { vi: "Nạp dữ liệu", en: "Ingestion", moduleId: "module-3-ingestion" },
+  { vi: "Biến đổi", en: "Transformation", moduleId: "module-4-modeling" },
+  { vi: "Phục vụ", en: "Serving", moduleId: "module-7-enterprise" },
 ] as const;
 
 const ARROW_H = "M4 12 L20 12";
