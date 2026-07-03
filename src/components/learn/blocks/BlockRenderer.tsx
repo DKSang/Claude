@@ -24,5 +24,7 @@ export function BlockRenderer({ block }: BlockRendererProps) {
       return <BlockquoteBlock variant={block.variant} spans={block.spans} />;
     case "list":
       return <ListBlock ordered={block.ordered} items={block.items} />;
+    default:
+      return null;
   }
 }

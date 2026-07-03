@@ -13,6 +13,17 @@ export function HeadingBlock({ level, text, id }: HeadingBlockProps) {
   const marginTop = level === 2 ? "mt-[var(--space-4)]" : level === 3 ? "mt-[var(--space-3)]" : "mt-[var(--space-2-5)]";
   const marginBottom = level === 2 ? "mb-[var(--space-1-5)]" : level === 3 ? "mb-[var(--space-1)]" : "mb-[var(--space-0-75)]";
 
+  if (!id) {
+    return (
+      <Tag
+        className={cn(sizeClass, bottomBorder, marginTop, marginBottom)}
+        style={{ scrollMarginTop: "80px", color: "var(--fg-primary)" }}
+      >
+        {text}
+      </Tag>
+    );
+  }
+
   return (
     <Tag
       id={id}

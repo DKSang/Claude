@@ -4,6 +4,7 @@ interface TableBlockProps {
 }
 
 export function TableBlock({ headers, rows }: TableBlockProps) {
+  if (!headers.length) return null;
   return (
     <div
       className="mb-[var(--space-1-5)] overflow-x-auto"
@@ -36,19 +37,22 @@ export function TableBlock({ headers, rows }: TableBlockProps) {
         <tbody>
           {rows.map((row, i) => (
             <tr key={i}>
-              {row.map((cell, j) => (
-                <td
-                  key={j}
-                  style={{
-                    padding: "10px 14px",
-                    fontSize: "var(--text-body-3)",
-                    color: "var(--fg-secondary)",
-                    borderTop: i === 0 ? "none" : "1px solid var(--border-tertiary)",
-                  }}
-                >
-                  {cell}
-                </td>
-              ))}
+              {headers.map((_, j) => {
+                const cell = row[j] ?? "";
+                return (
+                  <td
+                    key={j}
+                    style={{
+                      padding: "10px 14px",
+                      fontSize: "var(--text-body-3)",
+                      color: "var(--fg-secondary)",
+                      borderTop: i === 0 ? "none" : "1px solid var(--border-tertiary)",
+                    }}
+                  >
+                    {cell}
+                  </td>
+                );
+              })}
             </tr>
           ))}
         </tbody>

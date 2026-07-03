@@ -4,6 +4,7 @@ interface CodeBlockProps {
 }
 
 export function CodeBlock({ language, code }: CodeBlockProps) {
+  if (!code.trim()) return null;
   return (
     <div
       className="mb-[var(--space-1-5)] relative overflow-x-auto"

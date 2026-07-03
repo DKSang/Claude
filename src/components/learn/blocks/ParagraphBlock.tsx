@@ -23,15 +23,22 @@ function Span({ span }: { span: InlineSpan }) {
           {span.text}
         </code>
       );
-    case "link":
+    case "link": {
+      const safeHref = /^(https?:|\/|#|mailto:)/.test(span.href) ? span.href : undefined;
+      if (!safeHref) return <>{span.text}</>;
+      const isExternal = safeHref.startsWith("http");
       return (
         <a
-          href={span.href}
+          href={safeHref}
+          {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
           style={{ color: "var(--text-accent)", textDecoration: "underline" }}
         >
           {span.text}
         </a>
       );
+    }
+    default:
+      return null;
   }
 }
 
@@ -40,6 +47,7 @@ interface ParagraphBlockProps {
 }
 
 export function ParagraphBlock({ spans }: ParagraphBlockProps) {
+  if (!spans.length) return null;
   return (
     <p
       className="mb-[var(--space-1)]"

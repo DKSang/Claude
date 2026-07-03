@@ -24,12 +24,22 @@ function Span({ span }: { span: InlineSpan }) {
           {span.text}
         </code>
       );
-    case "link":
+    case "link": {
+      const safeHref = /^(https?:|\/|#|mailto:)/.test(span.href) ? span.href : undefined;
+      if (!safeHref) return <>{span.text}</>;
+      const isExternal = safeHref.startsWith("http");
       return (
-        <a href={span.href} style={{ color: "var(--text-accent)", textDecoration: "underline" }}>
+        <a
+          href={safeHref}
+          {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+          style={{ color: "var(--text-accent)", textDecoration: "underline" }}
+        >
           {span.text}
         </a>
       );
+    }
+    default:
+      return null;
   }
 }
 
@@ -39,6 +49,7 @@ interface BlockquoteBlockProps {
 }
 
 export function BlockquoteBlock({ variant, spans }: BlockquoteBlockProps) {
+  if (!spans.length) return null;
   const Icon = variant === "note" ? Info : Lightbulb;
   return (
     <div

@@ -23,12 +23,22 @@ function Span({ span }: { span: InlineSpan }) {
           {span.text}
         </code>
       );
-    case "link":
+    case "link": {
+      const safeHref = /^(https?:|\/|#|mailto:)/.test(span.href) ? span.href : undefined;
+      if (!safeHref) return <>{span.text}</>;
+      const isExternal = safeHref.startsWith("http");
       return (
-        <a href={span.href} style={{ color: "var(--text-accent)", textDecoration: "underline" }}>
+        <a
+          href={safeHref}
+          {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+          style={{ color: "var(--text-accent)", textDecoration: "underline" }}
+        >
           {span.text}
         </a>
       );
+    }
+    default:
+      return null;
   }
 }
 
@@ -38,6 +48,7 @@ interface ListBlockProps {
 }
 
 export function ListBlock({ ordered, items }: ListBlockProps) {
+  if (!items.length) return null;
   const Tag = ordered ? "ol" : "ul";
   return (
     <Tag
