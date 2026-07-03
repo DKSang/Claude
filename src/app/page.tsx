@@ -13,18 +13,18 @@ export default function Home() {
       <LearnHeader />
       <main className="flex flex-col" style={{ paddingTop: 56 }}>
         <section
-          className="mx-auto w-full"
+          className="mx-auto w-full flex flex-col items-center text-center"
           style={{
-            maxWidth: "90rem",
-            padding: "var(--section-space-page-top) var(--container-margin) var(--space-4)",
+            maxWidth: "48rem",
+            padding: "var(--space-6) var(--container-margin) var(--space-4)",
           }}
         >
           <h1
-            className="text-display-1"
+            className="text-display-2"
             style={{
               color: "var(--fg-primary)",
-              maxWidth: 800,
               lineHeight: 1.1,
+              maxWidth: "36rem",
             }}
           >
             Data Engineering Lifecycle
@@ -33,11 +33,12 @@ export default function Home() {
             style={{
               fontSize: "var(--text-body-large-1)",
               color: "var(--fg-tertiary)",
-              maxWidth: 600,
+              maxWidth: "32rem",
               marginTop: "var(--space-1-5)",
+              lineHeight: 1.5,
             }}
           >
-            Khóa học lý thuyết Data Engineering: từ nguồn dữ liệu đến phục vụ phân tích. Học qua vòng đời 5 giai đoạn với ví dụ Climate &amp; Smart Agriculture Việt Nam.
+            Học lý thuyết Data Engineering qua 5 giai đoạn vòng đời — từ nguồn dữ liệu đến phục vụ phân tích.
           </p>
           <div style={{ marginTop: "var(--space-4)" }}>
             <LifecycleDiagram />
@@ -47,13 +48,23 @@ export default function Home() {
         <section
           className="mx-auto w-full"
           style={{
-            maxWidth: "90rem",
+            maxWidth: "64rem",
             padding: "0 var(--container-margin) var(--section-space-main)",
           }}
         >
+          <h2
+            className="text-h4"
+            style={{
+              color: "var(--fg-primary)",
+              marginBottom: "var(--space-2-5)",
+              textAlign: "center",
+            }}
+          >
+            Khóa học
+          </h2>
           <div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-            style={{ gap: "var(--space-1-5)" }}
+            style={{ gap: "var(--space-1)" }}
           >
             {curriculum.modules.map((mod) => (
               <ModuleCard key={mod.id} module={mod} />
