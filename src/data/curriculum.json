@@ -9765,7 +9765,7 @@
               "nodes": [
                 {
                   "id": "ingestion",
-                  "label": "Nap du lieu",
+                  "label": "Nạp dữ liệu",
                   "nodeType": "stage"
                 },
                 {
@@ -9818,22 +9818,22 @@
                 {
                   "from": "source",
                   "to": "ingestion",
-                  "label": "nap tu nguon"
+                  "label": "nạp từ nguồn"
                 },
                 {
                   "from": "ingestion",
                   "to": "bronze",
-                  "label": "land tai"
+                  "label": "land tại"
                 },
                 {
                   "from": "ingestion",
                   "to": "batch",
-                  "label": "che do 1"
+                  "label": "chế độ 1"
                 },
                 {
                   "from": "ingestion",
                   "to": "stream",
-                  "label": "che do 2"
+                  "label": "chế độ 2"
                 },
                 {
                   "from": "batch",
@@ -9853,12 +9853,12 @@
                 {
                   "from": "dlt",
                   "to": "ingestion",
-                  "label": "tool nap"
+                  "label": "tool nạp"
                 },
                 {
                   "from": "airbyte",
                   "to": "ingestion",
-                  "label": "tool nap"
+                  "label": "tool nạp"
                 },
                 {
                   "from": "soda",
@@ -9872,7 +9872,7 @@
         {
           "id": "kiem-tra-hieu-biet-phuong-phap-feynman",
           "number": 14,
-          "title": "Kiem tra hieu biet — Phuong phap Feynman",
+          "title": "Kiểm tra hiểu biết — Phương pháp Feynman",
           "blocks": [
             {
               "type": "feynman",

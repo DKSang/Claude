@@ -151,7 +151,7 @@ export function QuizBlock({ question, options, onSaveScore }: QuizBlockProps) {
             transition: "background 0.2s var(--ease-expo-out)",
           }}
         >
-          Kiem tra dap an
+          Kiểm tra đáp án
         </button>
       ) : (
         <div style={{
@@ -186,7 +186,7 @@ export function QuizBlock({ question, options, onSaveScore }: QuizBlockProps) {
             }}
           >
             <RotateCcw size={14} />
-            Thu lai
+            Thử lại
           </button>
         </div>
       )}

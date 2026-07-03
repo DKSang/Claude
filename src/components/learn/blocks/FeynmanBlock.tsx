@@ -27,7 +27,7 @@ export function FeynmanBlock({ id, topic, moduleId, onSaveScore, keyPoints, sect
 
   async function submit() {
     if (explanation.trim().length < 20) {
-      setError("Hay viet it nhat 20 ky tu de giai thich.");
+      setError("Hãy viết ít nhất 20 ký tự để giải thích.");
       return;
     }
     setLoading(true);
@@ -44,9 +44,9 @@ export function FeynmanBlock({ id, topic, moduleId, onSaveScore, keyPoints, sect
       if (!res.ok) {
         const data = await res.json();
         if (data.fallback) {
-          setError("Khong the ket noi AI. Thu lai sau.");
+          setError("Không thể kết nối AI. Thử lại sau.");
         } else {
-          setError("Loi danh gia. Thu lai.");
+          setError("Lỗi đánh giá. Thử lại.");
         }
         setLoading(false);
         return;
@@ -56,7 +56,7 @@ export function FeynmanBlock({ id, topic, moduleId, onSaveScore, keyPoints, sect
       setEvaluation(data);
       onSaveScore(data.score, data.suggestions);
     } catch {
-      setError("Loi ket noi. Thu lai sau.");
+      setError("Lỗi kết nối. Thử lại sau.");
     } finally {
       setLoading(false);
     }
@@ -83,7 +83,7 @@ export function FeynmanBlock({ id, topic, moduleId, onSaveScore, keyPoints, sect
         color: "var(--fg-primary)",
         marginBottom: "var(--space-0-5)",
       }}>
-        Kiem tra hieu biet: {topic}
+        Kiểm tra hiểu biết: {topic}
       </div>
       <p style={{
         fontSize: "var(--text-body-3)",
@@ -92,7 +92,7 @@ export function FeynmanBlock({ id, topic, moduleId, onSaveScore, keyPoints, sect
         margin: "0 0 var(--space-1) 0",
         lineHeight: "24px",
       }}>
-        Giai thich chu de nay bang loi cua ban, nhu dang day cho nguoi moi bat dau. AI se danh gia ban hieu biet cua ban.
+        Giải thích chủ đề này bằng lời của bạn, như đang dạy cho người mới bắt đầu. AI sẽ đánh giá bản hiểu biết của bạn.
       </p>
 
       {!evaluation && (
@@ -104,7 +104,7 @@ export function FeynmanBlock({ id, topic, moduleId, onSaveScore, keyPoints, sect
               if (error) setError(null);
             }}
             disabled={loading}
-            placeholder="Giai thich o day..."
+            placeholder="Giải thích ở đây..."
             style={{
               width: "100%",
               minHeight: 120,
@@ -160,7 +160,7 @@ export function FeynmanBlock({ id, topic, moduleId, onSaveScore, keyPoints, sect
             }}
           >
             {loading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
-            {loading ? "Dang danh gia..." : "Gui danh gia"}
+            {loading ? "Đang đánh giá..." : "Gửi đánh giá"}
           </button>
         </>
       )}
@@ -196,14 +196,14 @@ export function FeynmanBlock({ id, topic, moduleId, onSaveScore, keyPoints, sect
                 color: "var(--fg-secondary)",
                 fontWeight: 500,
               }}>
-                Diem hieu biet
+                Điểm hiểu biết
               </div>
               <div style={{
                 fontSize: "var(--text-body-3)",
                 color: "var(--fg-tertiary)",
                 fontFamily: "var(--font-sans)",
               }}>
-                {evaluation.score >= 70 ? "Ban hieu rat tot!" : evaluation.score >= 40 ? "Ban hieu co ban, con co the cai thien." : "Can on tap lai chu de nay."}
+                {evaluation.score >= 70 ? "Bạn hiểu rất tốt!" : evaluation.score >= 40 ? "Bạn hiểu cơ bản, còn có thể cải thiện." : "Cần ôn tập lại chủ đề này."}
               </div>
             </div>
           </div>
@@ -220,7 +220,7 @@ export function FeynmanBlock({ id, topic, moduleId, onSaveScore, keyPoints, sect
                 alignItems: "center",
                 gap: 4,
               }}>
-                <Check size={14} /> Diem da hieu dung
+                <Check size={14} /> Điểm đã hiểu đúng
               </div>
               <ul style={{ margin: 0, paddingLeft: 20, listStyleType: "disc" }}>
                 {evaluation.correctPoints.map((p, i) => (
@@ -250,7 +250,7 @@ export function FeynmanBlock({ id, topic, moduleId, onSaveScore, keyPoints, sect
                 alignItems: "center",
                 gap: 4,
               }}>
-                <AlertCircle size={14} /> Diem chua hoac hieu sai
+                <AlertCircle size={14} /> Điểm chưa hoặc hiểu sai
               </div>
               <ul style={{ margin: 0, paddingLeft: 20, listStyleType: "disc" }}>
                 {evaluation.missingPoints.map((p, i) => (
@@ -280,7 +280,7 @@ export function FeynmanBlock({ id, topic, moduleId, onSaveScore, keyPoints, sect
                 fontFamily: "var(--font-sans)",
                 color: "var(--fg-tertiary)",
               }}>
-                <strong style={{ fontWeight: 500, color: "var(--fg-secondary)" }}>Goi y: </strong>
+                <strong style={{ fontWeight: 500, color: "var(--fg-secondary)" }}>Gợi ý: </strong>
                 {evaluation.suggestions}
               </span>
             </div>
@@ -304,7 +304,7 @@ export function FeynmanBlock({ id, topic, moduleId, onSaveScore, keyPoints, sect
             }}
           >
             <RotateCcw size={14} />
-            Thu lai
+            Thử lại
           </button>
         </div>
       )}

@@ -23,7 +23,7 @@ export function CopyButton({ code }: CopyButtonProps) {
     <button
       type="button"
       onClick={handleCopy}
-      aria-label={copied ? "Da sao chep" : "Sao chep ma"}
+      aria-label={copied ? "Đã sao chép" : "Sao chép mã"}
       style={{
         display: "flex",
         alignItems: "center",
@@ -41,7 +41,7 @@ export function CopyButton({ code }: CopyButtonProps) {
       }}
     >
       {copied ? <Check size={14} /> : <Copy size={14} />}
-      {copied ? "Da chep" : "Sao chep"}
+      {copied ? "Đã chép" : "Sao chép"}
     </button>
   );
 }

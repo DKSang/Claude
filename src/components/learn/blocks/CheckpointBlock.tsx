@@ -35,7 +35,7 @@ export function CheckpointBlock({ goals, completedGoals, onToggleGoal }: Checkpo
           fontWeight: 500,
           color: "var(--fg-primary)",
         }}>
-          Muc tieo bai hoc
+          Mục tiêu bài học
         </div>
         <span style={{
           fontSize: "14px",
