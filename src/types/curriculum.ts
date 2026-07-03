@@ -11,7 +11,8 @@ export type Block =
   | { type: "table"; headers: string[]; rows: string[][] }
   | { type: "code"; language: string; code: string }
   | { type: "blockquote"; variant: "tip" | "note"; spans: InlineSpan[] }
-  | { type: "list"; ordered: boolean; items: InlineSpan[][] };
+  | { type: "list"; ordered: boolean; items: InlineSpan[][] }
+  | { type: "tabs"; id: string; panels: { label: string; spans: InlineSpan[] }[] };
 
 export interface Section {
   id: string;
