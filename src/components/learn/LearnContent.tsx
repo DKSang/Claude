@@ -70,7 +70,7 @@ export async function LearnContent({ module, curriculum }: LearnContentProps) {
               : section.blocks;
             const renderedBlocks = await Promise.all(
               renderBlocks.map((block, i) => {
-                if (block.type === "quiz" || block.type === "checkpoint") {
+                if (block.type === "quiz" || block.type === "checkpoint" || block.type === "mindmap") {
                   return <InteractiveBlock key={i} block={block} moduleId={module.id} />;
                 }
                 return <BlockRenderer key={i} block={block} />;

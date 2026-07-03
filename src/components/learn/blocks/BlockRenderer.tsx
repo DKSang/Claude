@@ -29,6 +29,7 @@ export async function BlockRenderer({ block }: BlockRendererProps) {
       return <ComparisonTabs id={block.id} panels={block.panels} />;
     case "quiz":
     case "checkpoint":
+    case "mindmap":
       return null;
     default:
       return null;

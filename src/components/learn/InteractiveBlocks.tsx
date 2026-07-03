@@ -3,8 +3,11 @@
 import { useProgress } from "@/hooks/useProgress";
 import { QuizBlock } from "./blocks/QuizBlock";
 import { CheckpointBlock } from "./blocks/CheckpointBlock";
+import dynamic from "next/dynamic";
 import { ReadingProgress } from "@/components/ReadingProgress";
 import type { Block, Section } from "@/types/curriculum";
+
+const MindMapBlock = dynamic(() => import("./blocks/MindMapBlock").then(m => m.MindMapBlock), { ssr: false });
 
 interface InteractiveContentProps {
   moduleId: string;
@@ -34,6 +37,9 @@ export function InteractiveBlock({ block, moduleId }: { block: Block; moduleId: 
   }
   if (block.type === "checkpoint") {
     return <CheckpointBlock id={block.id} goals={block.goals} completedGoals={progress?.checkpointGoals ?? []} onToggleGoal={toggleGoal} />;
+  }
+  if (block.type === "mindmap") {
+    return <MindMapBlock id={block.id} nodes={block.nodes} edges={block.edges} />;
   }
   return null;
 }
