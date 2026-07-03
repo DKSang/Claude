@@ -557,37 +557,37 @@
               ],
               "rows": [
                 [
-                  "Module 0.1",
+                  "Module 1",
                   "Source Systems",
                   "Generation / Source Systems"
                 ],
                 [
-                  "Module 0.2",
+                  "Module 2",
                   "Storage Systems & Abstractions",
                   "Storage, File Format, Table Format"
                 ],
                 [
-                  "Module 1",
+                  "Module 3",
                   "Ingestion với dlt/Airbyte",
                   "Ingestion, Quality"
                 ],
                 [
-                  "Module 2",
+                  "Module 4",
                   "Modeling với dbt + Trino",
                   "Transformation, Table Metadata"
                 ],
                 [
-                  "Module 3",
+                  "Module 5",
                   "Orchestration với Airflow lite",
                   "Orchestration, DataOps"
                 ],
                 [
-                  "Module 4",
+                  "Module 6",
                   "Streaming với Redpanda/Flink",
                   "Stream Ingestion, Event Time"
                 ],
                 [
-                  "Module 5",
+                  "Module 7",
                   "Trino, Streamlit, Governance/Security",
                   "Serving, BI/Data App, Governance"
                 ]
@@ -1331,7 +1331,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Sau bài này, Module 0.1 đi sâu vào Source Systems: API, file, OLTP/OLAP, CDC, message/stream và các loại thời gian. Module 0.2 đi sâu vào Storage: object storage, file format, table format, catalog và các lớp trừu tượng như warehouse/lake/lakehouse."
+                  "text": "Sau bài này, Module 1 đi sâu vào Source Systems: API, file, OLTP/OLAP, CDC, message/stream và các loại thời gian. Module 2 đi sâu vào Storage: object storage, file format, table format, catalog và các lớp trừu tượng như warehouse/lake/lakehouse."
                 }
               ]
             }
@@ -1450,11 +1450,11 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Bài này nằm ở Module 0 vì nó là tầng Generation trong vòng đời kỹ thuật dữ liệu (Data Engineering Lifecycle). Nếu không hiểu nguồn, bước nạp dữ liệu (Ingestion) ở "
+                  "text": "Bài này nằm ở Module 1 vì nó là tầng Generation trong vòng đời kỹ thuật dữ liệu (Data Engineering Lifecycle). Nếu không hiểu nguồn, bước nạp dữ liệu (Ingestion) ở "
                 },
                 {
                   "type": "code",
-                  "text": "docs/module-01-ingestion.md"
+                  "text": "docs/module-3-ingestion.md"
                 },
                 {
                   "type": "text",
@@ -2854,7 +2854,7 @@
                 },
                 {
                   "type": "code",
-                  "text": "docs/module-01-ingestion.md"
+                  "text": "docs/module-3-ingestion.md"
                 },
                 {
                   "type": "text",
@@ -2927,10 +2927,6 @@
                   {
                     "type": "bold",
                     "text": "và thực tế các cloud storage hiện đại (2020 trở đi) đứng ở đâu trong bức tranh này?"
-                  },
-                  {
-                    "type": "text",
-                    "text": " 🆕"
                   }
                 ],
                 [
@@ -2949,10 +2945,6 @@
                   {
                     "type": "bold",
                     "text": "Table Format (Iceberg, Delta Lake, Hudi, DuckLake) khác gì nhau, và vì sao chúng ra đời?"
-                  },
-                  {
-                    "type": "text",
-                    "text": " 🆕"
                   }
                 ],
                 [
@@ -2971,10 +2963,6 @@
                   {
                     "type": "bold",
                     "text": "Small Files Problem là gì, vì sao nó xảy ra, và các kỹ thuật compaction nào giải quyết nó?"
-                  },
-                  {
-                    "type": "text",
-                    "text": " 🆕"
                   }
                 ]
               ]
@@ -4215,7 +4203,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 5.1 Thực tế hiện nay: object storage lớn phần lớn đã là Strong Consistency",
+              "text": "5.1 Thực tế hiện nay: object storage lớn phần lớn đã là Strong Consistency",
               "id": "51-thuc-te-hien-nay-object-storage-lon-phan-lon-da-la-strong-consistency"
             },
             {
@@ -4555,7 +4543,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 6.1 Cạm bẫy Partitioning: Over-partitioning và mối liên hệ với Small Files",
+              "text": "6.1 Cạm bẫy Partitioning: Over-partitioning và mối liên hệ với Small Files",
               "id": "61-cam-bay-partitioning-over-partitioning-va-moi-lien-he-voi-small-files"
             },
             {
@@ -4775,7 +4763,7 @@
         {
           "id": "71-table-format-iceberg-delta-lake-hudi-ducklake-vi-sao-chung-ra-doi-va-khac-nhau-o-dau",
           "number": 9,
-          "title": "🆕 7.1 Table Format: Iceberg, Delta Lake, Hudi, DuckLake — vì sao chúng ra đời và khác nhau ở đâu",
+          "title": "7.1 Table Format: Iceberg, Delta Lake, Hudi, DuckLake — vì sao chúng ra đời và khác nhau ở đâu",
           "blocks": [
             {
               "type": "paragraph",
@@ -5770,7 +5758,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 10.1 Small Files Problem: vì sao xảy ra và cách xử lý bằng Compaction",
+              "text": "10.1 Small Files Problem: vì sao xảy ra và cách xử lý bằng Compaction",
               "id": "101-small-files-problem-vi-sao-xay-ra-va-cach-xu-ly-bang-compaction"
             },
             {
@@ -6323,7 +6311,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 12.2.1 Áp dụng tiering thực tế: MinIO local không có tiering — vậy học để làm gì?",
+              "text": "12.2.1 Áp dụng tiering thực tế: MinIO local không có tiering — vậy học để làm gì?",
               "id": "1221-ap-dung-tiering-thuc-te-minio-local-khong-co-tiering-vay-hoc-de-lam-gi"
             },
             {
@@ -6632,10 +6620,6 @@
                   {
                     "type": "bold",
                     "text": "Object storage hiện đại (S3 từ 2020, GCS, Azure Blob, MinIO) phần lớn đã là strong read-after-write consistency ở tầng object đơn lẻ — eventual consistency vẫn là mô hình quan trọng cần hiểu, nhưng nên định vị đúng chỗ nó còn xuất hiện: catalog commit, cache layer, một số hệ NoSQL."
-                  },
-                  {
-                    "type": "text",
-                    "text": " 🆕"
                   }
                 ],
                 [
@@ -6646,10 +6630,6 @@
                   {
                     "type": "bold",
                     "text": "chọn cột partition sai (cardinality quá cao) là nguyên nhân trực tiếp gây ra small files problem."
-                  },
-                  {
-                    "type": "text",
-                    "text": " 🆕"
                   }
                 ],
                 [
@@ -6662,10 +6642,6 @@
                   {
                     "type": "bold",
                     "text": "Table format (Iceberg, Delta Lake, Hudi, DuckLake) là lớp metadata giải quyết vấn đề transaction, schema evolution và time travel mà kiểu \"Hive-style table\" thuần list-file không làm được; mỗi format có điểm mạnh và hệ sinh thái riêng, DuckLake phù hợp cho project cá nhân/học tập nhưng chưa phổ biến ở production doanh nghiệp lớn như Iceberg/Delta."
-                  },
-                  {
-                    "type": "text",
-                    "text": " 🆕"
                   }
                 ],
                 [
@@ -6696,10 +6672,6 @@
                   {
                     "type": "bold",
                     "text": "Small Files Problem xảy ra khi ingest tần suất cao/over-partitioning tạo quá nhiều file nhỏ, làm chậm hệ thống do overhead mở file và list operation; Compaction (batch job hoặc lệnh built-in của table format như Iceberg `rewrite_data_files`/Delta `OPTIMIZE`) là kỹ thuật khắc phục chính, cùng với việc thiết kế target file size ngay từ bước ingestion."
-                  },
-                  {
-                    "type": "text",
-                    "text": " 🆕"
                   }
                 ],
                 [
@@ -6716,10 +6688,6 @@
                   {
                     "type": "bold",
                     "text": "các storage tier tự động (Hot/Cool/Cold/Archive) là tính năng của managed cloud storage, không có sẵn trên MinIO local — cần tự mô phỏng bằng job/policy ở mức ứng dụng khi học local, và chuyển sang Lifecycle Rules thật khi triển khai production."
-                  },
-                  {
-                    "type": "text",
-                    "text": " 🆕"
                   }
                 ]
               ]
@@ -6733,7 +6701,7 @@
                 },
                 {
                   "type": "code",
-                  "text": "docs/module-00-source-systems.md"
+                  "text": "docs/module-1-source-systems.md"
                 },
                 {
                   "type": "text",
@@ -6746,7 +6714,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Khi sang Module 1 Ingestion, bạn sẽ thấy dữ liệu từ Open-Meteo/NASA POWER/OpenAQ/Vietnam Provinces được ghi vào Bronze trên MinIO dưới dạng Parquet/DuckLake và cần quality gate bằng Soda Core. Khi sang Module 2 Transformation, dbt-duckdb hoặc SQL scripts sẽ quản lý transformations còn DuckDB thực thi query trên DuckLake tables. Khi sang Module 5 Lakehouse/Serving, DuckDB/Quack và Streamlit sẽ phục vụ dữ liệu Gold cho dashboard, còn catalog, lineage, security và retention trở thành điều kiện để hệ thống đáng tin."
+                  "text": "Khi sang Module 3 Ingestion, bạn sẽ thấy dữ liệu từ Open-Meteo/NASA POWER/OpenAQ/Vietnam Provinces được ghi vào Bronze trên MinIO dưới dạng Parquet/DuckLake và cần quality gate bằng Soda Core. Khi sang Module 4 Transformation, dbt-duckdb hoặc SQL scripts sẽ quản lý transformations còn DuckDB thực thi query trên DuckLake tables. Khi sang Module 7 Lakehouse/Serving, DuckDB/Quack và Streamlit sẽ phục vụ dữ liệu Gold cho dashboard, còn catalog, lineage, security và retention trở thành điều kiện để hệ thống đáng tin."
                 }
               ]
             }
@@ -6802,11 +6770,11 @@
                   "Giải thích các tối ưu sâu giữa compute và storage, có thể đọc sau khi đã nắm separation cơ bản"
                 ],
                 [
-                  "**🆕 Apache Iceberg / Delta Lake / Hudi chi tiết kỹ thuật**",
+                  "**Apache Iceberg / Delta Lake / Hudi chi tiết kỹ thuật**",
                   "Bài này chỉ so sánh ở mức khái niệm (mục 7.1); nếu muốn hiểu sâu transaction log format, manifest file, conflict resolution — nên đọc riêng docs chính thức của từng dự án khi cần chuyển từ DuckLake sang production table format"
                 ],
                 [
-                  "**🆕 File compaction strategies nâng cao (sort-based compaction, Z-ordering)**",
+                  "**File compaction strategies nâng cao (sort-based compaction, Z-ordering)**",
                   "Mục 10.1 chỉ giới thiệu compaction cơ bản; Z-ordering (multi-dimensional clustering, dùng trong Delta Lake `OPTIMIZE ZORDER BY`) là kỹ thuật nâng cao hơn, phù hợp đọc khi đã quen với partitioning/clustering cơ bản"
                 ]
               ]
@@ -6820,7 +6788,7 @@
       "number": 3,
       "title": "Ingestion",
       "subtitle": "Nạp dữ liệu từ nguồn công khai vào Bronze Lakehouse",
-      "summary": "Module 1 đi vào giai đoạn Nạp dữ liệu (Ingestion) trong vòng đời kỹ thuật dữ liệu: đưa dữ liệu từ hệ thống nguồn về lớp lưu trữ đầu tiên để có thể ...",
+      "summary": "Module 3 đi vào giai đoạn Nạp dữ liệu (Ingestion) trong vòng đời kỹ thuật dữ liệu: đưa dữ liệu từ hệ thống nguồn về lớp lưu trữ đầu tiên để có thể ...",
       "sourceFile": "module-3-ingestion.md",
       "sections": [
         {
@@ -6894,7 +6862,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 1.1 Data Contract: hợp đồng giữa Source và Ingestion — mảnh ghép còn thiếu",
+              "text": "1.1 Data Contract: hợp đồng giữa Source và Ingestion — mảnh ghép còn thiếu",
               "id": "11-data-contract-hop-dong-giua-source-va-ingestion-manh-ghep-con-thieu"
             },
             {
@@ -7056,7 +7024,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Module 1 dùng các nguồn công khai để gắn bài học với bài toán Việt Nam:"
+                  "text": "Module 3 dùng các nguồn công khai để gắn bài học với bài toán Việt Nam:"
                 }
               ]
             },
@@ -7449,7 +7417,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 3.1 Đào sâu câu hỏi #17: các kiểu Pagination và cách chọn đúng",
+              "text": "3.1 Đào sâu câu hỏi #17: các kiểu Pagination và cách chọn đúng",
               "id": "31-dao-sau-cau-hoi-17-cac-kieu-pagination-va-cach-chon-dung"
             },
             {
@@ -7533,7 +7501,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 3.2 Đào sâu câu hỏi #15: xử lý Rate Limit bằng Exponential Backoff + Jitter",
+              "text": "3.2 Đào sâu câu hỏi #15: xử lý Rate Limit bằng Exponential Backoff + Jitter",
               "id": "32-dao-sau-cau-hoi-15-xu-ly-rate-limit-bang-exponential-backoff-jitter"
             },
             {
@@ -7752,7 +7720,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Module 1 bắt đầu bằng batch hoặc micro-batch. Điều này không có nghĩa dữ liệu thực tế là bounded. Ta chỉ đặt ranh giới để học viên có thể ingest, kiểm tra và debug dễ dàng."
+                  "text": "Module 3 bắt đầu bằng batch hoặc micro-batch. Điều này không có nghĩa dữ liệu thực tế là bounded. Ta chỉ đặt ranh giới để học viên có thể ingest, kiểm tra và debug dễ dàng."
                 }
               ]
             },
@@ -7796,7 +7764,7 @@
                 [
                   "Near-real-time/stream",
                   "Xử lý từng event cảm biến",
-                  "Phức tạp hơn, để sang Module 4"
+                  "Phức tạp hơn, để sang Module 6"
                 ]
               ]
             },
@@ -7849,7 +7817,7 @@
                   },
                   {
                     "type": "text",
-                    "text": ": Source đẩy message vào queue hoặc event log, pipeline đọc sau. Cách này chịu lỗi tốt hơn và giảm phụ thuộc trực tiếp, nhưng cần thêm hạ tầng. Module 4 sẽ quay lại Redpanda/Flink để học kỹ hơn."
+                    "text": ": Source đẩy message vào queue hoặc event log, pipeline đọc sau. Cách này chịu lỗi tốt hơn và giảm phụ thuộc trực tiếp, nhưng cần thêm hạ tầng. Module 6 sẽ quay lại Redpanda/Flink để học kỹ hơn."
                   }
                 ]
               ]
@@ -7886,7 +7854,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Trong Module 1, source thường trả JSON hoặc file CSV/JSON. Bronze layer ưu tiên Parquet/Iceberg trên MinIO vì analytics scan hiệu quả hơn và có metadata tốt hơn. Ingestion phải tôn trọng sự khác biệt này:"
+                  "text": "Trong Module 3, source thường trả JSON hoặc file CSV/JSON. Bronze layer ưu tiên Parquet/Iceberg trên MinIO vì analytics scan hiệu quả hơn và có metadata tốt hơn. Ingestion phải tôn trọng sự khác biệt này:"
                 }
               ]
             },
@@ -8100,7 +8068,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Module 1 chủ yếu dùng pull/poll vì phù hợp với API công khai và dễ chạy lại. Push và event-driven sẽ hợp hơn với hệ thống streaming hoặc webhook thực tế."
+                  "text": "Module 3 chủ yếu dùng pull/poll vì phù hợp với API công khai và dễ chạy lại. Push và event-driven sẽ hợp hơn với hệ thống streaming hoặc webhook thực tế."
                 }
               ]
             },
@@ -8612,7 +8580,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 5.5 Blind spot của Watermark: Incremental Pattern KHÔNG phát hiện được Deleted Records",
+              "text": "5.5 Blind spot của Watermark: Incremental Pattern KHÔNG phát hiện được Deleted Records",
               "id": "55-blind-spot-cua-watermark-incremental-pattern-khong-phat-hien-duoc-deleted-records"
             },
             {
@@ -8877,7 +8845,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 6.3.1 \"Effectively-once\": vì sao đây mới là thuật ngữ chính xác, và giới hạn thực tế của MERGE-based idempotency",
+              "text": "6.3.1 \"Effectively-once\": vì sao đây mới là thuật ngữ chính xác, và giới hạn thực tế của MERGE-based idempotency",
               "id": "631-effectively-once-vi-sao-day-moi-la-thuat-ngu-chinh-xac-va-gioi-han-thuc-te-cua-merge-based-idempotency"
             },
             {
@@ -9186,7 +9154,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Module 1 không xây hệ thống streaming chuyên sâu, nhưng học viên cần biết các vấn đề stream/message ingestion trước khi sang Module 4."
+                  "text": "Module 3 không xây hệ thống streaming chuyên sâu, nhưng học viên cần biết các vấn đề stream/message ingestion trước khi sang Module 6."
                 }
               ]
             },
@@ -9238,7 +9206,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Module 4 sẽ học sau về event time, watermark và windowing. Story 3.1 chỉ cần nắm: ordering và duplicate delivery là lý do batch/stream đều cần idempotency."
+                  "text": "Module 6 sẽ học sau về event time, watermark và windowing. Story 3.1 chỉ cần nắm: ordering và duplicate delivery là lý do batch/stream đều cần idempotency."
                 }
               ]
             },
@@ -9313,7 +9281,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 8.5 Change Data Capture (CDC): ba phương pháp chính — vì sao bài gốc chỉ nhắc tên mà chưa đủ",
+              "text": "8.5 Change Data Capture (CDC): ba phương pháp chính — vì sao bài gốc chỉ nhắc tên mà chưa đủ",
               "id": "85-change-data-capture-cdc-ba-phuong-phap-chinh-vi-sao-bai-goc-chi-nhac-ten-ma-chua-du"
             },
             {
@@ -9380,7 +9348,7 @@
               "spans": [
                 {
                   "type": "bold",
-                  "text": "Vì sao Module 1 của AgriTech không cần CDC"
+                  "text": "Vì sao Module 3 của AgriTech không cần CDC"
                 },
                 {
                   "type": "text",
@@ -9559,7 +9527,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 10.1 Observability cho Ingestion Pipeline: những chỉ số cần theo dõi từ ngày đầu",
+              "text": "10.1 Observability cho Ingestion Pipeline: những chỉ số cần theo dõi từ ngày đầu",
               "id": "101-observability-cho-ingestion-pipeline-nhung-chi-so-can-theo-doi-tu-ngay-dau"
             },
             {
@@ -9654,7 +9622,7 @@
                 [
                   "Bounded/Unbounded",
                   "Dữ liệu đã đóng khung hay liên tục?",
-                  "Batch theo ngày/tọa độ/tỉnh, streaming để Module 4"
+                  "Batch theo ngày/tọa độ/tỉnh, streaming để Module 6"
                 ],
                 [
                   "Frequency",
@@ -9664,7 +9632,7 @@
                 [
                   "Push/Pull/Poll",
                   "Ai chủ động đưa/lấy dữ liệu?",
-                  "Module 1 chủ yếu pull/poll public APIs"
+                  "Module 3 chủ yếu pull/poll public APIs"
                 ],
                 [
                   "Payload",
@@ -9697,22 +9665,22 @@
                   "Đọc từ `.env`/secret config, commit placeholder"
                 ],
                 [
-                  "**🆕 Data Contract**",
+                  "**Data Contract**",
                   "Hợp đồng schema/SLA giữa source và pipeline có tường minh không?",
                   "Tự viết \"data contract nội bộ\" cho từng public API dù không ký được hợp đồng chính thức"
                 ],
                 [
-                  "**🆕 Deleted records blind spot**",
+                  "**Deleted records blind spot**",
                   "Watermark pattern có bỏ sót record bị xóa ở nguồn không?",
                   "Chấp nhận theo nguyên tắc Bronze immutable; dùng full reconciliation cho reference data như Vietnam Provinces"
                 ],
                 [
-                  "**🆕 CDC methods**",
+                  "**CDC methods**",
                   "Nếu source là database, nên dùng query/trigger/log-based CDC nào?",
-                  "Module 1 chỉ dùng query-based (watermark) vì source là public API; log-based CDC để dành cho database nội bộ tương lai"
+                  "Module 3 chỉ dùng query-based (watermark) vì source là public API; log-based CDC để dành cho database nội bộ tương lai"
                 ],
                 [
-                  "**🆕 Observability**",
+                  "**Observability**",
                   "Làm sao biết pipeline đang \"âm thầm hỏng\" trước khi downstream báo lỗi?",
                   "Theo dõi freshness/volume/schema/latency — nền tảng cho Soda Core checks ở Story 3.3"
                 ]
@@ -9756,11 +9724,11 @@
               "rows": [
                 [
                   "Change Data Capture (CDC)",
-                  "🆕 Đã bổ sung khái niệm cốt lõi ở mục 8.5 (query/trigger/log-based); chi tiết triển khai Debezium/AWS DMS vẫn để lại cho khi project có database source thật"
+                  "Đã bổ sung khái niệm cốt lõi ở mục 8.5 (query/trigger/log-based); chi tiết triển khai Debezium/AWS DMS vẫn để lại cho khi project có database source thật"
                 ],
                 [
                   "Message queues",
-                  "Sẽ học kỹ hơn với Redpanda/Flink ở Module 4"
+                  "Sẽ học kỹ hơn với Redpanda/Flink ở Module 6"
                 ],
                 [
                   "Watermark/windowing (streaming)",
@@ -9775,11 +9743,11 @@
                   "Thuộc Story 3.3 quality done gate; mục 10.1 đã đặt nền tảng lý thuyết (4 nhóm chỉ số) cho phần này"
                 ],
                 [
-                  "**🆕 Schema Registry (Avro/Protobuf schema registry)**",
-                  "Data Contract ở mục 1.1 mới dừng ở mức khái niệm; triển khai schema registry thật (ví dụ Confluent Schema Registry) chỉ cần thiết khi làm việc với streaming/Kafka ở Module 4"
+                  "**Schema Registry (Avro/Protobuf schema registry)**",
+                  "Data Contract ở mục 1.1 mới dừng ở mức khái niệm; triển khai schema registry thật (ví dụ Confluent Schema Registry) chỉ cần thiết khi làm việc với streaming/Kafka ở Module 6"
                 ],
                 [
-                  "**🆕 Circuit Breaker pattern cho API không ổn định**",
+                  "**Circuit Breaker pattern cho API không ổn định**",
                   "Liên quan tới exponential backoff ở mục 3.2, nhưng là kỹ thuật nâng cao hơn (tự động \"ngắt mạch\" tạm dừng gọi API khi tỷ lệ lỗi vượt ngưỡng) — phù hợp đọc khi pipeline đã chạy production và cần resilience engineering sâu hơn"
                 ]
               ]
@@ -9928,7 +9896,7 @@
       "number": 4,
       "title": "Queries, Modeling & Transformation",
       "subtitle": "Từ câu hỏi đến mô hình dữ liệu",
-      "summary": "Module 1 đã đưa dữ liệu thô từ các nguồn công khai như Open-Meteo, NASA POWER, OpenAQ và Vietnam Provinces vào vùng Bronze của lakehouse. Nhưng dữ ...",
+      "summary": "Module 3 đã đưa dữ liệu thô từ các nguồn công khai như Open-Meteo, NASA POWER, OpenAQ và Vietnam Provinces vào vùng Bronze của lakehouse. Nhưng dữ ...",
       "sourceFile": "module-4-modeling.md",
       "sections": [
         {
@@ -9995,7 +9963,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Module 0 giúp bạn hiểu nguồn và lưu trữ: dữ liệu sinh ra từ đâu, vì sao Parquet, DuckLake, DuckDB, Supabase/PostgreSQL catalog và MinIO có vai trò khác nhau. Module 1 giúp bạn hiểu ingestion: batch, incremental, idempotency, schema evolution, late data. Module 2 bắt đầu khi dữ liệu đã nằm trong vùng phân tích nhưng còn thô."
+                  "text": "Module 0 giúp bạn hiểu nguồn và lưu trữ: dữ liệu sinh ra từ đâu, vì sao Parquet, DuckLake, DuckDB, Supabase/PostgreSQL catalog và MinIO có vai trò khác nhau. Module 3 giúp bạn hiểu ingestion: batch, incremental, idempotency, schema evolution, late data. Module 4 bắt đầu khi dữ liệu đã nằm trong vùng phân tích nhưng còn thô."
                 }
               ]
             },
@@ -10190,7 +10158,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 2.2.1 Cost-Based Optimizer vs Rule-Based Optimizer, và cách đọc EXPLAIN plan thực tế",
+              "text": "2.2.1 Cost-Based Optimizer vs Rule-Based Optimizer, và cách đọc EXPLAIN plan thực tế",
               "id": "221-cost-based-optimizer-vs-rule-based-optimizer-va-cach-doc-explain-plan-thuc-te"
             },
             {
@@ -11372,7 +11340,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 6.2.1 Ba loại Fact Table: Transaction, Periodic Snapshot, Accumulating Snapshot",
+              "text": "6.2.1 Ba loại Fact Table: Transaction, Periodic Snapshot, Accumulating Snapshot",
               "id": "621-ba-loai-fact-table-transaction-periodic-snapshot-accumulating-snapshot"
             },
             {
@@ -11465,7 +11433,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 6.2.2 Junk Dimension, Degenerate Dimension, Role-Playing Dimension",
+              "text": "6.2.2 Junk Dimension, Degenerate Dimension, Role-Playing Dimension",
               "id": "622-junk-dimension-degenerate-dimension-role-playing-dimension"
             },
             {
@@ -11636,7 +11604,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "5.2-bis 🆕 Bridge Table: xử lý quan hệ nhiều-nhiều trong Dimensional Modeling",
+              "text": "5.2-bis Bridge Table: xử lý quan hệ nhiều-nhiều trong Dimensional Modeling",
               "id": "52-bis-bridge-table-xu-ly-quan-he-nhieu-nhieu-trong-dimensional-modeling"
             },
             {
@@ -12031,14 +11999,14 @@
                 },
                 {
                   "type": "text",
-                  "text": " dùng Hub, Link và Satellite để lưu khóa nghiệp vụ, quan hệ và thuộc tính theo thời gian. Nó mạnh khi nhiều nguồn thay đổi liên tục và cần audit sâu, nhưng rộng hơn phạm vi thực hành Module 2."
+                  "text": " dùng Hub, Link và Satellite để lưu khóa nghiệp vụ, quan hệ và thuộc tính theo thời gian. Nó mạnh khi nhiều nguồn thay đổi liên tục và cần audit sâu, nhưng rộng hơn phạm vi thực hành Module 4."
                 }
               ]
             },
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 6.4.1 Hub, Link, Satellite — bộ khung tối thiểu để không bị hỏi bí",
+              "text": "6.4.1 Hub, Link, Satellite — bộ khung tối thiểu để không bị hỏi bí",
               "id": "641-hub-link-satellite-bo-khung-toi-thieu-de-khong-bi-hoi-bi"
             },
             {
@@ -13027,8 +12995,8 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 8.4 dbt Materialization Strategy: view/table/incremental/ephemeral — mảnh ghép còn thiếu nối Module 1 với Module 2",
-              "id": "84-dbt-materialization-strategy-viewtableincrementalephemeral-manh-ghep-con-thieu-noi-module-1-voi-module-2"
+              "text": "8.4 dbt Materialization Strategy: view/table/incremental/ephemeral — mảnh ghép còn thiếu nối Module 3 với Module 4",
+              "id": "84-dbt-materialization-strategy-viewtableincrementalephemeral-manh-ghep-con-thieu-noi-module-3-voi-module-4"
             },
             {
               "type": "paragraph",
@@ -13047,7 +13015,7 @@
                 },
                 {
                   "type": "bold",
-                  "text": "watermark/incremental pattern đã học kỹ ở Module 1"
+                  "text": "watermark/incremental pattern đã học kỹ ở Module 3"
                 },
                 {
                   "type": "text",
@@ -13084,7 +13052,7 @@
                 [
                   "**incremental**",
                   "Chỉ xử lý và thêm/cập nhật phần dữ liệu **mới** kể từ lần chạy trước, thay vì build lại toàn bộ bảng",
-                  "Fact table lớn, tăng dần theo thời gian như `fact_weather_daily` — đây chính là nơi bạn *áp dụng lại* watermark pattern đã học ở Module 1 §5, nhưng giờ nằm trong dbt config thay vì tự viết bằng tay"
+                  "Fact table lớn, tăng dần theo thời gian như `fact_weather_daily` — đây chính là nơi bạn *áp dụng lại* watermark pattern đã học ở Module 3 §5, nhưng giờ nằm trong dbt config thay vì tự viết bằng tay"
                 ],
                 [
                   "**ephemeral**",
@@ -13113,7 +13081,7 @@
                   },
                   {
                     "type": "text",
-                    "text": ": Chỉ chèn thêm dòng mới, không kiểm tra trùng lặp. Nhanh nhưng rủi ro tạo bản ghi trùng nếu chạy lại (không idempotent) — nhắc lại đúng vấn đề \"at-least-once delivery\" đã học ở Module 1 §6.3."
+                    "text": ": Chỉ chèn thêm dòng mới, không kiểm tra trùng lặp. Nhanh nhưng rủi ro tạo bản ghi trùng nếu chạy lại (không idempotent) — nhắc lại đúng vấn đề \"at-least-once delivery\" đã học ở Module 3 §6.3."
                   }
                 ],
                 [
@@ -13123,7 +13091,7 @@
                   },
                   {
                     "type": "text",
-                    "text": " (tương đương MERGE/upsert đã học chi tiết ở Module 1 §6.1–6.2): So khớp theo "
+                    "text": " (tương đương MERGE/upsert đã học chi tiết ở Module 3 §6.1–6.2): So khớp theo "
                   },
                   {
                     "type": "code",
@@ -13189,7 +13157,7 @@
                 },
                 {
                   "type": "text",
-                  "text": " chính là hiện thân trong dbt của watermark pattern (Module 1 §5.3): "
+                  "text": " chính là hiện thân trong dbt của watermark pattern (Module 3 §5.3): "
                 },
                 {
                   "type": "code",
@@ -13197,7 +13165,7 @@
                 },
                 {
                   "type": "text",
-                  "text": " tham chiếu tới chính bảng đích để lấy watermark hiện tại, thay vì cần một bảng metadata riêng như ví dụ thủ công ở Module 1 — dbt đã đóng gói sẵn cơ chế đó cho bạn."
+                  "text": " tham chiếu tới chính bảng đích để lấy watermark hiện tại, thay vì cần một bảng metadata riêng như ví dụ thủ công ở Module 3 — dbt đã đóng gói sẵn cơ chế đó cho bạn."
                 }
               ]
             }
@@ -13300,7 +13268,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 9.3 Semantic Layer / Metrics Layer: giải quyết \"Metric Drift\" tận gốc",
+              "text": "9.3 Semantic Layer / Metrics Layer: giải quyết \"Metric Drift\" tận gốc",
               "id": "93-semantic-layer-metrics-layer-giai-quyet-metric-drift-tan-goc"
             },
             {
@@ -13389,7 +13357,7 @@
               "spans": [
                 {
                   "type": "bold",
-                  "text": "Vì sao Module 2 chưa cần triển khai thật"
+                  "text": "Vì sao Module 4 chưa cần triển khai thật"
                 },
                 {
                   "type": "text",
@@ -13614,7 +13582,7 @@
                   "DuckDB tối ưu scan/join/filter trên DuckLake/Parquet"
                 ],
                 [
-                  "**🆕 Cost-Based vs Rule-Based Optimizer**",
+                  "**Cost-Based vs Rule-Based Optimizer**",
                   "Optimizer chọn plan dựa trên luật cố định hay chi phí ước lượng từ statistics?",
                   "DuckDB/Trino/Spark dùng CBO — statistics lỗi thời làm chọn sai plan"
                 ],
@@ -13649,17 +13617,17 @@
                   "`fact_weather_daily` (90% size) vs `dim_province` (10% size)"
                 ],
                 [
-                  "**🆕 Loại Fact Table**",
+                  "**Loại Fact Table**",
                   "Transaction, Periodic Snapshot, hay Accumulating Snapshot?",
                   "`fact_weather_daily` là periodic snapshot; một fact vòng đời mùa vụ sẽ là accumulating snapshot"
                 ],
                 [
-                  "**🆕 Junk / Degenerate / Role-Playing Dimension**",
+                  "**Junk / Degenerate / Role-Playing Dimension**",
                   "Cờ dữ liệu, ID không thuộc tính, và một dimension đóng nhiều vai xử lý ra sao?",
                   "`dim_data_quality_flags`, `batch_id` trong fact, `dim_date` đóng vai sowing/harvest date"
                 ],
                 [
-                  "**🆕 Bridge Table**",
+                  "**Bridge Table**",
                   "Quan hệ nhiều-nhiều giữa dimension xử lý sao mà không double-count?",
                   "`bridge_province_crop` cho quan hệ tỉnh-cây trồng"
                 ],
@@ -13674,7 +13642,7 @@
                   "Khi lệch độ hạt giữa các Fact (Actuals ở cấp Station vs Target ở cấp Province)"
                 ],
                 [
-                  "**🆕 Data Vault: Hub/Link/Satellite**",
+                  "**Data Vault: Hub/Link/Satellite**",
                   "Khóa, quan hệ, thuộc tính-theo-thời-gian tách riêng ra sao?",
                   "Hub chỉ chứa business key; Satellite là nơi duy nhất chứa dữ liệu thay đổi"
                 ],
@@ -13694,9 +13662,9 @@
                   "`EXPLODE`/`UNNEST`, `CAST`, `CASE WHEN`, `ROW_NUMBER()` để khử trùng trước MERGE, và `COALESCE`"
                 ],
                 [
-                  "**🆕 dbt Materialization**",
+                  "**dbt Materialization**",
                   "view/table/incremental/ephemeral khác nhau ra sao, khi nào dùng gì?",
-                  "`fact_weather_daily` nên dùng `incremental` + `merge` — chính là watermark pattern Module 1 đóng gói trong dbt"
+                  "`fact_weather_daily` nên dùng `incremental` + `merge` — chính là watermark pattern Module 3 đóng gói trong dbt"
                 ],
                 [
                   "ELT",
@@ -13714,7 +13682,7 @@
                   "DuckDB extensions cho quy mô gọn nhẹ; Trino/Presto là hướng mở rộng đọc thêm"
                 ],
                 [
-                  "**🆕 Semantic Layer / Metrics Layer**",
+                  "**Semantic Layer / Metrics Layer**",
                   "Làm sao đảm bảo mọi dashboard tính cùng một metric giống nhau?",
                   "Định nghĩa metric một lần (dbt Semantic Layer/MetricFlow), mọi công cụ downstream gọi lại — chưa cần triển khai ở quy mô một dashboard"
                 ],
@@ -13763,7 +13731,7 @@
               "rows": [
                 [
                   "Data Vault chi tiết",
-                  "🆕 Đã bổ sung khung Hub/Link/Satellite tối thiểu ở mục 6.4.1; PIT (Point-In-Time) và Bridge tables chuyên sâu của Data Vault (khác Bridge table ở mục 5.2-bis, vốn là khái niệm Kimball) vẫn cần một bài riêng"
+                  "Đã bổ sung khung Hub/Link/Satellite tối thiểu ở mục 6.4.1; PIT (Point-In-Time) và Bridge tables chuyên sâu của Data Vault (khác Bridge table ở mục 5.2-bis, vốn là khái niệm Kimball) vẫn cần một bài riêng"
                 ],
                 [
                   "4NF-6NF",
@@ -13783,10 +13751,10 @@
                 ],
                 [
                   "Semantic Layer / Metrics Layer",
-                  "🆕 Đã bổ sung khái niệm cốt lõi và ví dụ ở mục 9.3; triển khai thật (dbt Semantic Layer/MetricFlow, Cube, LookML) phù hợp hơn khi có nhiều dashboard/app cùng tiêu thụ Gold layer"
+                  "Đã bổ sung khái niệm cốt lõi và ví dụ ở mục 9.3; triển khai thật (dbt Semantic Layer/MetricFlow, Cube, LookML) phù hợp hơn khi có nhiều dashboard/app cùng tiêu thụ Gold layer"
                 ],
                 [
-                  "**🆕 Snapshot feature của dbt (`dbt snapshot`)**",
+                  "**Snapshot feature của dbt (`dbt snapshot`)**",
                   "Liên quan trực tiếp tới SCD Type 2 ở mục 7 — dbt có sẵn cơ chế `snapshot` tự động hóa việc tạo `effective_from`/`effective_to`/`is_current`, nhưng cần môi trường chạy thật nên để dành cho Story 4.2"
                 ]
               ]
@@ -13800,7 +13768,7 @@
       "number": 5,
       "title": "Điều phối Luồng Dữ liệu",
       "subtitle": "Orchestration & DataOps với Airflow",
-      "summary": "Sau Module 1 và Module 2, bạn đã có các mảnh quan trọng của pipeline dữ liệu: dlt hoặc Airbyte để nạp dữ liệu khí hậu/nông nghiệp công khai vào lak...",
+      "summary": "Sau Module 3 và Module 4, bạn đã có các mảnh quan trọng của pipeline dữ liệu: dlt hoặc Airbyte để nạp dữ liệu khí hậu/nông nghiệp công khai vào lak...",
       "sourceFile": "module-5-orchestration.md",
       "sections": [
         {
@@ -13991,15 +13959,15 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "1.3 Vị trí Module 3 trong lifecycle",
-              "id": "13-vi-tri-module-3-trong-lifecycle"
+              "text": "1.3 Vị trí Module 5 trong lifecycle",
+              "id": "13-vi-tri-module-5-trong-lifecycle"
             },
             {
               "type": "paragraph",
               "spans": [
                 {
                   "type": "text",
-                  "text": "Module 3 nằm ở giao điểm của "
+                  "text": "Module 5 nằm ở giao điểm của "
                 },
                 {
                   "type": "bold",
@@ -14229,7 +14197,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 2.4 Executor: ai thực sự chạy task, và vì sao Docker Compose ở Story 5.2 cần biết điều này",
+              "text": "2.4 Executor: ai thực sự chạy task, và vì sao Docker Compose ở Story 5.2 cần biết điều này",
               "id": "24-executor-ai-thuc-su-chay-task-va-vi-sao-docker-compose-o-story-52-can-biet-dieu-nay"
             },
             {
@@ -14640,7 +14608,7 @@
                   },
                   {
                     "type": "text",
-                    "text": " đã học ở Module 1 để tránh ghi trùng dữ liệu khi chạy lại."
+                    "text": " đã học ở Module 3 để tránh ghi trùng dữ liệu khi chạy lại."
                   }
                 ]
               ]
@@ -14737,7 +14705,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 3.5 Logical Date, Data Interval và Catchup — điểm nhầm lẫn kinh điển của người mới học Airflow",
+              "text": "3.5 Logical Date, Data Interval và Catchup — điểm nhầm lẫn kinh điển của người mới học Airflow",
               "id": "35-logical-date-data-interval-va-catchup-diem-nham-lan-kinh-dien-cua-nguoi-moi-hoc-airflow"
             },
             {
@@ -14938,7 +14906,7 @@
                 [
                   {
                     "type": "text",
-                    "text": "Với pipeline gọi API công khai như Open-Meteo/OpenAQ, catchup vô tình bật có thể khiến 180 lần chạy dồn dập gọi API cùng lúc, dễ dính rate limit (đã học ở Module 1 §3.2) hoặc tốn tài nguyên không cần thiết."
+                    "text": "Với pipeline gọi API công khai như Open-Meteo/OpenAQ, catchup vô tình bật có thể khiến 180 lần chạy dồn dập gọi API cùng lúc, dễ dính rate limit (đã học ở Module 3 §3.2) hoặc tốn tài nguyên không cần thiết."
                   }
                 ],
                 [
@@ -14972,7 +14940,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 3.6 XCom: cách các task trao đổi dữ liệu nhỏ với nhau",
+              "text": "3.6 XCom: cách các task trao đổi dữ liệu nhỏ với nhau",
               "id": "36-xcom-cach-cac-task-trao-doi-du-lieu-nho-voi-nhau"
             },
             {
@@ -15114,7 +15082,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 3.7 Sensor: chờ điều kiện thay vì chạy ngay",
+              "text": "3.7 Sensor: chờ điều kiện thay vì chạy ngay",
               "id": "37-sensor-cho-dieu-kien-thay-vi-chay-ngay"
             },
             {
@@ -15418,7 +15386,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 4.5 Pools và Concurrency Control: cơ chế thật để \"tuần tự hóa\" ghi dữ liệu",
+              "text": "4.5 Pools và Concurrency Control: cơ chế thật để \"tuần tự hóa\" ghi dữ liệu",
               "id": "45-pools-va-concurrency-control-co-che-that-de-tuan-tu-hoa-ghi-du-lieu"
             },
             {
@@ -15983,7 +15951,7 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "🆕 5.7 SLA Miss vs Timeout: hai khái niệm dễ nhầm khi cấu hình cảnh báo thời gian",
+              "text": "5.7 SLA Miss vs Timeout: hai khái niệm dễ nhầm khi cấu hình cảnh báo thời gian",
               "id": "57-sla-miss-vs-timeout-hai-khai-niem-de-nham-khi-cau-hinh-canh-bao-thoi-gian"
             },
             {
@@ -16246,11 +16214,11 @@
                   "Nhắc rõ DuckDB thực thi SQL, `dbt` quản lý model/test/docs"
                 ],
                 [
-                  "**🆕 `catchup=True` mặc định gây chạy bù hàng loạt ngoài ý muốn**",
+                  "**`catchup=True` mặc định gây chạy bù hàng loạt ngoài ý muốn**",
                   "Đặt `catchup=False` khi không chủ định backfill; dùng `airflow dags backfill` có kiểm soát khi cần"
                 ],
                 [
-                  "**🆕 Truyền dữ liệu lớn qua XCom làm phình metadata DB**",
+                  "**Truyền dữ liệu lớn qua XCom làm phình metadata DB**",
                   "Chỉ dùng XCom cho giá trị nhỏ (row count, đường dẫn file); dữ liệu thật luôn đi qua MinIO/DuckLake"
                 ]
               ]
@@ -16287,7 +16255,7 @@
                   "`dlt`, Airbyte, `dbt`, DuckDB, Soda Core là nhạc công"
                 ],
                 [
-                  "**🆕 Executor quyết định task chạy ở đâu**",
+                  "**Executor quyết định task chạy ở đâu**",
                   "LocalExecutor đủ cho khóa học; Celery/Kubernetes dành cho scale production"
                 ],
                 [
@@ -16307,19 +16275,19 @@
                   "On success, on failure, on completion, on skip giúp rẽ nhánh linh hoạt"
                 ],
                 [
-                  "**🆕 Logical Date & Catchup**",
+                  "**Logical Date & Catchup**",
                   "DAG run \"ngày X\" xử lý dữ liệu của khoảng đã trôi qua, không phải giờ chạy thật; `catchup=False` tránh chạy bù hàng loạt ngoài ý muốn"
                 ],
                 [
-                  "**🆕 XCom**",
+                  "**XCom**",
                   "Chỉ truyền giá trị nhỏ giữa task (row count, path) — không truyền dữ liệu lớn qua metadata DB"
                 ],
                 [
-                  "**🆕 Sensor: Poke vs Reschedule**",
+                  "**Sensor: Poke vs Reschedule**",
                   "Poke giữ tài nguyên liên tục; Reschedule nhả tài nguyên khi chờ — ưu tiên reschedule cho pipeline học tập"
                 ],
                 [
-                  "**🆕 Pools & Concurrency Control**",
+                  "**Pools & Concurrency Control**",
                   "`max_active_runs`, `max_active_tasks`, và Pool là cơ chế thật để tuần tự hóa ghi DuckLake giữa các task/DAG"
                 ],
                 [
@@ -16331,7 +16299,7 @@
                   "Tập trung logic gửi cảnh báo lỗi vào một đầu mối duy nhất thông qua callback dùng chung"
                 ],
                 [
-                  "**🆕 SLA Miss vs Timeout**",
+                  "**SLA Miss vs Timeout**",
                   "Timeout chủ động kill task treo; SLA chỉ cảnh báo sớm mà không dừng task"
                 ],
                 [
@@ -16389,7 +16357,7 @@
                 ],
                 [
                   "Airflow executor nâng cao",
-                  "🆕 Đã bổ sung khái niệm bốn loại executor ở mục 2.4; Celery/Kubernetes executor chi tiết (cấu hình worker, autoscaling) không cần cho local curriculum ban đầu"
+                  "Đã bổ sung khái niệm bốn loại executor ở mục 2.4; Celery/Kubernetes executor chi tiết (cấu hình worker, autoscaling) không cần cho local curriculum ban đầu"
                 ],
                 [
                   "Airflow asset-based scheduling",
@@ -16404,7 +16372,7 @@
                   "Thuộc observability production, chưa cần cho bài nhập môn"
                 ],
                 [
-                  "**🆕 TaskGroup và tổ chức DAG lớn**",
+                  "**TaskGroup và tổ chức DAG lớn**",
                   "Khi DAG có hàng chục task (ví dụ ingest riêng từng nguồn: Open-Meteo, NASA POWER, OpenAQ, Provinces), TaskGroup giúp gom nhóm trực quan trong UI — hữu ích khi Story 5.3 mở rộng, nhưng chưa cần cho DAG 4-task ban đầu"
                 ]
               ]
@@ -16418,7 +16386,7 @@
       "number": 6,
       "title": "Xử lý Dữ liệu Thời gian Thực",
       "subtitle": "Streaming với Redpanda & Flink",
-      "summary": "Sau Module 1, bạn đã học cách nạp dữ liệu public API theo lô bằng dlt. Sau Module 2, bạn đã thấy dbt và Trino/DuckDB biến dữ liệu thô thành mô hình...",
+      "summary": "Sau Module 3, bạn đã học cách nạp dữ liệu public API theo lô bằng dlt. Sau Module 4, bạn đã thấy dbt và Trino/DuckDB biến dữ liệu thô thành mô hình...",
       "sourceFile": "module-6-streaming.md",
       "sections": [
         {
@@ -16488,8 +16456,8 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "1.1 Hành trình từ Module 1-3 và giới hạn của batch",
-              "id": "11-hanh-trinh-tu-module-1-3-va-gioi-han-cua-batch"
+              "text": "1.1 Hành trình từ Module 3-5 và giới hạn của batch",
+              "id": "11-hanh-trinh-tu-module-3-5-va-gioi-han-cua-batch"
             },
             {
               "type": "paragraph",
@@ -16576,8 +16544,8 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "1.3 Vị trí Module 4 trong Data Engineering Lifecycle",
-              "id": "13-vi-tri-module-4-trong-data-engineering-lifecycle"
+              "text": "1.3 Vị trí Module 6 trong Data Engineering Lifecycle",
+              "id": "13-vi-tri-module-6-trong-data-engineering-lifecycle"
             },
             {
               "type": "paragraph",
@@ -17735,8 +17703,8 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "6.5 Vì sao Flink quan trọng trong Module 4?",
-              "id": "65-vi-sao-flink-quan-trong-trong-module-4"
+              "text": "6.5 Vì sao Flink quan trọng trong Module 6?",
+              "id": "65-vi-sao-flink-quan-trong-trong-module-6"
             },
             {
               "type": "paragraph",
@@ -18415,7 +18383,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Vì vậy, Module 5 tập trung vào "
+                  "text": "Vì vậy, Module 7 tập trung vào "
                 },
                 {
                   "type": "bold",
@@ -18430,15 +18398,15 @@
             {
               "type": "heading",
               "level": 3,
-              "text": "1.2 Module 5 trong vòng đời kỹ thuật dữ liệu",
-              "id": "12-module-5-trong-vong-doi-ky-thuat-du-lieu"
+              "text": "1.2 Module 7 trong vòng đời kỹ thuật dữ liệu",
+              "id": "12-module-7-trong-vong-doi-ky-thuat-du-lieu"
             },
             {
               "type": "paragraph",
               "spans": [
                 {
                   "type": "text",
-                  "text": "Ở Module 1, "
+                  "text": "Ở Module 3, "
                 },
                 {
                   "type": "code",
@@ -18446,7 +18414,7 @@
                 },
                 {
                   "type": "text",
-                  "text": " đưa dữ liệu khí hậu/nông nghiệp vào Bronze. Ở Module 2, dbt-duckdb hoặc SQL scripts cùng DuckDB biến dữ liệu thành Silver/Gold trên DuckLake. Ở Module 3, Airflow điều phối pipeline. Ở Module 4, Redpanda và Flink giúp bạn hiểu dữ liệu dòng chảy, event time và near real-time."
+                  "text": " đưa dữ liệu khí hậu/nông nghiệp vào Bronze. Ở Module 4, dbt-duckdb hoặc SQL scripts cùng DuckDB biến dữ liệu thành Silver/Gold trên DuckLake. Ở Module 5, Airflow điều phối pipeline. Ở Module 6, Redpanda và Flink giúp bạn hiểu dữ liệu dòng chảy, event time và near real-time."
                 }
               ]
             },
@@ -18455,7 +18423,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Module 5 nối tất cả lại bằng ba câu hỏi:"
+                  "text": "Module 7 nối tất cả lại bằng ba câu hỏi:"
                 }
               ]
             },
@@ -18500,7 +18468,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Trong khóa học này, stack OSS mục tiêu của Module 5 là:"
+                  "text": "Trong khóa học này, stack OSS mục tiêu của Module 7 là:"
                 }
               ]
             },
@@ -19112,7 +19080,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Điểm liên kết với Module 4 nằm ở đây: streaming giúp giảm độ trễ, nhưng serving layer phải trình bày rõ dữ liệu mới đến đâu, metric dựa trên event time hay processing time, và cảnh báo có đáng tin không."
+                  "text": "Điểm liên kết với Module 6 nằm ở đây: streaming giúp giảm độ trễ, nhưng serving layer phải trình bày rõ dữ liệu mới đến đâu, metric dựa trên event time hay processing time, và cảnh báo có đáng tin không."
                 }
               ]
             },
@@ -19313,7 +19281,7 @@
                 },
                 {
                   "type": "code",
-                  "text": "docs/module-05-enterprise.md"
+                  "text": "docs/module-7-enterprise.md"
                 },
                 {
                   "type": "text",
@@ -20058,7 +20026,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Module 4 đã giới thiệu streaming pipelines, event time, windowing và watermarks. Module 5 nối phần đó với serving: nếu dữ liệu đến gần real-time nhưng serving layer chậm, metric không rõ hoặc security yếu, hệ thống vẫn không đủ tốt."
+                  "text": "Module 6 đã giới thiệu streaming pipelines, event time, windowing và watermarks. Module 7 nối phần đó với serving: nếu dữ liệu đến gần real-time nhưng serving layer chậm, metric không rõ hoặc security yếu, hệ thống vẫn không đủ tốt."
                 }
               ]
             },
@@ -20150,7 +20118,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Module 5 khép lại khóa học bằng cách chuyển góc nhìn từ \"xây pipeline\" sang \"xây nền tảng dữ liệu dùng được\"."
+                  "text": "Module 7 khép lại khóa học bằng cách chuyển góc nhìn từ \"xây pipeline\" sang \"xây nền tảng dữ liệu dùng được\"."
                 }
               ]
             },
@@ -20260,7 +20228,7 @@
                 [
                   {
                     "type": "code",
-                    "text": "docs/module-00-storage-systems.md"
+                    "text": "docs/module-2-storage-systems.md"
                   },
                   {
                     "type": "text",
@@ -20270,7 +20238,7 @@
                 [
                   {
                     "type": "code",
-                    "text": "docs/module-03-orchestration.md"
+                    "text": "docs/module-5-orchestration.md"
                   },
                   {
                     "type": "text",
@@ -20280,7 +20248,7 @@
                 [
                   {
                     "type": "code",
-                    "text": "docs/module-04-streaming.md"
+                    "text": "docs/module-6-streaming.md"
                   },
                   {
                     "type": "text",

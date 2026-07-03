@@ -8,41 +8,36 @@ import { EASE_OUT_QUART, EASE_EXPO_OUT } from "@/lib/motion";
 
 const LIFECYCLE_STAGES = [
   {
-    vi: "Sinh du lieu",
+    vi: "Sinh dữ liệu",
     en: "Generation",
     moduleId: "module-1-source-systems",
-    description: "Du lieu sinh ra tu source systems — API, database, sensor, file. Giai doan nay tra loi: du lieu den tu dau, kieu gi, tan suat cap nhat ra sao.",
+    description: "Dữ liệu sinh ra từ source systems — API, database, sensor, file. Giai đoạn này trả lời: dữ liệu đến từ đâu, kiểu gì, tần suất cập nhật ra sao.",
   },
   {
-    vi: "Luu tru",
+    vi: "Lưu trữ",
     en: "Storage",
     moduleId: "module-2-storage-systems",
-    description: "Du lieu ha canh va nam lai o storage layer — data lake, lakehouse, warehouse. Bronze/Silver/Gold medallion architecture.",
+    description: "Dữ liệu hạ cánh và nằm lại ở storage layer — data lake, lakehouse, warehouse. Kiến trúc Bronze/Silver/Gold medallion.",
   },
   {
-    vi: "Nap du lieu",
+    vi: "Nạp dữ liệu",
     en: "Ingestion",
     moduleId: "module-3-ingestion",
-    description: "Dua du lieu tu nguon ve luu tru dau tien (Bronze). Batch, micro-batch, hoac streaming. Dam bao trung thuc, co the truy vet.",
+    description: "Đưa dữ liệu từ nguồn về lưu trữ đầu tiên (Bronze). Batch, micro-batch, hoặc streaming. Đảm bảo trung thực, có thể truy vết.",
   },
   {
-    vi: "Bien doi",
+    vi: "Biến đổi",
     en: "Transformation",
     moduleId: "module-4-modeling",
-    description: "Bien doi du lieu tho thanh mo hinh phan tich — Silver/Gold layers. dbt, Trino, SQL transformations, data modeling.",
+    description: "Biến đổi dữ liệu thô thành mô hình phân tích — Silver/Gold layers. dbt, Trino, SQL transformations, data modeling.",
   },
   {
-    vi: "Phuc vu",
+    vi: "Phục vụ",
     en: "Serving",
     moduleId: "module-7-enterprise",
-    description: "Phuc vu du lieu cho downstream — dashboard, API, ML pipeline, ung dung. Security, governance, access patterns.",
+    description: "Phục vụ dữ liệu cho downstream — dashboard, API, ML pipeline, ứng dụng. Security, governance, access patterns.",
   },
 ] as const;
-
-const ARROW_H = "M4 12 L20 12";
-const ARROW_H_HEAD = "M16 8 L20 12 L16 16";
-const ARROW_V = "M12 4 L12 20";
-const ARROW_V_HEAD = "M8 16 L12 20 L16 16";
 
 interface LifecycleDiagramProps {
   activeModuleId?: string;
@@ -84,7 +79,7 @@ function StagePopover({
         <button
           type="button"
           onClick={onClose}
-          aria-label="Dong"
+          aria-label="Đóng"
           style={{ background: "none", border: "none", cursor: "pointer", color: "var(--fg-tertiary)", padding: 0 }}
         >
           <X size={16} />
@@ -104,7 +99,7 @@ function StagePopover({
         }}
         className="hover-underline"
       >
-        {"Hoc module nay ->"}
+        {"Học module này →"}
       </Link>
     </div>
   );
@@ -116,11 +111,11 @@ export function LifecycleDiagram({ activeModuleId }: LifecycleDiagramProps) {
   const [openPopover, setOpenPopover] = useState<number | null>(null);
 
   return (
-    <div ref={ref} className="flex flex-col md:flex-row items-center gap-2 md:gap-1">
+    <div ref={ref} className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-2 w-full">
       {LIFECYCLE_STAGES.map((stage, i) => {
         const isActive = activeModuleId === stage.moduleId;
         return (
-          <div key={stage.moduleId} className="flex flex-col md:flex-row items-center gap-2 md:gap-1">
+          <div key={stage.moduleId} className="flex flex-col md:flex-row items-center gap-3 md:gap-2">
             <motion.div
               initial={{ opacity: 0, y: 12, scale: 0.96 }}
               animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
@@ -130,9 +125,11 @@ export function LifecycleDiagram({ activeModuleId }: LifecycleDiagramProps) {
                 background: isActive ? "rgba(217,119,87,0.08)" : "var(--card)",
                 border: `1px solid ${isActive ? "var(--text-accent)" : "var(--border-tertiary)"}`,
                 borderRadius: "var(--radius-large)",
-                padding: "12px 20px",
+                padding: "14px 28px",
                 textAlign: "center",
-                minWidth: 120,
+                minWidth: 160,
+                flex: "1 1 0",
+                maxWidth: 220,
                 position: "relative",
                 cursor: "pointer",
                 transition: "border-color 0.3s var(--ease-expo-out), background 0.3s var(--ease-expo-out)",
@@ -172,32 +169,32 @@ export function LifecycleDiagram({ activeModuleId }: LifecycleDiagramProps) {
 
             {i < LIFECYCLE_STAGES.length - 1 && (
               <motion.svg
-                width="24"
+                width="40"
                 height="24"
-                viewBox="0 0 24 24"
+                viewBox="0 0 40 24"
                 className="hidden md:block"
                 initial={{ opacity: 0 }}
                 animate={isInView ? { opacity: 1 } : {}}
                 transition={{ duration: 0.4, delay: i * 0.1 + 0.2, ease: EASE_EXPO_OUT }}
               >
-                <path d={ARROW_H} stroke="var(--border-secondary)" strokeWidth="1.5" fill="none" />
-                <path d={ARROW_H} stroke="var(--text-accent)" strokeWidth="1.5" fill="none" className="anim-flow" />
-                <path d={ARROW_H_HEAD} stroke="var(--border-secondary)" strokeWidth="1.5" fill="none" />
+                <path d="M4 12 L36 12" stroke="var(--border-secondary)" strokeWidth="1.5" fill="none" />
+                <path d="M4 12 L36 12" stroke="var(--text-accent)" strokeWidth="1.5" fill="none" className="anim-flow" />
+                <path d="M32 8 L36 12 L32 16" stroke="var(--border-secondary)" strokeWidth="1.5" fill="none" />
               </motion.svg>
             )}
             {i < LIFECYCLE_STAGES.length - 1 && (
               <motion.svg
                 width="24"
-                height="24"
-                viewBox="0 0 24 24"
+                height="40"
+                viewBox="0 0 24 40"
                 className="md:hidden"
                 initial={{ opacity: 0 }}
                 animate={isInView ? { opacity: 1 } : {}}
                 transition={{ duration: 0.4, delay: i * 0.1 + 0.2, ease: EASE_EXPO_OUT }}
               >
-                <path d={ARROW_V} stroke="var(--border-secondary)" strokeWidth="1.5" fill="none" />
-                <path d={ARROW_V} stroke="var(--text-accent)" strokeWidth="1.5" fill="none" className="anim-flow" />
-                <path d={ARROW_V_HEAD} stroke="var(--border-secondary)" strokeWidth="1.5" fill="none" />
+                <path d="M12 4 L12 36" stroke="var(--border-secondary)" strokeWidth="1.5" fill="none" />
+                <path d="M12 4 L12 36" stroke="var(--text-accent)" strokeWidth="1.5" fill="none" className="anim-flow" />
+                <path d="M8 32 L12 36 L16 32" stroke="var(--border-secondary)" strokeWidth="1.5" fill="none" />
               </motion.svg>
             )}
           </div>

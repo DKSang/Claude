@@ -6,6 +6,7 @@ import { LifecycleDiagram } from "@/components/LifecycleDiagram";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { AccordionSection } from "./AccordionSection";
 import { InteractiveContent, InteractiveBlock } from "./InteractiveBlocks";
+import { SectionFeynman } from "./SectionFeynman";
 
 interface LearnContentProps {
   module: Module;
@@ -84,6 +85,7 @@ export async function LearnContent({ module, curriculum }: LearnContentProps) {
                 blockCount={section.blocks.length}
               >
                 <FadeIn y={16}>{renderedBlocks}</FadeIn>
+                <SectionFeynman moduleId={module.id} section={section} />
               </AccordionSection>
             );
           })

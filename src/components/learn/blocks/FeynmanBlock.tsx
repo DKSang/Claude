@@ -8,6 +8,8 @@ interface FeynmanBlockProps {
   topic: string;
   moduleId: string;
   onSaveScore: (score: number, feedback: string) => void;
+  keyPoints?: string[];
+  sectionContext?: string;
 }
 
 interface Evaluation {
@@ -17,7 +19,7 @@ interface Evaluation {
   suggestions: string;
 }
 
-export function FeynmanBlock({ id, topic, moduleId, onSaveScore }: FeynmanBlockProps) {
+export function FeynmanBlock({ id, topic, moduleId, onSaveScore, keyPoints, sectionContext }: FeynmanBlockProps) {
   const [explanation, setExplanation] = useState("");
   const [loading, setLoading] = useState(false);
   const [evaluation, setEvaluation] = useState<Evaluation | null>(null);
@@ -36,7 +38,7 @@ export function FeynmanBlock({ id, topic, moduleId, onSaveScore }: FeynmanBlockP
       const res = await fetch("/api/feynman/evaluate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ moduleId, feynmanId: id, explanation }),
+        body: JSON.stringify({ moduleId, feynmanId: id, explanation, topic, keyPoints, sectionContext }),
       });
 
       if (!res.ok) {

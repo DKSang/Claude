@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import curriculumData from "@/data/curriculum.json";
-import type { Curriculum } from "@/types/curriculum";
+import type { Curriculum, Block } from "@/types/curriculum";
 
 export const dynamic = "force-dynamic";
 
@@ -14,35 +14,60 @@ interface FeynmanEvaluation {
   suggestions: string;
 }
 
+interface EvaluateRequestBody {
+  moduleId: string;
+  feynmanId?: string;
+  explanation: string;
+  topic?: string;
+  keyPoints?: string[];
+  sectionContext?: string;
+}
+
 export async function POST(request: NextRequest) {
-  const body = await request.json();
-  const { moduleId, feynmanId, explanation } = body as { moduleId: string; feynmanId: string; explanation: string };
+  const body = (await request.json()) as EvaluateRequestBody;
+  const { moduleId, feynmanId, explanation, topic, keyPoints, sectionContext } = body;
 
-  if (!moduleId || !feynmanId || !explanation) {
-    return NextResponse.json({ error: "moduleId, feynmanId, and explanation required" }, { status: 400 });
+  if (!moduleId || !explanation) {
+    return NextResponse.json({ error: "moduleId and explanation required" }, { status: 400 });
   }
 
-  const curriculum = curriculumData as Curriculum;
-  const foundModule = curriculum.modules.find((m) => m.id === moduleId);
-  if (!foundModule) {
-    return NextResponse.json({ error: "Module not found" }, { status: 404 });
+  let resolvedTopic = topic;
+  let resolvedKeyPoints = keyPoints;
+  let resolvedContext = sectionContext;
+
+  if (!resolvedTopic && feynmanId) {
+    const curriculum = curriculumData as Curriculum;
+    const foundModule = curriculum.modules.find((m) => m.id === moduleId);
+    if (!foundModule) {
+      return NextResponse.json({ error: "Module not found" }, { status: 404 });
+    }
+
+    const feynmanBlock = foundModule.sections
+      .flatMap((s) => s.blocks)
+      .find((b): b is Extract<Block, { type: "feynman" }> => b.type === "feynman" && b.id === feynmanId);
+
+    if (!feynmanBlock) {
+      return NextResponse.json({ error: "Feynman block not found" }, { status: 404 });
+    }
+
+    resolvedTopic = feynmanBlock.topic;
+    resolvedKeyPoints = feynmanBlock.keyPoints;
+    resolvedContext = feynmanBlock.sectionContext;
   }
 
-  const feynmanBlock = foundModule.sections
-    .flatMap((s) => s.blocks)
-    .find((b) => b.type === "feynman" && b.id === feynmanId);
-
-  if (!feynmanBlock || feynmanBlock.type !== "feynman") {
-    return NextResponse.json({ error: "Feynman block not found" }, { status: 404 });
+  if (!resolvedTopic) {
+    return NextResponse.json({ error: "topic or feynmanId required" }, { status: 400 });
   }
+
+  const finalKeyPoints = resolvedKeyPoints && resolvedKeyPoints.length > 0 ? resolvedKeyPoints : [resolvedTopic];
 
   const systemPrompt = `You are a teacher evaluating a student's explanation using the Feynman technique. The student must explain a concept in their own words as if teaching a beginner. Evaluate their explanation based on the key points below. Return ONLY valid JSON (no markdown, no code blocks) with this exact shape:
 {"score": 0-100, "correctPoints": ["points they got right"], "missingPoints": ["points they missed or got wrong"], "suggestions": "one sentence on how to improve"}
 
-Topic: ${feynmanBlock.topic}
+Topic: ${resolvedTopic}
 Key points to check:
-${feynmanBlock.keyPoints.map((p, i) => `${i + 1}. ${p}`).join("\n")}
-Context: ${feynmanBlock.sectionContext}`;
+${finalKeyPoints.map((p, i) => `${i + 1}. ${p}`).join("\n")}
+Context: ${resolvedContext ?? resolvedTopic}`;
 
   const userPrompt = `Student's explanation:\n${explanation}`;
 
