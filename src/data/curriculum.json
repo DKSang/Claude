@@ -1396,7 +1396,7 @@
     {
       "id": "module-00-source-systems",
       "number": 0,
-      "title": "Bài 0.1: Source Systems",
+      "title": "Source Systems",
       "subtitle": "Dữ liệu sinh ra từ đâu?",
       "summary": "",
       "sourceFile": "module-00-source-systems.md",
@@ -1535,7 +1535,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Lưu ý: Một pipeline tốt bắt đầu bằng source contract rõ ràng: nguồn cung cấp trường nào, kiểu dữ liệu gì, khóa chính là gì, bản ghi thay đổi ra sao, và khi lỗi thì ai chịu trách nhiệm.\r"
+                  "text": "Lưu ý: Một pipeline tốt bắt đầu bằng source contract rõ ràng: nguồn cung cấp trường nào, kiểu dữ liệu gì, khóa chính là gì, bản ghi thay đổi ra sao, và khi lỗi thì ai chịu trách nhiệm."
                 }
               ]
             },
@@ -2869,7 +2869,7 @@
     {
       "id": "module-00-storage-systems",
       "number": 0,
-      "title": "Bài 0.2: Storage Systems",
+      "title": "Storage Systems",
       "subtitle": "Dữ liệu được lưu ở đâu?",
       "summary": "*(Bản bổ sung — các phần lý thuyết còn thiếu được đánh dấu 🆕)*",
       "sourceFile": "module-00-storage-systems.md",
@@ -4960,7 +4960,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "\"DuckLake phù hợp cho project quy mô cá nhân/học tập vì nó dùng Postgres làm catalog — không cần vận hành thêm Hive Metastore hay Glue Catalog, và tích hợp rất mượt với DuckDB làm compute engine local. Trong môi trường doanh nghiệp cần multi-engine (Spark, Trino, Snowflake cùng đọc một bảng), tôi sẽ chọn Iceberg vì nó vendor-neutral và được hỗ trợ rộng nhất. Nếu pipeline chính là CDC từ OLTP database với nhiều upsert, Hudi sẽ hợp lý hơn.\"\r"
+                  "text": "\"DuckLake phù hợp cho project quy mô cá nhân/học tập vì nó dùng Postgres làm catalog — không cần vận hành thêm Hive Metastore hay Glue Catalog, và tích hợp rất mượt với DuckDB làm compute engine local. Trong môi trường doanh nghiệp cần multi-engine (Spark, Trino, Snowflake cùng đọc một bảng), tôi sẽ chọn Iceberg vì nó vendor-neutral và được hỗ trợ rộng nhất. Nếu pipeline chính là CDC từ OLTP database với nhiều upsert, Hudi sẽ hợp lý hơn.\""
                 }
               ]
             },
@@ -6895,7 +6895,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Lưu ý: Đừng biến ingestion thành nơi \"làm mọi thứ\". Nếu vừa gọi API, vừa sửa đơn vị, vừa join danh mục tỉnh, vừa tính KPI, vừa loại bỏ bản ghi lỗi, pipeline sẽ rất khó debug. Bronze layer cần trung thực và có thể truy vết trước khi đẹp.\r"
+                  "text": "Lưu ý: Đừng biến ingestion thành nơi \"làm mọi thứ\". Nếu vừa gọi API, vừa sửa đơn vị, vừa join danh mục tỉnh, vừa tính KPI, vừa loại bỏ bản ghi lỗi, pipeline sẽ rất khó debug. Bronze layer cần trung thực và có thể truy vết trước khi đẹp."
                 }
               ]
             },
@@ -8296,7 +8296,7 @@
                 },
                 {
                   "type": "text",
-                  "text": "\r Nếu lưu thời điểm kết thúc, bất kỳ dữ liệu nào được ghi thêm vào hệ thống nguồn trong lúc pipeline đang chạy sẽ có timestamp nhỏ hơn thời điểm kết thúc này. Ở lần chạy tiếp theo, các bản ghi này sẽ bị bỏ sót vĩnh viễn. Việc lưu thời điểm bắt đầu giúp bao phủ toàn bộ dữ liệu sinh ra trong quá trình chạy.\r"
+                  "text": "\r Nếu lưu thời điểm kết thúc, bất kỳ dữ liệu nào được ghi thêm vào hệ thống nguồn trong lúc pipeline đang chạy sẽ có timestamp nhỏ hơn thời điểm kết thúc này. Ở lần chạy tiếp theo, các bản ghi này sẽ bị bỏ sót vĩnh viễn. Việc lưu thời điểm bắt đầu giúp bao phủ toàn bộ dữ liệu sinh ra trong quá trình chạy."
                 }
               ]
             },
@@ -9161,7 +9161,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Lưu ý: Luôn ưu tiên event time cho phân tích nghiệp vụ. Ingestion time hữu ích cho vận hành pipeline, nhưng không thay thế thời điểm sự kiện xảy ra.\r"
+                  "text": "Lưu ý: Luôn ưu tiên event time cho phân tích nghiệp vụ. Ingestion time hữu ích cho vận hành pipeline, nhưng không thay thế thời điểm sự kiện xảy ra."
                 }
               ]
             },
@@ -9504,7 +9504,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Lưu ý: Public API không có nghĩa là không cần security. Rate limit, token, object storage key và local credentials vẫn cần được bảo vệ.\r"
+                  "text": "Lưu ý: Public API không có nghĩa là không cần security. Rate limit, token, object storage key và local credentials vẫn cần được bảo vệ."
                 }
               ]
             },
@@ -9936,7 +9936,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Lưu ý: Story 4.1 chỉ là bài lý thuyết. Story 4.2 mới tạo dbt-duckdb project hoặc SQL scripts, SQL models và DuckDB secrets/profile. Story 4.3 mới thêm dbt tests và Soda Core quality gate.\r"
+                  "text": "Lưu ý: Story 4.1 chỉ là bài lý thuyết. Story 4.2 mới tạo dbt-duckdb project hoặc SQL scripts, SQL models và DuckDB secrets/profile. Story 4.3 mới thêm dbt tests và Soda Core quality gate."
                 }
               ]
             }
@@ -10303,7 +10303,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Lưu ý: MinIO không chạy SQL, DuckLake không phải compute engine, Parquet không phải database, và Soda Core không biến đổi dữ liệu.\r"
+                  "text": "Lưu ý: MinIO không chạy SQL, DuckLake không phải compute engine, Parquet không phải database, và Soda Core không biến đổi dữ liệu."
                 }
               ]
             }
@@ -11062,7 +11062,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Tip: One Big Table có thể tiện cho demo nhanh, nhưng nếu gom mọi metric, dimension và logic vào một bảng duy nhất, bạn dễ tạo data swamp ở lớp Gold.\r"
+                  "text": "Tip: One Big Table có thể tiện cho demo nhanh, nhưng nếu gom mọi metric, dimension và logic vào một bảng duy nhất, bạn dễ tạo data swamp ở lớp Gold."
                 }
               ]
             }
@@ -13494,7 +13494,7 @@
                 },
                 {
                   "type": "text",
-                  "text": ", bạn biết bảng Gold và dashboard nào bị ảnh hưởng.\r"
+                  "text": ", bạn biết bảng Gold và dashboard nào bị ảnh hưởng."
                 }
               ]
             }
@@ -13889,7 +13889,7 @@
                 },
                 {
                   "type": "text",
-                  "text": ", DuckDB hoặc Soda Core là orchestrator thì bạn đang nhầm vai trò. Trong khóa học này, chúng là nhạc công; Airflow là nhạc trưởng.\r"
+                  "text": ", DuckDB hoặc Soda Core là orchestrator thì bạn đang nhầm vai trò. Trong khóa học này, chúng là nhạc công; Airflow là nhạc trưởng."
                 }
               ]
             },
@@ -14405,7 +14405,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Tip: Pipeline tốt không chỉ biết chạy. Pipeline tốt còn biết khi nào phải dừng.\r"
+                  "text": "Tip: Pipeline tốt không chỉ biết chạy. Pipeline tốt còn biết khi nào phải dừng."
                 }
               ]
             },
@@ -15214,7 +15214,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Lưu ý: DAG file càng nhẹ thì scheduler càng ổn định. Hãy để DAG mô tả \"ai chạy trước ai\", không biến DAG thành nơi xử lý dữ liệu.\r"
+                  "text": "Lưu ý: DAG file càng nhẹ thì scheduler càng ổn định. Hãy để DAG mô tả \"ai chạy trước ai\", không biến DAG thành nơi xử lý dữ liệu."
                 }
               ]
             },
@@ -15523,7 +15523,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Lưu ý: Mục tiêu của DataOps là phát hiện lỗi trước người dùng dashboard, không chờ người dùng báo \"số hôm nay sao giống hôm qua?\".\r"
+                  "text": "Lưu ý: Mục tiêu của DataOps là phát hiện lỗi trước người dùng dashboard, không chờ người dùng báo \"số hôm nay sao giống hôm qua?\"."
                 }
               ]
             },
@@ -16387,7 +16387,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Tip: Streaming không có nghĩa là mọi thứ phải tức thì tuyệt đối. Nó là cách xử lý luồng sự kiện liên tục với độ trễ được kiểm soát, đủ nhanh cho mục tiêu nghiệp vụ.\r"
+                  "text": "Tip: Streaming không có nghĩa là mọi thứ phải tức thì tuyệt đối. Nó là cách xử lý luồng sự kiện liên tục với độ trễ được kiểm soát, đủ nhanh cho mục tiêu nghiệp vụ."
                 }
               ]
             }
@@ -16523,7 +16523,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Lưu ý: Redpanda không phải engine tính toán window. Redpanda là broker/event-streaming platform. Flink mới là nơi thực hiện Tumbling Window, Watermark và stateful aggregation.\r"
+                  "text": "Lưu ý: Redpanda không phải engine tính toán window. Redpanda là broker/event-streaming platform. Flink mới là nơi thực hiện Tumbling Window, Watermark và stateful aggregation."
                 }
               ]
             }
@@ -17000,7 +17000,7 @@
                 },
                 {
                   "type": "text",
-                  "text": ".\r"
+                  "text": "."
                 }
               ]
             }
@@ -17666,7 +17666,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Tip: Khi nghe \"streaming\", hãy tách hai vai: transport layer đưa event đi, processing layer tính toán trên event.\r"
+                  "text": "Tip: Khi nghe \"streaming\", hãy tách hai vai: transport layer đưa event đi, processing layer tính toán trên event."
                 }
               ]
             }
@@ -18273,7 +18273,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Tip: Khi thiết kế metric streaming, hãy luôn hỏi năm câu: event time nằm ở đâu, ingestion time được ghi ở đâu, window dài bao lâu, watermark cho phép trễ bao nhiêu, và late data quá ngưỡng sẽ đi đâu.\r"
+                  "text": "Tip: Khi thiết kế metric streaming, hãy luôn hỏi năm câu: event time nằm ở đâu, ingestion time được ghi ở đâu, window dài bao lâu, watermark cho phép trễ bao nhiêu, và late data quá ngưỡng sẽ đi đâu."
                 }
               ]
             }
@@ -18725,7 +18725,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Lưu ý: DuckLake không \"lưu dữ liệu thay Parquet\". Parquet chứa dữ liệu vật lý. DuckLake quản lý metadata để engine như DuckDB hiểu tập file đó như một bảng phân tích đáng tin.\r"
+                  "text": "Lưu ý: DuckLake không \"lưu dữ liệu thay Parquet\". Parquet chứa dữ liệu vật lý. DuckLake quản lý metadata để engine như DuckDB hiểu tập file đó như một bảng phân tích đáng tin."
                 }
               ]
             },
@@ -19113,7 +19113,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Lưu ý: Reverse ETL không phải \"dashboard đẹp hơn\". Nó là hành động ghi ngược vào hệ thống vận hành. Vì vậy mức yêu cầu về kiểm soát và quan sát phải cao hơn báo cáo đọc-only.\r"
+                  "text": "Lưu ý: Reverse ETL không phải \"dashboard đẹp hơn\". Nó là hành động ghi ngược vào hệ thống vận hành. Vì vậy mức yêu cầu về kiểm soát và quan sát phải cao hơn báo cáo đọc-only."
                 }
               ]
             }
@@ -19700,7 +19700,7 @@
               "spans": [
                 {
                   "type": "text",
-                  "text": "Tip: Nếu một secret xuất hiện trong Git history, việc xóa dòng hiện tại chưa đủ. Secret đó nên được xem là đã lộ và cần rotate.\r"
+                  "text": "Tip: Nếu một secret xuất hiện trong Git history, việc xóa dòng hiện tại chưa đủ. Secret đó nên được xem là đã lộ và cần rotate."
                 }
               ]
             },

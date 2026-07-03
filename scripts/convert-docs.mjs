@@ -58,7 +58,7 @@ function parseModuleMeta(content) {
   const numberMatch = fullTitle.match(/B\u00e0i\s*(\d+)/i);
   const number = numberMatch ? parseInt(numberMatch[1], 10) : 0;
 
-  let title = fullTitle.replace(/^B\u00e0i\s*\d+:\s*/i, "").trim();
+  let title = fullTitle.replace(/^B\u00e0i\s*[\d.]+:\s*/i, "").trim();
   let subtitle = "";
 
   const subtitleMatch = title.match(/^(.+?)\s*[-\u2013\u2014]\s*(.+)$/);
@@ -119,14 +119,28 @@ function parseBlocks(lines, startIndex) {
         quoteLines.push(lines[i].slice(2));
         i++;
       }
-      const quoteText = quoteLines.join(" ");
+      let quoteText = quoteLines.join(" ");
+      let variant = "tip";
+      const admonitionMatch = quoteText.match(/^\[!(IMPORTANT|NOTE|WARNING|TIP)\]\s*(.*)$/i);
+      if (admonitionMatch) {
+        quoteText = admonitionMatch[2];
+        const admonitionType = admonitionMatch[1].toUpperCase();
+        if (admonitionType === "NOTE" || admonitionType === "WARNING") {
+          variant = "note";
+        }
+      }
       const normalized = quoteText
         .toLowerCase()
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
         .replace(/đ/g, "d");
-      const variant = normalized.startsWith("luu y") ? "note" : "tip";
-      blocks.push({ type: "blockquote", variant, spans: parseInlineSpans(quoteText) });
+      if (normalized.startsWith("luu y")) {
+        variant = "note";
+      }
+      quoteText = quoteText.trim();
+      if (quoteText) {
+        blocks.push({ type: "blockquote", variant, spans: parseInlineSpans(quoteText) });
+      }
       continue;
     }
 
