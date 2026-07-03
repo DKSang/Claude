@@ -23,12 +23,12 @@ export async function POST(request: NextRequest) {
   }
 
   const curriculum = curriculumData as Curriculum;
-  const module = curriculum.modules.find((m) => m.id === moduleId);
-  if (!module) {
+  const foundModule = curriculum.modules.find((m) => m.id === moduleId);
+  if (!foundModule) {
     return NextResponse.json({ error: "Module not found" }, { status: 404 });
   }
 
-  const feynmanBlock = module.sections
+  const feynmanBlock = foundModule.sections
     .flatMap((s) => s.blocks)
     .find((b) => b.type === "feynman" && b.id === feynmanId);
 

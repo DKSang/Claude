@@ -88,7 +88,20 @@ export function useProgress(moduleId: string) {
     }
   }, [moduleId]);
 
-  return { progress, loading, markSectionRead, toggleGoal, saveQuizScore };
+  const saveFeynmanScore = useCallback(async (score: number, feedback: string) => {
+    try {
+      const res = await fetch("/api/progress/feynman", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ moduleId, score, feedback }),
+      });
+      const data = await res.json();
+      setProgress(data);
+    } catch {
+    }
+  }, [moduleId]);
+
+  return { progress, loading, markSectionRead, toggleGoal, saveQuizScore, saveFeynmanScore };
 }
 
 export function useAllProgress() {

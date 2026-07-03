@@ -30,6 +30,7 @@ export async function BlockRenderer({ block }: BlockRendererProps) {
     case "quiz":
     case "checkpoint":
     case "mindmap":
+    case "feynman":
       return null;
     default:
       return null;
